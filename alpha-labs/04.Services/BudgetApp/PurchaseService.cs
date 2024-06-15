@@ -1,0 +1,105 @@
+﻿using alpha_labs._01.Configuration.Configs;
+using alpha_labs._01.Configuration.Utilities;
+using alpha_labs._02.Models.BudgetApp.Purchases;
+using alpha_labs._06.Controllers.BudgetApp.Purchases;
+using Microsoft.Extensions.Options;
+
+namespace alpha_labs._04.Services.BudgetApp
+{
+    public interface IPurchaseService
+    {
+        /// <summary>Calculates values for the purchase nodes.</summary>
+        PurchaseNodesResponse CalculateNodeValues(List<Purchase> purchases);
+
+        /// <summary>Creates a new purchase model entity.</summary>
+        Purchase CreatePurchaseEntity(CreatePurchaseRequest request);
+
+        /// <summary>Creates a new purchase report response.</summary>
+        PurchaseReportResponse CreatePurchaseReportResponse(PurchaseNodesResponse nodes, List<Purchase> purchases);
+    }
+
+    public class PurchaseService : IPurchaseService
+    {
+        private readonly BudgetConfig _config;
+
+        public PurchaseService(IOptions<BudgetConfig> config)
+        {
+            _config = config.Value;
+        }
+
+        /// <summary>Calculates values for the purchase nodes.</summary>
+        public PurchaseNodesResponse CalculateNodeValues(List<Purchase> purchases)
+        {
+            var totalMonthlySpending = purchases.Select(x => x.Amount).Sum();
+
+            if (totalMonthlySpending == 0)
+            {
+                return new PurchaseNodesResponse
+                {
+                    TotalEntertainmentSpending = 0,
+                    TotalEntertainmentPercentage = 0,
+                    TotalFoodSpending = 0,
+                    TotalFoodPercentage = 0,
+                    TotalHousingSpending = 0,
+                    TotalHousingPercentage = 0,
+                    TotalMiscSpending = 0,
+                    TotalMiscPercentage = 0,
+                };
+            }
+
+            var totalEntertainmentSpending = purchases.Where(x => x.Category == "Entertainment").Select(x => x.Amount).Sum();
+            var totalFoodSpending = purchases.Where(x => x.Category == "Food").Select(x => x.Amount).Sum();
+            var totalHousingSpending = purchases.Where(x => x.Category == "Housing").Select(x => x.Amount).Sum();
+            var totalMiscSpending = purchases.Where(x => x.Category == "Miscellaneous").Select(x => x.Amount).Sum();
+
+            var entertainmentPercentage = totalEntertainmentSpending != 0 ? totalEntertainmentSpending / totalMonthlySpending : 0;
+            var foodPercentage = totalFoodSpending != 0 ? totalFoodSpending / totalMonthlySpending : 0;
+            var housingPercentage = totalHousingSpending != 0 ? totalHousingSpending / totalMonthlySpending : 0;
+            var miscPercentage = totalMiscSpending != 0 ? totalMiscSpending / totalMonthlySpending : 0;
+
+            Converter converter = new();
+            return new PurchaseNodesResponse
+            {
+                TotalEntertainmentSpending = totalEntertainmentSpending,
+                TotalEntertainmentPercentage = converter.ConvertDecimalToPercent(entertainmentPercentage),
+                TotalFoodSpending = totalFoodSpending,
+                TotalFoodPercentage = converter.ConvertDecimalToPercent(foodPercentage),
+                TotalHousingSpending = totalHousingSpending,
+                TotalHousingPercentage = converter.ConvertDecimalToPercent(housingPercentage),
+                TotalMiscSpending = totalMiscSpending,
+                TotalMiscPercentage = converter.ConvertDecimalToPercent(miscPercentage),
+            };
+        }
+
+        /// <summary>Creates a new purchase model entity.</summary>
+        public Purchase CreatePurchaseEntity(CreatePurchaseRequest request)
+        {
+            Converter converter = new();
+            return new Purchase()
+            {
+                CreatedDate = DateTime.Now,
+                UpdatedDate = null,
+                PurchaseDate = converter.ConvertStringToDateTime(request.PurchaseDate),
+                PurchaseDateFormatted = converter.ConvertStringToDateTime(request.PurchaseDate).ToString("M/d/yy"),
+                Amount = request.Amount,
+                Category = request.Category,
+                Description = request.Description,
+                IsLuxury = request.IsLuxury,
+            };
+        }
+
+        /// <summary>Creates a new purchase report response.</summary>
+        public PurchaseReportResponse CreatePurchaseReportResponse(PurchaseNodesResponse nodes, List<Purchase> purchases)
+        {
+            return new PurchaseReportResponse()
+            {
+                PurchaseTotal = purchases.Select(p => p.Amount).Sum(),
+                LuxuryPurchaseTotal = purchases.Where(p => p.IsLuxury).Select(p => p.Amount).Sum(),
+                LuxuryPurchaseLimit = _config.LuxuryPurchaseLimit,
+                NecessityPurchaseTotal = purchases.Where(p => !p.IsLuxury).Select(p => p.Amount).Sum(),
+                NodeResponse = nodes,
+                PurchaseList = purchases
+            };
+        }
+    }
+}
