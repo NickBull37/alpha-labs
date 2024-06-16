@@ -1,13 +1,677 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/********************************************************************************************************************************************
+*********************************************************** TABLE OF CONTENTS ***************************************************************
+********************************************************************************************************************************************/
+/*
+    1. ROOT VARIABLES
+        1.1 Colors
+        1.2 Text Size
+
+    2. DEFAULT STYLES
+        2.1 Default page styling
+        2.2 Default font styling
+        2.3 Default component styling
+        2.4 Additional fonts
+
+    3. GENERIC STYLES
+        3.1 Spacing
+        3.2 Color
+        3.3 Display
+        3.4 Typography
+
+    4. HEADER
+
+    5. FOOTER
+
+    6. MEDIA QUERIES
+        6.1 Tablet View
+        6.2 Mobile View
+*/
+
+/********************************************************************************************************************************************
+************************************************************ 1. ROOT VARIABLES **************************************************************
+********************************************************************************************************************************************/
+:root {
+
+    /* ----------------- 1.1 Colors ----------------- */
+    --white-100: #e6e6e6;
+    --white-200: #cccccc;
+    --white-300: #b3b3b3;
+    --white-400: #999999;
+
+    --gray-500: #808080;
+
+    --black-600: #666666;
+    --black-700: #4d4d4d;
+    --black-800: #333333;
+    --black-900: #1a1a1a;
+
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1e293b;
+    --slate-900: #0f172a;
+
+    --zinc-400: #a1a1aa;
+    --zinc-500: #71717a;
+    --zinc-600: #52525b;
+    --zinc-700: #3f3f46;
+    --zinc-800: #27272a;
+    --zinc-900: #18181b;
+
+    /* Color Palette */
+    --pal-primary: #000;
+    --pal-secondary: #000;
+    --pal-tertiary: #000;
+
+    --pal-red: #ff0000;
+    --pal-red-light: #ff8080;
+    --pal-red-dark: #800000;
+
+    --pal-orange: #ff6600;
+    --pal-orange-light: #ffb380;
+    --pal-orange-dark: #803300;
+
+    --pal-yellow: #ffff00;
+    --pal-yellow-light: #ffff80;
+    --pal-yellow-dark: #808000;
+
+    --pal-green: #00cc00;
+    --pal-green-light: #4dff4d;
+    --pal-green-dark: #004d00;
+
+    --pal-blue: #0000ff;
+    --pal-blue-light: #8080ff;
+    --pal-blue-dark: #000080;
+
+    --pal-purple: #bf00ff;
+    --pal-purple-light: #df80ff;
+    --pal-purple-dark: #600080;
+
+    --pal-pink: #ff1aff;
+    --pal-pink-light: #ff99ff;
+    --pal-pink-dark: #b300b3;
+
+    /* ---------------- 1.2 Text Size --------------*/
+    --txt-10: 0.625rem;
+    --txt-12: 0.75rem;
+    --txt-14: 0.875rem;
+    --txt-16: 1rem;
+    --txt-20: 1.25rem;
+    --txt-24: 1.5rem;
+    --txt-28: 1.75rem;
+    --txt-32: 2rem;
+    --txt-36: 2.25rem;
+    --txt-40: 2.5rem;
+    --txt-48: 3rem;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/********************************************************************************************************************************************
+*********************************************************** 2. DEFAULT STYLES ***************************************************************
+********************************************************************************************************************************************/
+/* ------------------- 2.1 Default page styling ------------------- */
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    /* Set background color for entire site */
+    background: #262626;
+    /* Set default text color for entire site */
+    color: #fff;
+}
+
+/* ------------------- 2.2 Default font styling ------------------- */
+.no-deco {
+    text-decoration: none!important;
+}
+
+.bolded {
+    font-weight: 600!important;
+}
+
+.ls-100 {
+    letter-spacing: 0.1rem!important;
+}
+.ls-200 {
+    letter-spacing: 0.2rem!important;
+}
+
+/* PAGE HEADERS */
+.pg-header1 {
+    /* 64 px */
+    font-size: 4rem!important;
+    font-weight: 600!important;
+    line-height: 1.1!important;
+    font-family: "Basiercircle", sans-serif!important;
+}
+.pg-header2 {
+    /* 48 px */
+    font-size: 2.625rem!important;
+    font-weight: 500!important;
+    line-height: 1.2!important;
+    font-family: "Basiercircle", sans-serif!important;
+}
+.pg-header3 {
+    /* 32 px */
+    font-size: 2rem!important;
+    font-weight: 500!important;
+    line-height: 1.3!important;
+    font-family: "Basiercircle", sans-serif!important;
+}
+
+/* SECTION HEADERS */
+.sec-header1 {
+    /* 30 px */
+    font-size: 1.875rem!important;
+    line-height: 2.25rem!important;
+    letter-spacing: -.025em!important;
+    font-weight: 800!important;
+}
+.sec-header2 {
+    /* 28 px */
+    font-size: 1.75rem!important;
+    line-height: 1.5!important;
+    letter-spacing: 0.6px!important;
+    font-weight: 600!important;
+    font-family: "General Sans", "Segoe UI", "Helvetica Neue", Arial,sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"!important;
+}
+.sec-header3 {
+    /* 20 px */
+    font-size: 1.25rem!important;
+    line-height: 1.4!important;
+    letter-spacing: 0em!important;
+    font-weight: 600!important;
+}
+
+.sec-header33 {
+    /* 18 px */
+    font-size: 1.125rem!important;
+    line-height: 1.4!important;
+    letter-spacing: 0em!important;
+    font-weight: 600!important;
+}
+
+.sec-header4 {
+    /* 16 px */
+    font-size: 1rem!important;
+    line-height: 1.4!important;
+    letter-spacing: 0em!important;
+    font-weight: 600!important;
+    font-style: italic;
+    color: var(--white-400);
+    padding-left: 3px;
+}
+
+.sec-header5 {
+    /* 14 px */
+    font-size: 0.875rem!important;
+    line-height: 1.4!important;
+    letter-spacing: 0em!important;
+    font-weight: 600!important;
+    font-style: italic;
+    color: var(--white-400);
+}
+
+.sec-header5-grad {
+    /* 14 px */
+    font-size: 0.875rem!important;
+    line-height: 1.4!important;
+    letter-spacing: 0em!important;
+    font-weight: 600!important;
+    font-style: italic;
+    color: #ff0066;
+}
+
+.sec-header-bold {
+    /* 24 px */
+    font-size: 1.5rem!important;
+    line-height: 1.5!important;
+    font-weight: 700!important;
+    font-family: "General Sans", "Segoe UI", "Helvetica Neue", Arial,sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"!important;
+}
+
+.num-text-bold {
+    /* 30 px */
+    font-size: 1.75rem!important;
+    line-height: 1.5!important;
+    font-weight: 700!important;
+    font-family: "General Sans", "Segoe UI", "Helvetica Neue", Arial,sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"!important;
+}
+
+/* BODY TEXT */
+.body1 {
+    /* 18 px */
+    font-size: 1.125rem!important;
+    line-height: 1.6!important;
+    letter-spacing: 0!important;
+    /* font-weight: 400!important; */
+    font-family: "IBM Plex Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"!important;
+}
+.body2 {
+    /* 20 px */
+    font-size: 1.25rem!important;
+    line-height: 1.75!important;
+    letter-spacing: 0!important;
+    font-weight: 400!important;
+    font-family: "IBM Plex Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"!important;
+}
+
+/* SUBTITLES */
+.subtitle1 {
+    font-size: 14px!important;
+    line-height: 1.2!important;
+    font-weight: 500!important;
+}
+.subtitle2 {
+    font-size: 16px!important;
+    line-height: 1.2!important;
+    font-weight: 500!important;
+}
+.subtitle3 {
+    font-size: 13px!important;
+    font-style: italic!important;
+    font-weight: 500!important;
+}
+
+/* ICONS */
+.text-icon-plus {
+    color: #b3b3b3!important;
+    font-size: 24px!important;
+}
+.text-icon-equal {
+    color: #b3b3b3!important;
+    font-size: 27px!important;
+}
+
+/* ----------------- 2.3 Default component styling ----------------- */
+
+.btn-primary {
+    color: #fff;
+    background-color: var(--pal-primary);
+}
+
+.btn-secondary {
+    color: #fff;
+    background-color: var(--pal-secondary);
+}
+
+/* ------------------ 2.4 Additional fonts added ------------------ */
+@font-face {
+    font-family: 'Blackpearl';
+    src: local('Blackpearl'),
+         url('./fonts/Blackpearl.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Brosh';
+    src: local('Brosh'),
+         url('./fonts/Brosh.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Cornerstone';
+    src: local('Cornerstone'),
+         url('./fonts/Cornerstone.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Engine';
+    src: local('Engine'),
+         url('./fonts/Engine.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Eros';
+    src: local('Eros'),
+         url('./fonts/Eros.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Kepo';
+    src: local('Kepo'),
+         url('./fonts/Kepo.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Progress';
+    src: local('Progress'),
+         url('./fonts/Progress.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Salvar';
+    src: local('Salvar'),
+         url('./fonts/Salvar.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Signwood';
+    src: local('Signwood'),
+         url('./fonts/Signwood.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Signature';
+    src: local('Signature'),
+         url('./fonts/TheSignature.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Wolfalcon';
+    src: local('Wolfalcon'),
+         url('./fonts/Wolfalcon.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Wordmean';
+    src: local('Wordmean'),
+         url('./fonts/Wordmean.ttf') format('truetype');
+}
+
+
+
+/********************************************************************************************************************************************
+************************************************************ 3. GENERIC STYLES **************************************************************
+********************************************************************************************************************************************/
+/* ------------------- 3.1 Spacing  ------------------*/
+.container {
+    padding: 10px 15%;
+}
+
+/* ------------------- 3.2 Color  ------------------*/
+.color-primary {
+    color: var(--pal-purple)!important;
+}
+
+.color-primary2 {
+    color: var(--pal-pink)!important;
+}
+
+.clr-bg-primary {
+    background-color: var(--pal-purple)!important;
+}
+.clr-bg-secondary {
+    background-color: var(--pal-pink)!important;
+}
+
+.color-white {
+    color: #fff!important;
+}
+
+.color-gray200 {
+    color: var(--white-200)
+}
+.color-gray300 {
+    color: var(--white-300)
+}
+.color-gray400 {
+    color: var(--white-400)
+}
+
+.color-green {
+    color: var(--pal-green)!important;
+}
+.color-darkgreen {
+    color: var(--pal-green-dark)!important;
+}
+.green-txt {
+    color: #00cc7a!important;
+}
+
+.color-purple {
+    color: '#A602B0'!important;
+}
+
+.color-transpurple {
+    color: var(--pal-purple-transparent)!important;
+}
+
+.color-blue {
+    color: #1976d2!important;
+}
+
+.color-red {
+    color: var(--pal-red)!important;
+}
+
+/* ------------------- 3.3 Display  ------------------*/
+.hide-display {
+    display: none !important;
+}
+
+.hide-on-mobile {
+    display: none;
+}
+
+.pad-list {
+    margin: 1rem;
+}
+
+
+/********************************************************************************************************************************************
+************************************************************** 4. TYPOGRAPHY ********************************************************************
+********************************************************************************************************************************************/
+/* BLACKPEARL */
+.blackpear-h1 {
+    font-family: Blackpearl !important;
+}
+
+.blackpear-h1-blue-grad {
+    font-family: Blackpearl !important;
+    font-weight: 300;
+    font-size: 3.75rem!important;
+    line-height: 1.2;
+    letter-spacing: -0.00833em;
+    background: linear-gradient(to right, #0951aa, #00e6e6)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+/* BROSH */
+
+/* CORNERSTONE */
+
+/* ENGINE */
+
+/* EROS */
+
+/* KEPO */
+
+/* PROGRESS */
+.progress {
+    font-family: Progress !important;
+    font-weight: 300;
+    font-size: 1.5rem!important;
+    line-height: 1.2;
+    letter-spacing: -0.00833em;
+}
+.progress-h4-pink-grad {
+    font-family: Progress !important;
+    line-height: 1.3!important;
+    font-size: 40px!important;
+    font-weight: 600!important;
+    background: linear-gradient(to right, #cc0052, #ff66a3)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.progress-h4-blue-grad {
+    font-family: Progress !important;
+    line-height: 1.3!important;
+    font-size: 40px!important;
+    font-weight: 600!important;
+    background: linear-gradient(to right, #1566b7, #a4ccf4)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.progress-h4-green-grad {
+    font-family: Progress !important;
+    line-height: 1.3!important;
+    font-size: 40px!important;
+    font-weight: 600!important;
+    background: linear-gradient(to right, #00804d, #1affa3)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.progress-h4-purple-grad {
+    font-family: Progress !important;
+    line-height: 1.3!important;
+    font-size: 40px!important;
+    font-weight: 600!important;
+    background: linear-gradient(to right, #6b1daf, #b67bea)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+/* SALVAR */
+.salvar-h1 {
+    font-family: Salvar !important;
+}
+.salvar-h1-red-grad {
+    font-family: Salvar !important;
+    line-height: 1!important;
+    font-size: 96px!important;
+    background: linear-gradient(to right, #EE0425, #DE04AE)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.salvar-h1-purp-grad {
+    font-family: Salvar !important;
+    line-height: 1!important;
+    font-size: 96px!important;
+    background: linear-gradient(to right, #A602B0, #2F0897)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+/* SIGNWOOD */
+
+/* SIGNATURE */
+
+/* WOLFALCON */
+
+/* WORDMEAN */
+
+
+/********************************************************************************************************************************************
+************************************************************** 5. HEADER ********************************************************************
+********************************************************************************************************************************************/
+.app-preview-cal {
+    border-radius: 5px;
+    border: 1px solid #000;
+    box-shadow: 0px 2px 10px 2px #1a1a1a;
+}
+.app-preview-cal:hover {
+    cursor: pointer;
+    box-shadow: 0px 1px 10px 0.5px rgba(0, 82, 204, 0.8);
+}
+.app-preview-bud {
+    border-radius: 5px;
+    border: 1px solid #000;
+    box-shadow: 0px 2px 10px 2px #1a1a1a;
+}
+.app-preview-bud:hover {
+    cursor: pointer;
+    box-shadow: 0px 1px 10px 0.5px rgba(172, 0, 230, 0.7);
+}
+.app-preview-pho {
+    border-radius: 5px;
+    border: 1px solid #000;
+    box-shadow: 0px 2px 10px 2px #1a1a1a;
+}
+.app-preview-pho:hover {
+    cursor: pointer;
+    box-shadow: 0px 1px 10px 0.5px rgba(238, 4, 41, 0.7);
+}
+.app-preview-tod {
+    border-radius: 5px;
+    border: 1px solid #000;
+    box-shadow: 0px 2px 10px 2px #1a1a1a;
+}
+.app-preview-tod:hover {
+    cursor: pointer;
+    box-shadow: 0px 2px 10px 1px rgba(160, 238, 25, 0.7);
+}
+
+
+
+/********************************************************************************************************************************************
+*************************************************************** DATE PICKER *****************************************************************
+********************************************************************************************************************************************/
+.date-picker {
+    min-height: 55px;
+    min-width: 250px;
+    font-size: 1rem;
+    padding-left: 12px;
+    padding-right: 10px;
+    color: #fff!important;
+    background-color: #4d4d4d;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+.date-picker:hover {
+    border: 1px solid #999999;
+}
+
+
+
+/********************************************************************************************************************************************
+****************************************************************** FORMS ********************************************************************
+********************************************************************************************************************************************/
+.error-label {
+    color: red!important;
+}
+
+.mui-error-text {
+    color: red;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.03333em !important;
+    margin-top: 5px !important;
+    margin-left: 2px !important;
+}
+
+.quick-fill {
+    font-size: 14px!important;
+    border: 1px solid #ff1a75!important;
+    border-radius: 3px!important;
+    background-color: rgba(255, 26, 117, 0.2)!important;
+    padding: 0 5px 0 5px;
+    cursor: pointer;
+}
+
+.quick-fill-transactions {
+    font-size: 14px!important;
+    border: 1px solid #00cc7a!important;
+    border-radius: 3px!important;
+    background-color: rgba(0, 204, 122, 0.2)!important;
+    padding: 0 5px 0 5px;
+    cursor: pointer;
+}
+
+
+
+/********************************************************************************************************************************************
+************************************************************** 5. FOOTER ********************************************************************
+********************************************************************************************************************************************/
+
+
+
+/********************************************************************************************************************************************
+*********************************************************** 6. MEDIA QUERIES ***************************************************************
+********************************************************************************************************************************************/
+/* ------------------- 6.1 Tablet View  ------------------*/
+@media only screen and (max-width: 821px) {
+
+}
+
+/* ------------------- 6.2 Mobile View  ------------------*/
+@media only screen and (max-width: 600px) {
+
 }
