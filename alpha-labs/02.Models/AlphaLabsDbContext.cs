@@ -3,6 +3,7 @@ using alpha_labs._02.Models.BudgetApp.Funds;
 using alpha_labs._02.Models.BudgetApp.Paychecks;
 using alpha_labs._02.Models.BudgetApp.Purchases;
 using alpha_labs._02.Models.BudgetApp.Transactions;
+using alpha_labs._02.Models.CalendarApp.Birthdays;
 using Microsoft.EntityFrameworkCore;
 
 namespace alpha_labs._02.Models
@@ -13,21 +14,20 @@ namespace alpha_labs._02.Models
         {
         }
 
+        #region BudgetApp
         public DbSet<Bill> Bills { get; set; }
-
         public DbSet<BillTemplate> BillTemplates { get; set; }
-
         public DbSet<Fund> Funds { get; set; }
-
         public DbSet<FundTransaction> FundTransactions { get; set; }
-
         public DbSet<Purchase> Purchases { get; set; }
-
         public DbSet<Paycheck> Paychecks { get; set; }
-
         public DbSet<PaycheckTemplate> PaycheckTemplates { get; set; }
-
         public DbSet<Transaction> Transactions { get; set; }
+        #endregion
+
+        #region CalendarApp
+        public DbSet<BirthdayModel> Birthdays { get; set; }
+        #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

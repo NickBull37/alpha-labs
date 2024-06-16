@@ -2,5 +2,6 @@
 {
     public class CalendarConfig
     {
+        public int BirthdayYearsInAdvance { get; set; }
     }
 }
