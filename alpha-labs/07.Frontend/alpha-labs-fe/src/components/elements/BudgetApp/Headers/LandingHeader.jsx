@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/material';
-import { alphaBull } from '../../../../utils/constants';
+import { alphaVault } from '../../../../utils/constants';
 
 const LandingHeader = () => {
     return (
@@ -14,7 +14,7 @@ const LandingHeader = () => {
         >
             <Link to="/">
                 <Box sx={{ mr: 2 }}>
-                    <img src={alphaBull} height={50}/>
+                    <img src={alphaVault} height={50}/>
                 </Box>
             </Link>
         </Box>

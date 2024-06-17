@@ -166,7 +166,7 @@ const DepositFundsBtn = ({ fund, setSuccessState, setErrorState }) => {
 
         try {
             // Create purchase record
-            const response = await axios.post("https://localhost:7295/Fund/create-fund-transaction", {
+            const response = await axios.post("https://localhost:44379/Fund/create-fund-transaction", {
                 fundID: fund.id,
                 amount: Number(amount)
             });

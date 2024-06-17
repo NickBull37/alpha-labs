@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Typography, } from '@mui/material';
-import { alphaBull } from '../../../../utils/constants';
+import { alphaVault } from '../../../../utils/constants';
 
 const DashboardHeader = () => {
 
@@ -16,7 +16,7 @@ const DashboardHeader = () => {
         >
             <Link to="/">
                 <Box sx={{ mr: 4 }}>
-                    <img src={alphaBull} height={50}/>
+                    <img src={alphaVault} height={50}/>
                 </Box>
             </Link>
             <Typography variant='h4'

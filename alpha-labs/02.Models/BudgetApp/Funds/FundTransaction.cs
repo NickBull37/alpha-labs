@@ -28,7 +28,7 @@ namespace alpha_labs._02.Models.BudgetApp.Funds
         DateTime? UpdatedDate { get; set; }
     }
 
-    [Table("FundTransactions")]
+    [Table("Budget.FundTransactions")]
     public class FundTransaction : IFundTransaction
     {
         [Key]

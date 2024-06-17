@@ -39,7 +39,7 @@ namespace alpha_labs._02.Models.BudgetApp.Bills
         bool IsActive { get; set; }
     }
 
-    [Table("BillTemplates")]
+    [Table("Budget.BillTemplates")]
     public class BillTemplate : IBillTemplate
     {
         [Key]

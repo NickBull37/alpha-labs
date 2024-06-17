@@ -34,7 +34,9 @@ namespace alpha_labs._06.Controllers.CalendarApp.Birthdays
         [Route("add-birthday")]
         public async Task<IActionResult> AddBirthday(AddBirthdayRequest request)
         {
-            if (string.IsNullOrEmpty(request.Name))
+            if (string.IsNullOrEmpty(request.Name)
+                || request.Day == 0
+                || request.Month == 0)
             {
                 return BadRequest(new { message = "Missing or invalid required fields." });
             }

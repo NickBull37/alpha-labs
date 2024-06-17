@@ -23,7 +23,7 @@ namespace alpha_labs._02.Models.BudgetApp.Funds
         bool IsActive { get; set; }
     }
 
-    [Table("Funds")]
+    [Table("Budget.Funds")]
     public class Fund : IFund
     {
         [Key]

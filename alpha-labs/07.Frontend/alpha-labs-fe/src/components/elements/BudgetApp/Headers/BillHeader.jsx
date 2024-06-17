@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Typography, } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { alphaVault } from '../../../../utils/constants';
 
-const PurchaseHeader = () => {
-    
+const BillHeader = () => {
+
     return (
         <Box display="flex" gap={1}
             sx={{
                 py: 2,
                 px: 4,
                 mb: 4,
-                backgroundColor: '#18181b',
+                backgroundColor: '#18181b'
             }}
         >
             <Link to="/">
@@ -32,17 +32,7 @@ const PurchaseHeader = () => {
                     Dashboard
                 </Typography>
             </Link>
-            <Typography variant='h4'
-                sx={{
-                    py: 0.5,
-                    px: 2,
-                    border: '2px solid #ff1a75',
-                    borderRadius: '5px'
-                }}
-            >
-                Purchases
-            </Typography>
-            <Link to="/budget-bills" className="no-deco">
+            <Link to="/budget-purchases" className="no-deco">
                 <Typography variant='h4'
                     sx={{
                         py: 0.5,
@@ -52,9 +42,19 @@ const PurchaseHeader = () => {
                         color: '#fff'
                     }}
                 >
-                    Bills
+                    Purchases
                 </Typography>
             </Link>
+            <Typography variant='h4'
+                sx={{
+                    py: 0.5,
+                    px: 2,
+                    border: '2px solid #1976d2',
+                    borderRadius: '5px'
+                }}
+            >
+                Bills
+            </Typography>
             <Link to="/budget-savings" className="no-deco">
                 <Typography variant='h4'
                     sx={{
@@ -72,4 +72,4 @@ const PurchaseHeader = () => {
     );
 }
 
-export default PurchaseHeader;
+export default BillHeader;

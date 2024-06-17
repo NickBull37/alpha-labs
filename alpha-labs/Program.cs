@@ -1,8 +1,11 @@
 using alpha_labs._01.Configuration.Configs;
 using alpha_labs._02.Models;
 using alpha_labs._03.DataAccess.BudgetApp;
+using alpha_labs._03.DataAccess.CalendarApp;
 using alpha_labs._04.Services.BudgetApp;
+using alpha_labs._04.Services.CalendarApp;
 using alpha_labs._05.Workflows.BudgetApp;
+using alpha_labs._05.Workflows.CalendarApp;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,7 +27,7 @@ builder.Services.Configure<FormOptions>(options =>
     options.MultipartBodyLengthLimit = 62914560; // 30 MB limit (in bytes)
 });
 
-// configure DI for application services
+// configure DI for BUDGET APP services
 builder.Services.AddScoped<IBillWorkflow, BillWorkflow>();
 builder.Services.AddScoped<IDashboardWorkflow, DashboardWorkflow>();
 builder.Services.AddScoped<IFundWorkflow, FundWorkflow>();
@@ -44,6 +47,13 @@ builder.Services.AddScoped<IFundRepository, FundRepository>();
 builder.Services.AddScoped<IPaycheckRepository, PaycheckRepository>();
 builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+// configure DI for CALENDAR APP services
+builder.Services.AddScoped<IBirthdayWorkflow, BirthdayWorkflow>();
+
+builder.Services.AddScoped<IBirthdayService, BirthdayService>();
+
+builder.Services.AddScoped<IBirthdayRepository, BirthdayRepository>();
 
 builder.Services.AddDbContext<AlphaLabsDbContext>(options => options
     .UseSqlServer(builder.Configuration.GetConnectionString("AlphaLabsDbContext")));

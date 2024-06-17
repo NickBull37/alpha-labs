@@ -234,7 +234,7 @@ const AddEventBtn = ({ setSuccessState, setErrorState }) => {
 
         try {
             // Create event record
-            const response = await axios.post("https://localhost:7295/Event/add-event", {
+            const response = await axios.post("https://localhost:44379/Event/add-event", {
                 startDate: startDate,
                 endDate: endDate,
                 name: name

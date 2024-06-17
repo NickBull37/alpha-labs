@@ -61,7 +61,7 @@ const Purchases = () => {
     async function GetPurchaseReport() {
         try {
             // Get purchase report data
-            const response = await axios.get("https://localhost:7295/Purchase/report");
+            const response = await axios.get("https://localhost:44379/Purchase/report");
 
             if (response.status === 200) {
                 setPurchaseTotal(response.data.purchaseTotal);

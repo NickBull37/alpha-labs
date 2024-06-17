@@ -33,7 +33,7 @@ const BillDetails = () => {
     async function GetBillingNodes() {
         try {
             // Get purchase nodes data
-            const response = await axios.get("https://localhost:7295/Bills/nodes");
+            const response = await axios.get("https://localhost:44379/Bill/nodes");
 
             if (response.status === 200) {
                 setBusinessBillsAmount(response.data.businessBillsAmount);

@@ -3,29 +3,30 @@ import axios from "axios";
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
-import { Box, Paper, Typography, Checkbox, Toolbar, Tooltip, IconButton, FormControlLabel, Switch } from '@mui/material';
+import { Box, Paper, Typography, Checkbox, Toolbar, Tooltip, Button, IconButton, Alert, Snackbar, FormControlLabel, Switch } from '@mui/material';
 import { TableHead, TableRow, TableSortLabel, TableContainer, Table, TableBody, TablePagination } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import CheckIcon from '@mui/icons-material/Check';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: '#ff1a75',
-        color: theme.palette.common.black,
+        backgroundColor: '#1976d2',
+        color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 15,
+        fontSize: 14,
         color: theme.palette.common.white,
     },
 }));
-
+  
 const StyledTableRow = styled(TableRow)(() => ({
     height: '42px',
     '&:hover': {
-        backgroundColor: 'rgba(255, 26, 117, 0.1)!important',
+        backgroundColor: 'rgba(25, 118, 210, 0.2)!important',
     },
     '&:nth-of-type(odd)': {
         backgroundColor: '#262626',
@@ -36,18 +37,6 @@ const StyledTableRow = styled(TableRow)(() => ({
     },
 }));
 
-const PinkSwitch = styled(Switch)(({ theme }) => ({
-    '& .MuiSwitch-switchBase.Mui-checked': {
-        color: '#ff1a75',
-        '&:hover': {
-            backgroundColor: 'rgba(255, 26, 117, 0.1)',
-        },
-    },
-    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-        backgroundColor: '#ff1a75',
-    },
-}));
-  
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
@@ -63,7 +52,7 @@ function getComparator(order, orderBy) {
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
-
+  
 function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
@@ -78,10 +67,10 @@ function stableSort(array, comparator) {
   
 const headCells = [
     {
-        id: 'purchaseDate',
+        id: 'dueDate',
         numeric: false,
         disablePadding: true,
-        label: 'Date',
+        label: 'Due Date',
     },
     {
         id: 'category',
@@ -102,14 +91,20 @@ const headCells = [
         label: 'Amount',
     },
     {
-        id: 'isLuxury',
+        id: 'isAutoPay',
         numeric: true,
         disablePadding: false,
-        label: 'Luxury',
+        label: 'Auto Pay',
+    },
+    {
+        id: 'isPaid',
+        numeric: true,
+        disablePadding: false,
+        label: 'Paid',
     },
 ];
-
-function PurchaseTableHead(props) {
+  
+function BillsTableHead(props) {
 
     const { order, orderBy, numSelected, rowCount, onRequestSort } = props;
     const createSortHandler = (property) => (event) => {
@@ -120,7 +115,7 @@ function PurchaseTableHead(props) {
         <TableHead>
             <StyledTableRow>
                 <StyledTableCell>
-                    <ShoppingCartIcon sx={{ mb: -1 }} />
+                    <ReceiptLongIcon sx={{ mb: -1 }} />
                 </StyledTableCell>
                 {headCells.map((headCell) => (
                     <StyledTableCell
@@ -137,6 +132,7 @@ function PurchaseTableHead(props) {
                             <Typography className="body1 bolded"
                                 sx={{
                                     my: 0.5,
+                                    color: '#fff'
                                 }}
                             >
                                 {headCell.label}
@@ -154,7 +150,7 @@ function PurchaseTableHead(props) {
     );
 }
   
-PurchaseTableHead.propTypes = {
+BillsTableHead.propTypes = {
     numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
     onSelectAllClick: PropTypes.func.isRequired,
@@ -162,8 +158,8 @@ PurchaseTableHead.propTypes = {
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
 };
-
-function PurchaseTableToolbar({ numSelected, setDeleteBtnClicked }) {
+  
+function BillsTableToolbar({ numSelected, hasUnbatchedBills, setDeleteBtnClicked }) {
 
     // Constants
     const monthNames = [
@@ -183,6 +179,62 @@ function PurchaseTableToolbar({ numSelected, setDeleteBtnClicked }) {
     const currentDate = new Date();
     const currentMonthIndex = currentDate.getMonth();
     const currentMonthName = monthNames[currentMonthIndex];
+
+    // State variables
+    const [successState, setSuccessState] = useState('');
+    const [errorState, setErrorState] = useState('');
+    const [successOpen, setSuccessOpen] = useState(false);
+    const [failureOpen, setFailureOpen] = useState(false);
+
+    // Event Handlers
+    const handleBatchClick = () => {
+        RunBillsBatch();
+    };
+
+    const handleSuccessClose = (reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setSuccessOpen(false);
+    };
+
+    const handleFailureClose = (reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setFailureOpen(false);
+    };
+
+    // Use Effects
+    useEffect(() => {
+        if (successState !== '')
+        {
+            setSuccessOpen(true);
+        }
+    }, [successState]);
+    useEffect(() => {
+        if (errorState !== '')
+        {
+            setFailureOpen(true);
+        }
+    }, [errorState]);
+
+    // API Calls
+    async function RunBillsBatch() {
+        try {
+            // Create BillTemplate record
+            const response = await axios.get("https://localhost:44379/Bills/batch");
+
+            if (response.status === 200) {
+                // console.log('CreateBillTemplate API call successful');
+                setSuccessState('Batch job executed successfully!');
+            }
+        } catch (error) {
+            if (error.response) {
+                setErrorState(error.response.data.title);
+            }
+        }
+    }
 
     return (
         <Toolbar
@@ -206,55 +258,86 @@ function PurchaseTableToolbar({ numSelected, setDeleteBtnClicked }) {
                     {numSelected} selected
                 </Typography>
             ) : (
-                <Typography className="sec-header2"
-                    sx={{ flex: '1 1 100%' }}
-                    id="tableTitle"
-                    component="div"
-                >
-                    {currentMonthName} Purchases
-                </Typography>
+                <Box display="flex" alignItems="center" gap={4}>
+                    <Typography className="sec-header2"
+                        sx={{ flex: '1 1 100%' }}
+                        variant="h4"
+                        id="tableTitle"
+                        component="div"
+                    >
+                        {currentMonthName} Bills
+                    </Typography>
+                    <Button
+                        elevation={8}
+                        size='small'
+                        variant='outlined'
+                        disabled={!hasUnbatchedBills}
+                        onClick={handleBatchClick}
+                        sx={{
+                            bgcolor: '#27272a',
+                            '&:hover': {
+                                backgroundColor: 'rgba(25, 118, 210, 0.2)',
+                            },
+                            '&:disabled': {
+                                color: '#595959',
+                                backgroundColor: '#333333',
+                            },
+                        }}
+                    >
+                        Batch
+                    </Button>
+                </Box>
             )}
-
             {numSelected > 0 ? (
                 <Tooltip title="Delete">
                     <IconButton onClick={() => setDeleteBtnClicked(true)}>
                         <DeleteIcon
-                            sx={{
-                                color: '#fff'
-                            }}
+                            sx={{ color: '#fff' }}
                         />
                     </IconButton>
                 </Tooltip>
             ) : (
                 <Box></Box>
             )}
+            <Snackbar open={successOpen} autoHideDuration={6000} onClose={handleSuccessClose}>
+                <Alert
+                    onClose={handleSuccessClose}
+                    severity="success"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    {successState}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={failureOpen} autoHideDuration={6000} onClose={handleFailureClose}>
+                <Alert
+                    onClose={handleFailureClose}
+                    severity="error"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    ERROR: {errorState}
+                </Alert>
+            </Snackbar>
         </Toolbar>
     );
 }
 
-PurchaseTableToolbar.propTypes = {
+BillsTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
+    hasUnbatchedBills: PropTypes.bool.isRequired,
 };
 
-export default function PurchaseTable({ purchases, setSuccessState, setErrorState }) {
+export default function BillsTable({ hasUnbatchedBills, bills, setSuccessState, setErrorState }) {
 
     // State Variables
     const [order, setOrder] = useState('asc');
-    const [orderBy, setOrderBy] = useState('purchaseDate');
+    const [orderBy, setOrderBy] = useState('dueDate');
     const [page, setPage] = useState(0);
     const [dense, setDense] = useState(true);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [selected, setSelected] = useState([]);
     const [deleteBtnClicked, setDeleteBtnClicked] = useState(false);
-
-    // Use Effects
-    useEffect(() => {
-        setDeleteBtnClicked(false);
-        if (deleteBtnClicked === true) {
-            DeleteTableRecords();
-            setSelected([]);
-        }
-    }, [deleteBtnClicked]);
 
     // Event handlers
     const handleRequestSort = (event, property) => {
@@ -265,13 +348,13 @@ export default function PurchaseTable({ purchases, setSuccessState, setErrorStat
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelected = purchases.map((n) => n.id);
+            const newSelected = bills.map((n) => n.id);
             setSelected(newSelected);
             return;
         }
         setSelected([]);
     };
-    
+
     const handleClick = (event, id) => {
 
         const selectedIndex = selected.indexOf(id);
@@ -312,32 +395,62 @@ export default function PurchaseTable({ purchases, setSuccessState, setErrorStat
         setDense(event.target.checked);
     };
 
+    const handlePayBtnClick = (rowId) => (event) => {
+        SetBillPaid(rowId);
+    };
+
     const isSelected = (id) => selected.indexOf(id) !== -1;
 
     // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - purchases.length) : 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - bills.length) : 0;
 
     const visibleRows = useMemo(
         () =>
-            stableSort(purchases, getComparator(order, orderBy)).slice(
+            stableSort(bills, getComparator(order, orderBy)).slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
             ),
-        [order, orderBy, page, rowsPerPage, purchases],
+        [order, orderBy, page, rowsPerPage, bills],
     );
+
+    // Use Effects
+    useEffect(() => {
+        console.log(deleteBtnClicked);
+        setDeleteBtnClicked(false);
+        if (deleteBtnClicked === true) {
+            console.log('Delete Button Clicked.');
+            console.log(selected);
+            DeleteTableRecords();
+            setSelected([]);
+        }
+    }, [deleteBtnClicked]);
+
+    // API Calls
+    async function SetBillPaid(rowId) {
+        try {
+            // Set bill as paid
+            const response = await axios.post(`https://localhost:44379/Bills/set-paid?id=${rowId}`);
+
+            if (response.status === 200) {
+                setSuccessState("Bill updated successfully!");
+            }
+        } catch (error) {
+            setErrorState(error.response.data.title);
+        }
+    }
 
     async function DeleteTableRecords() {
 
         try {
             // Create bill record
-            const response = await axios.post("https://localhost:44379/Purchase/delete-purchases", {
-                purchaseIDs: selected
+            const response = await axios.post("https://localhost:44379/Bills/delete-bills", {
+                billIDs: selected
             });
 
             // Close dialog window
             if (response.status === 200) {
-                // console.log('Delete Purchases API call successful');
-                setSuccessState('Purchases deleted successfully!');
+                // console.log('Delete Bills API call successful');
+                setSuccessState('Bills deleted successfully!');
             }
         } catch (error) {
             if (error.response) {
@@ -355,8 +468,9 @@ export default function PurchaseTable({ purchases, setSuccessState, setErrorStat
                     color: '#fff',
                 }}
             >
-                <PurchaseTableToolbar
+                <BillsTableToolbar
                     numSelected={selected.length}
+                    hasUnbatchedBills={hasUnbatchedBills}
                     setDeleteBtnClicked={setDeleteBtnClicked}
                 />
                 <TableContainer>
@@ -365,13 +479,13 @@ export default function PurchaseTable({ purchases, setSuccessState, setErrorStat
                         aria-labelledby="tableTitle"
                         size={dense ? 'small' : 'medium'}
                     >
-                        <PurchaseTableHead
+                        <BillsTableHead
                             numSelected={selected.length}
                             order={order}
                             orderBy={orderBy}
                             onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
-                            rowCount={purchases.length}
+                            rowCount={bills.length}
                         />
                         <TableBody>
                             {visibleRows.map((row, index) => {
@@ -390,16 +504,14 @@ export default function PurchaseTable({ purchases, setSuccessState, setErrorStat
                                     >
                                         <StyledTableCell padding="checkbox">
                                             <Checkbox
+                                                color="primary"
                                                 checked={isItemSelected}
                                                 inputProps={{
                                                     'aria-labelledby': labelId,
                                                 }}
                                                 sx={{
                                                     mr: 3,
-                                                    color: '#fff',
-                                                    '&.Mui-checked': {
-                                                        color: '#ff1a75',
-                                                    },
+                                                    color: '#fff'
                                                 }}
                                             />
                                         </StyledTableCell>
@@ -408,25 +520,63 @@ export default function PurchaseTable({ purchases, setSuccessState, setErrorStat
                                             id={labelId}
                                             scope="row"
                                             padding="none"
-                                            sx={{
-                                                color:'#fff',
-                                            }}
                                         >
-                                            {row.purchaseDateFormatted}
+                                            {row.dueDateFormatted}
                                         </StyledTableCell>
-                                        <StyledTableCell sx={{ color: '#fff' }} align="left">{row.category}</StyledTableCell>
-                                        <StyledTableCell sx={{ color: '#fff' }} align="left">{row.description}</StyledTableCell>
-                                        <StyledTableCell sx={{ color: '#fff' }} align="right">$ {row.amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</StyledTableCell>
-                                        <StyledTableCell sx={{ color: '#fff' }} align="right">
-                                            {row.isLuxury && (
-                                                <CheckCircleIcon
+                                        <StyledTableCell align="left">{row.category}</StyledTableCell>
+                                        <StyledTableCell align="left">{row.description}</StyledTableCell>
+                                        <StyledTableCell align="right">
+                                            {row.hasEstimatedAmount ? (
+                                                <>
+                                                    <Tooltip title="Estimated value based on the average of previous bills of the same type. Update amount for current month.">
+                                                        <span className="subtitle3 color-blue">
+                                                            EST&nbsp;&nbsp;
+                                                        </span>
+                                                    </Tooltip>
+                                                    <span>
+                                                        $ {row.amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                                                    </span>
+                                                </>
+                                            ) : (
+                                                <span>
+                                                    $ {row.amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                                                </span>
+                                            )}
+                                        </StyledTableCell>
+                                        <StyledTableCell align="right">
+                                            {row.isAutoPay && (
+                                                <CheckIcon
+                                                    color="primary"
                                                     sx={{
-                                                        color: '#ff1a75',
-                                                        mb: '-4px'
+                                                        mb: '-2px'
                                                     }}
                                                 />
                                             )}
                                         </StyledTableCell>
+                                        <TableCell align="right">
+                                            {row.isPaid ? (
+                                                <CheckCircleIcon
+                                                    sx={{
+                                                        color: '#1976d2',
+                                                        mb: '-4px'
+                                                    }}
+                                                />
+                                            ) : (
+                                                <Button variant='outlined' size='small'
+                                                    onClick={handlePayBtnClick(row.id)}
+                                                    sx={{
+                                                        mr: '-4px',
+                                                        minWidth: '50px',
+                                                        '&:hover': {
+                                                            color: '#fff',
+                                                            backgroundColor: '#104d89'
+                                                        }
+                                                    }}
+                                                >
+                                                    Pay
+                                                </Button>
+                                            )}
+                                        </TableCell>
                                     </StyledTableRow>
                                 );
                             })}
@@ -437,7 +587,7 @@ export default function PurchaseTable({ purchases, setSuccessState, setErrorStat
                                         height: (dense ? 33 : 53) * emptyRows,
                                     }}
                                 >
-                                    <TableCell colSpan={6} />
+                                    <StyledTableCell colSpan={6} />
                                 </StyledTableRow>
                             )}
                         </TableBody>
@@ -446,7 +596,7 @@ export default function PurchaseTable({ purchases, setSuccessState, setErrorStat
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={purchases.length}
+                    count={bills.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
@@ -457,12 +607,7 @@ export default function PurchaseTable({ purchases, setSuccessState, setErrorStat
                 />
             </Paper>
             <FormControlLabel
-                control={
-                    <PinkSwitch
-                        checked={dense}
-                        onChange={handleChangeDense}
-                    />
-                }
+                control={<Switch checked={dense} onChange={handleChangeDense} />}
                 label="Dense padding"
             />
         </Box>

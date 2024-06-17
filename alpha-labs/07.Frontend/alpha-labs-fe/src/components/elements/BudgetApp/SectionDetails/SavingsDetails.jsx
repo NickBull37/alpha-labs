@@ -55,7 +55,7 @@ const SavingsDetails = () => {
     async function GetFundNodes() {
         try {
             // Get purchase nodes data
-            const response = await axios.get("https://localhost:7295/Fund/nodes");
+            const response = await axios.get("https://localhost:44379/Fund/nodes");
 
             if (response.status === 200) {
                 setFunds(response.data);
@@ -68,7 +68,7 @@ const SavingsDetails = () => {
     async function DeleteFund(activeFundID) {
         try {
             // Delete fund
-            const response = await axios.post(`https://localhost:7295/Fund/delete-fund?id=${activeFundID}`);
+            const response = await axios.post(`https://localhost:44379/Fund/delete-fund?id=${activeFundID}`);
 
             if (response.status === 200) {
                 navigate("/funds");

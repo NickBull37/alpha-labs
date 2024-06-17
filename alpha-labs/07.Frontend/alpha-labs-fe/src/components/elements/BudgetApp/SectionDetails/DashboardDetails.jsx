@@ -57,7 +57,7 @@ const DashboardDetails = () => {
     async function GetDashboardReport() {
         try {
             // Get dashboard report data
-            const response = await axios.get("https://localhost:7295/Dashboard/report");
+            const response = await axios.get("https://localhost:44379/Dashboard/report");
 
             if (response.status === 200)
             {

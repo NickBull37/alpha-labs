@@ -1,25 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Typography, } from '@mui/material';
 import { alphaVault } from '../../../../utils/constants';
 
-const PurchaseHeader = () => {
-    
+const SavingsHeader = () => {
+
     return (
         <Box display="flex" gap={1}
             sx={{
                 py: 2,
                 px: 4,
                 mb: 4,
-                backgroundColor: '#18181b',
+                backgroundColor: '#18181b'
             }}
         >
-            <Link to="/">
-                <Box sx={{ mr: 4 }}>
-                    <img src={alphaVault} height={50}/>
-                </Box>
-            </Link>
-            <Link to="/budget-dashboard" className="no-deco">
+            <Box sx={{ mr: 4 }}>
+                <img src={alphaVault} height={50}/>
+            </Box>
+            <Link to="/dashboard" className="no-deco">
                 <Typography variant='h4'
                     sx={{
                         py: 0.5,
@@ -32,17 +30,20 @@ const PurchaseHeader = () => {
                     Dashboard
                 </Typography>
             </Link>
-            <Typography variant='h4'
-                sx={{
-                    py: 0.5,
-                    px: 2,
-                    border: '2px solid #ff1a75',
-                    borderRadius: '5px'
-                }}
-            >
-                Purchases
-            </Typography>
-            <Link to="/budget-bills" className="no-deco">
+            <Link to="/purchases" className="no-deco">
+                <Typography variant='h4'
+                    sx={{
+                        py: 0.5,
+                        px: 2,
+                        border: '2px solid #18181b',
+                        borderRadius: '5px',
+                        color: '#fff'
+                    }}
+                >
+                    Purchases
+                </Typography>
+            </Link>
+            <Link to="/bills" className="no-deco">
                 <Typography variant='h4'
                     sx={{
                         py: 0.5,
@@ -55,21 +56,19 @@ const PurchaseHeader = () => {
                     Bills
                 </Typography>
             </Link>
-            <Link to="/budget-savings" className="no-deco">
-                <Typography variant='h4'
-                    sx={{
-                        py: 0.5,
-                        px: 2,
-                        border: '2px solid #18181b',
-                        borderRadius: '5px',
-                        color: '#fff'
-                    }}
-                >
-                    Savings
-                </Typography>
-            </Link>
+            <Typography variant='h4'
+                sx={{
+                    py: 0.5,
+                    px: 2,
+                    border: '2px solid #00cc7a',
+                    borderRadius: '5px',
+                    color: '#fff'
+                }}
+            >
+                Savings
+            </Typography>
         </Box>
     );
 }
 
-export default PurchaseHeader;
+export default SavingsHeader;

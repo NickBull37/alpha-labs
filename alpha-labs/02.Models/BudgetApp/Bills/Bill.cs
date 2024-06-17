@@ -28,7 +28,7 @@ namespace alpha_labs._02.Models.BudgetApp.Bills
         DateTime? UpdatedDate { get; set; }
     }
 
-    [Table("Bills")]
+    [Table("Budget.Bills")]
     public class Bill : IBill
     {
         [Key]

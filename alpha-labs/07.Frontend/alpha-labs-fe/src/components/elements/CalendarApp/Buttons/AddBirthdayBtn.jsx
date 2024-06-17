@@ -234,7 +234,7 @@ const AddBirthdayBtn = ({ setSuccessState, setErrorState }) => {
 
         try {
             // Create birthday record
-            const response = await axios.post("https://localhost:7295/Birthday/add-birthday", {
+            const response = await axios.post("https://localhost:44379/Birthday/add-birthday", {
                 day: day,
                 month: month,
                 name: name

@@ -234,7 +234,7 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
 
         try {
             // Create holiday record
-            const response = await axios.post("https://localhost:7295/Holiday/add-holiday", {
+            const response = await axios.post("https://localhost:44379/Holiday/add-holiday", {
                 day: day,
                 month: month,
                 name: name

@@ -4,7 +4,7 @@ export { default as LabDashboard } from './pages/LabDashboard';
 //########################## Budget Pages ##########################//
 export { default as BudgetLanding } from './pages/BudgetApp/BudgetLanding';
 export { default as BudgetDashboard } from './pages/BudgetApp/BudgetDashboard';
-// export { default as Bills } from './pages/BudgetApp/Bills';
+export { default as Bills } from './pages/BudgetApp/Bills';
 export { default as Purchases } from './pages/BudgetApp/Purchases';
 // export { default as Savings } from './pages/BudgetApp/Savings';
 
@@ -25,12 +25,12 @@ export { default as Header } from './elements/Header';
 export { default as LandingHeader } from './elements/BudgetApp/Headers/LandingHeader';
 export { default as DashboardHeader } from './elements/BudgetApp/Headers/DashboardHeader';
 export { default as PurchaseHeader } from './elements/BudgetApp/Headers/PurchaseHeader';
-// export { default as BillHeader } from './elements/BudgetApp/Headers/BillHeader';
-// export { default as SavingsHeader } from './elements/BudgetApp/Headers/SavingsHeader';
+export { default as BillHeader } from './elements/BudgetApp/Headers/BillHeader';
+export { default as SavingsHeader } from './elements/BudgetApp/Headers/SavingsHeader';
 
 // Buttons
 export { default as AddPurchaseBtn } from './elements/BudgetApp/Buttons/Purchases/AddPurchaseBtn';
-// export { default as AddBillBtn } from './elements/Buttons/Bills/AddBillBtn';
+export { default as AddBillBtn } from './elements/BudgetApp/Buttons/Bills/AddBillBtn';
 // export { default as AddPaycheckBtn } from './elements/Buttons/Funds/AddPaycheckBtn';
 // export { default as LogPaycheckBtn } from './elements/Buttons/Funds/LogPaycheckBtn';
 // export { default as AddFundBtn } from './elements/Buttons/Funds/AddFundBtn';
@@ -39,7 +39,7 @@ export { default as DepositFundsBtn } from './elements/BudgetApp/Buttons/Savings
 
 // Button Sets
 export { default as PurchaseButtonSet } from './elements/BudgetApp/Buttons/Purchases/PurchaseButtonSet';
-// export { default as BillButtonSet } from './elements/Buttons/Bills/BillButtonSet';
+export { default as BillButtonSet } from './elements/BudgetApp/Buttons/Bills/BillButtonSet';
 // export { default as FundButtonSet } from './elements/Buttons/Funds/FundButtonSet';
 
 // Section Details
@@ -52,7 +52,7 @@ export { default as SavingsDetails } from './elements/BudgetApp/SectionDetails/S
 // Tables
 // export { default as DashboardTable } from './elements/Tables/DashboardTable';
 export { default as PurchasesTable } from './elements/BudgetApp/Tables/PurchasesTable';
-// export { default as BillsTable } from './elements/Tables/BillsTable';
+export { default as BillsTable } from './elements/BudgetApp/Tables/BillsTable';
 // export { default as FundsTable } from './elements/Tables/FundsTable';
 
 

@@ -4,6 +4,7 @@ using alpha_labs._02.Models.BudgetApp.Paychecks;
 using alpha_labs._02.Models.BudgetApp.Purchases;
 using alpha_labs._02.Models.BudgetApp.Transactions;
 using alpha_labs._02.Models.CalendarApp.Birthdays;
+using alpha_labs._02.Models.CalendarApp.Holidays;
 using Microsoft.EntityFrameworkCore;
 
 namespace alpha_labs._02.Models
@@ -27,6 +28,7 @@ namespace alpha_labs._02.Models
 
         #region CalendarApp
         public DbSet<BirthdayModel> Birthdays { get; set; }
+        public DbSet<HolidayModel> Holidays { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

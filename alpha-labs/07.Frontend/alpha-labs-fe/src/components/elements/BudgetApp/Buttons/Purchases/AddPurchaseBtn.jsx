@@ -291,7 +291,7 @@ const AddPurchaseBtn = ({ setSuccessState, setErrorState }) => {
 
         try {
             // Create purchase record
-            const response = await axios.post("https://localhost:7295/Purchase/create-purchase", {
+            const response = await axios.post("https://localhost:44379/Purchase/create-purchase", {
                 purchaseDate: purchaseDate,
                 amount: Number(amount),
                 category: category,

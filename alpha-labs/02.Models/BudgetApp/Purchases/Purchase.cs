@@ -42,7 +42,7 @@ namespace alpha_labs._02.Models.BudgetApp.Purchases
         Utilities,
     }
 
-    [Table("Purchases")]
+    [Table("Budget.Purchases")]
     public class Purchase : IPurchase
     {
         [Key]

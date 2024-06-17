@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from "axios";
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Typography, Paper, Box, Grid, Button } from '@mui/material';
@@ -31,7 +32,7 @@ const DayNode = styled(Paper)(() => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: '100px',
+    height: '110px',
     padding: '1em',
 }));
 
@@ -41,7 +42,6 @@ const CurrentDayNode = styled(DayNode)(() => ({
 
 const EmptyNode = styled(DayNode)(() => ({
     backgroundColor: '#1E293B',
-    //border: '2px solid #4d4d4d'
 }));
 
 function createBirthdays(name, month, day) {
@@ -101,11 +101,13 @@ const CalendarList = () => {
         if (currentMonthRef.current) {
             currentMonthRef.current.scrollIntoView({ behavior: 'smooth' });
         }
+        GetBirthdays();
     }, []);
 
     useEffect(() => {
         if (successState !== '')
         {
+            GetBirthdays();
             console.log("Setting snackbar open.");
             console.log("Success State: " + successState);
             setSuccessOpen(true);
@@ -137,10 +139,30 @@ const CalendarList = () => {
         return daysArray;
     };
 
+    // API Calls
+    async function GetBirthdays() {
+
+        try {
+            // Get birthdays for the current calendar year
+            const response = await axios.get("https://localhost:44379/Birthday/birthdays");
+
+            if (response.status === 200) {
+                setBirthdays(response.data);
+            }
+        } catch (error) {
+            if (error.response) {
+                setErrorState(error.response.data.title);
+            }
+        }
+    }
+
     return (
         <>
             <CalLandingHeader />
-            <CalButtonSet />
+            <CalButtonSet
+                setSuccessState={setSuccessState}
+                setErrorState={setErrorState}
+            />
             <Box
                 sx={{
                     my: 4,
@@ -188,29 +210,36 @@ const CalendarList = () => {
                                             {day ? (
                                                 (day === todayDate && currentDate.getFullYear() === todayYear && index === todayMonth) ? (
                                                     <CurrentDayNode elevation={4}>
-                                                        <Typography variant="body1">
+                                                        <Typography variant="body2">
                                                             {day}
                                                         </Typography>
-                                                        <Box sx={{ textAlign: 'right' }}>
-                                                            <CakeIcon sx={{ color: '#00e6e6' }} />
-                                                            <EventIcon  sx={{ ml: 1.5, color: '#ff6600' }} />
-                                                            <FlareIcon sx={{ ml: 1.5, color: '#e6e600' }} />
-                                                        </Box>
                                                     </CurrentDayNode>
                                                 ) : (
                                                     <DayNode elevation={4}>
-                                                        <Typography variant="body1">
+                                                        <Typography variant="body2">
                                                             {day}
                                                         </Typography>
+                                                        <Box
+                                                            display="flex"
+                                                            justifyContent="flex-end"
+                                                            alignItems="flex-end"
+                                                        >
+                                                            {birthdays.find(element => element.day === day && element.monthName === monthName) !== undefined && (
+                                                                <CakeIcon fontSize='large' sx={{ color: '#00e6e6' }} />
+                                                            )}
+                                                            {birthdays.find(element => element.day === day && element.monthName === monthName) !== undefined && (
+                                                                <EventIcon fontSize='large'  sx={{ ml: 1.5, color: '#ff6600' }} />
+                                                            )}
+                                                            {birthdays.find(element => element.day === day && element.monthName === monthName) !== undefined && (
+                                                                <FlareIcon fontSize='large' sx={{ ml: 1.5, color: '#e6e600' }} />
+                                                            )}
+                                                        </Box>
+                                                        
                                                     </DayNode>
                                                 )
-                                            ) : (
-                                                <EmptyNode elevation={0}>
-                                                    <Typography variant="body1">
-                                                        {day}
-                                                    </Typography>
-                                                </EmptyNode>
-                                            )}
+                                                ) : (
+                                                    <EmptyNode elevation={0}></EmptyNode>
+                                                )}
                                         </Link>
                                     </Grid>
                                 ))}
@@ -219,6 +248,26 @@ const CalendarList = () => {
                     );
                 })}
             </Box>
+            <Snackbar open={successOpen} autoHideDuration={6000} onClose={handleSuccessClose}>
+                <Alert
+                    onClose={handleSuccessClose}
+                    severity="success"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    {successState}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={failureOpen} autoHideDuration={6000} onClose={handleFailureClose}>
+                <Alert
+                    onClose={handleFailureClose}
+                    severity="error"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    ERROR: {errorState}
+                </Alert>
+            </Snackbar>
         </>
     );
 }

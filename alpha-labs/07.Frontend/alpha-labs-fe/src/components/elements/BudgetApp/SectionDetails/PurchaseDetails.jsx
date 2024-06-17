@@ -30,7 +30,7 @@ const PurchaseDetails = () => {
     async function GetPurchaseNodes() {
         try {
             // Get purchase nodes data
-            const response = await axios.get("https://localhost:7295/Purchase/nodes");
+            const response = await axios.get("https://localhost:44379/Purchase/nodes");
 
             if (response.status === 200) {
                 setEntertainmentSpending(response.data.totalEntertainmentSpending);

@@ -22,7 +22,7 @@ namespace alpha_labs._02.Models.BudgetApp.Paychecks
         bool IsActive { get; set; }
     }
 
-    [Table("PaycheckTemplates")]
+    [Table("Budget.PaycheckTemplates")]
     public class PaycheckTemplate : IPaycheckTemplate
     {
         [Key]

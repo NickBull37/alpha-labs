@@ -24,7 +24,7 @@ namespace alpha_labs._02.Models.BudgetApp.Paychecks
         DateTime? UpdatedDate { get; set; }
     }
 
-    [Table("Paychecks")]
+    [Table("Budget.Paychecks")]
     public class Paycheck : IPaycheck
     {
         [Key]
