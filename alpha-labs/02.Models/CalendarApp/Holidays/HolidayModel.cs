@@ -5,26 +5,22 @@ namespace alpha_labs._02.Models.CalendarApp.Holidays
 {
     public interface IHolidayModel
     {
-        /// <summary>The ID of the holiday model entity.</summary>
         int ID { get; set; }
 
         int Day { get; set; }
 
         int Month { get; set; }
 
-        /// <summary> </summary>
+        string MonthName { get; set; }
+
         DateTime Date { get; set; }
 
-        /// <summary> </summary>
         string Name { get; set; }
 
-        /// <summary>The date the database record was created.</summary>
         DateTime CreatedDate { get; set; }
 
-        /// <summary>The date of the most recent update to the database record.</summary>
         DateTime? UpdatedDate { get; set; }
 
-        /// <summary>A boolean indicating if the record is active.</summary>
         bool IsActive { get; set; }
     }
 
@@ -39,6 +35,9 @@ namespace alpha_labs._02.Models.CalendarApp.Holidays
 
         [Required]
         public int Month { get; set; }
+
+        [Required]
+        public string MonthName { get; set; } = string.Empty;
 
         [Required]
         public DateTime Date { get; set; }

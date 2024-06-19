@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { styled } from '@mui/material/styles';
 import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
-import { Box, Stack, Button, Typography, FormControl, InputLabel, Select, MenuItem, OutlinedInput, InputAdornment } from '@mui/material';
+import { Box, Stack, Button, FormGroup, FormControlLabel, Checkbox, Typography } from '@mui/material';
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { outlinedInputClasses } from '@mui/material/OutlinedInput';
 import IconButton from '@mui/material/IconButton';
@@ -47,6 +47,13 @@ const SaveButton = styled(Button)(() => ({
     },
 }));
 
+const StyledCheckbox = styled(Checkbox)(() => ({
+    color: '#fff',
+    '&.Mui-checked': {
+        color: '#e6e600',
+    },
+}));
+
 const BootstrapDialog = styled(Dialog)(() => ({
     '& .MuiDialogTitle-root': {
         backgroundColor: '#4d4d4d',
@@ -70,9 +77,23 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     // State Variables
-    const [day, setDay] = useState(0);
-    const [month, setMonth] = useState(0);
-    const [name, setName] = useState('');
+    const [christmasActive, setChristmasActive] = useState(false);
+    const [easterActive, setEasterActive] = useState(false);
+    const [fathersDayActive, setFathersDayActive] = useState(false);
+    const [halloweenActive, setHalloweenActive] = useState(false);
+    const [independenceDayActive, setIndependenceDayActive] = useState(false);
+    const [laborDayActive, setLaborDayActive] = useState(false);
+    const [memorialDayActive, setMemorialDayActive] = useState(false);
+    const [mothersDayActive, setMothersDayActive] = useState(false);
+    const [newYearsDayActive, setNewYearsDayActive] = useState(false);
+    const [newYearsEveActive, setNewYearsEveActive] = useState(false);
+    const [thanksgivingActive, setThanksgivingActive] = useState(false);
+    const [valentinesDayActive, setValentinesDayActive] = useState(false);
+
+    const [haveValuesBeenUpdated, setHaveValuesBeenUpdated] = useState(false);
+    const [holidayNames, setHolidayNames] = useState([]);
+    const [enabledHolidays, setEnabledHolidays] = useState([]);
+    const [disabledHolidays, setDisabledHolidays] = useState([]);
 
     // Event Handlers
     const handleClickOpen = () => {
@@ -82,131 +103,39 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
         setOpen(false);
     };
 
+    const UpdateHolidayNamesList = (name, isChecked) => {
+        let tempEnabled = enabledHolidays;
+        let tempDisabled = disabledHolidays;
+
+        if (isChecked) {
+            tempEnabled.push(name);
+        }
+        else {
+            tempDisabled.push(name);
+        }
+
+        setEnabledHolidays(tempEnabled);
+        setDisabledHolidays(tempDisabled);
+        setHaveValuesBeenUpdated(true);
+    };
+
     // Use Effects
     useEffect(() => {
-        setDay(day);
-        validateDay();
-    }, [day]);
-    
-    useEffect(() => {
-        setMonth(month);
-        validateMonth();
-    }, [month]);
-
-    useEffect(() => {
-        setName(name);
-        validateName();
-    }, [name]);
-
-    // Validate Day
-    function validateDay() {
-        if (day === undefined || day === 0)
-        {
-            const label = document.getElementById("dayLabel");
-            if (label)
-            {
-                label.classList.add("error-label");
-            }
-            const errorText = document.getElementById("dayErrorText");
-            if (errorText) {
-                errorText.classList.remove("hide-display");
-            }
-        }
-        else
-        {
-            const label = document.getElementById("dayLabel");
-            if (label)
-            {
-                label.classList.remove("error-label");
-            }
-            const errorText = document.getElementById("dayErrorText");
-            if (errorText)
-            {
-                errorText.classList.add("hide-display");
-            }
-        }
-    }
-
-    // Validate Month
-    function validateMonth() {
-        if (month === undefined || month === 0)
-        {
-            const errorText = document.getElementById("monthErrorText");
-            if (errorText)
-            {
-                errorText.classList.remove("hide-display");
-            }
-        }
-        else
-        {
-            const errorText = document.getElementById("monthErrorText");
-            if (errorText)
-            {
-                errorText.classList.add("hide-display");
-            }
-        }
-    }
-
-    // Validate Name
-    function validateName() {
-        if (name === '')
-        {
-            const errorText = document.getElementById("nameErrorText");
-            if (errorText)
-            {
-                errorText.classList.remove("hide-display");
-            }
-        }
-        else
-        {
-            const errorText = document.getElementById("nameErrorText");
-            if (errorText)
-            {
-                errorText.classList.add("hide-display");
-            }
-        }
-    }
+        GetActiveHolidays();
+    }, []);
 
     // Validate form before submission
     function validateFormFields () {
 
         var validationSuccessful = true;
-        if (day === undefined || day === 0)
+        if (holidayNames.length === 0)
         {
-            const element = document.getElementById("dayLabel");
+            const element = document.getElementById("namesLabel");
             if (element)
             {
                 element.classList.add("error-label");
             }
-            const errorText = document.getElementById("dayErrorText");
-            if (errorText)
-            {
-                errorText.classList.remove("hide-display");
-            }
-            validationSuccessful = false;
-        }
-        if (month === undefined || month === 0)
-        {
-            const element = document.getElementById("monthLabel");
-            if (element)
-            {
-                element.classList.add("error-label");
-            }
-            const errorText = document.getElementById("monthErrorText");
-            if (errorText)
-            {
-                errorText.classList.remove("hide-display");
-            }
-            validationSuccessful = false;
-        }
-        if (name === '')
-        {
-            const element = document.getElementById("nameLabel");
-            if (element)
-            {
-                element.classList.add("error-label");
-            }
-            const errorText = document.getElementById("nameErrorText");
+            const errorText = document.getElementById("namesErrorText");
             if (errorText)
             {
                 errorText.classList.remove("hide-display");
@@ -225,30 +154,143 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
         var validationSuccessful = validateFormFields();
         if (validationSuccessful)
         {
-            SaveHoliday(data);
+            SetHolidays(data);
         }
     };
 
     // API Calls
-    async function SaveHoliday(data) {
+    async function GetActiveHolidays(data) {
+        try {
+
+            // Get all active holidays
+            const response = await axios.get("https://localhost:44379/Holiday/get-active-holidays");
+
+            if (response.status === 200) {
+
+                let tempEnabled = [];
+                let tempDisabled = [];
+
+                setChristmasActive(response.data.isChristmasActive);
+                if (response.data.isChristmasActive) {
+                    tempEnabled.push("Christmas");
+                }
+                else{
+                    tempDisabled.push("Christmas");
+                }
+
+                setEasterActive(response.data.isEasterActive);
+                if (response.data.isEasterActive) {
+                    tempEnabled.push("Easter");
+                }
+                else{
+                    tempDisabled.push("Easter");
+                }
+
+                setFathersDayActive(response.data.isFathersDayActive);
+                if (response.data.isFathersDayActive) {
+                    tempEnabled.push("Father's Day");
+                }
+                else{
+                    tempDisabled.push("Father's Day");
+                }
+
+                setHalloweenActive(response.data.isHalloweenActive);
+                if (response.data.isHalloweenActive) {
+                    tempEnabled.push("Halloween");
+                }
+                else{
+                    tempDisabled.push("Halloween");
+                }
+
+                setIndependenceDayActive(response.data.isIndependenceDayActive);
+                if (response.data.isIndependenceDayActive) {
+                    tempEnabled.push("Independence Day");
+                }
+                else{
+                    tempDisabled.push("Independence Day");
+                }
+
+                setLaborDayActive(response.data.isLaborDayActive);
+                if (response.data.isLaborDayActive) {
+                    tempEnabled.push("Labor Day");
+                }
+                else{
+                    tempDisabled.push("Labor Day");
+                }
+
+                setMemorialDayActive(response.data.isMemorialDayActive);
+                if (response.data.isMemorialDayActive) {
+                    tempEnabled.push("Memorial Day");
+                }
+                else{
+                    tempDisabled.push("Memorial Day");
+                }
+
+                setMothersDayActive(response.data.isMothersDayActive);
+                if (response.data.isMothersDayActive) {
+                    tempEnabled.push("Mother's Day");
+                }
+                else{
+                    tempDisabled.push("Mother's Day");
+                }
+
+                setNewYearsDayActive(response.data.isNewYearsDayActive);
+                if (response.data.isNewYearsDayActive) {
+                    tempEnabled.push("New Year's Day");
+                }
+                else{
+                    tempDisabled.push("New Year's Day");
+                }
+
+                setNewYearsEveActive(response.data.isNewYearsEveActive);
+                if (response.data.isNewYearsEveActive) {
+                    tempEnabled.push("New Year's Eve");
+                }
+                else{
+                    tempDisabled.push("New Year's Eve");
+                }
+
+                setThanksgivingActive(response.data.isThanksgivingActive);
+                if (response.data.isThanksgivingActive) {
+                    tempEnabled.push("Thanksgiving");
+                }
+                else{
+                    tempDisabled.push("Thanksgiving");
+                }
+
+                setValentinesDayActive(response.data.isValentinesDayActive);
+                if (response.data.isValentinesDayActive) {
+                    tempEnabled.push("Valentine's Day");
+                }
+                else{
+                    tempDisabled.push("Valentine's Day");
+                }
+
+                setEnabledHolidays(tempEnabled);
+                setDisabledHolidays(tempDisabled);
+                
+            }
+        } catch (error) {
+            if (error.response) {
+                setErrorState(error.response.data.title);
+            }
+            setOpen(false);
+        }
+    }
+
+    async function SetHolidays(data) {
 
         try {
-            // Create holiday record
-            const response = await axios.post("https://localhost:44379/Holiday/add-holiday", {
-                day: day,
-                month: month,
-                name: name
+            // Create holiday records
+            const response = await axios.post("https://localhost:44379/Holiday/set-holidays", {
+                enabledHolidays: enabledHolidays,
+                disabledHolidays: disabledHolidays
             });
 
             // Clear form & close dialog window
             if (response.status === 200) {
-                // console.log('Save Holiday API call successful');
                 setSuccessState('Holiday added successfully!');
                 setOpen(false);
-
-                setDay(0);
-                setMonth(0);
-                setName('');
             }
         } catch (error) {
             if (error.response) {
@@ -268,14 +310,22 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
                 >
                     Add
                 </AddHolidayButton>
-                <form id="add-holiday" onSubmit={handleSubmit(onSubmit)}>
+                <form id="set-holidays" onSubmit={handleSubmit(onSubmit)}>
                     <BootstrapDialog
                         fullWidth={true}
                         onClose={handleClose}
                         open={open}
                     >
                         <DialogTitle>
-                            Add Holiday
+                            <Box display="flex" alignItems="center">
+                                <FlareIcon
+                                    fontSize='large'
+                                    sx={{ mr: 2, color: '#e6e600' }}
+                                />
+                                <Typography className="sec-header2">
+                                    Select Holidays
+                                </Typography>
+                            </Box>
                         </DialogTitle>
                         <IconButton
                             aria-label="close"
@@ -290,106 +340,142 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
                             <CloseIcon />
                         </IconButton>
                         <DialogContent dividers>
-                            <Stack gap={4}>
-                                <FormControl variant="outlined" sx={{ minWidth: 100, maxWidth: 200 }}>
-                                    <InputLabel id="monthLabel" sx={{ color : '#fff' }}>Month</InputLabel>
-                                    <Select
-                                        id="month"
-                                        name='month'
-                                        label="Month"
-                                        // type='text'
-                                        value={month}
-                                        {...register("month", { required: "Month is required."})}
-                                        onChange={ (e) => setMonth(e.target.value) }
-                                        error={Boolean(errors.month)}
-                                        sx={{ color : '#fff' }}
-                                    >
-                                        <MenuItem value=""><em>None</em></MenuItem>
-                                        <MenuItem value={1}>January</MenuItem>
-                                        <MenuItem value={2}>February</MenuItem>
-                                        <MenuItem value={3}>March</MenuItem>
-                                        <MenuItem value={4}>April</MenuItem>
-                                        <MenuItem value={5}>May</MenuItem>
-                                        <MenuItem value={6}>June</MenuItem>
-                                        <MenuItem value={7}>July</MenuItem>
-                                        <MenuItem value={8}>August</MenuItem>
-                                        <MenuItem value={9}>September</MenuItem>
-                                        <MenuItem value={10}>October</MenuItem>
-                                        <MenuItem value={11}>November</MenuItem>
-                                        <MenuItem value={12}>December</MenuItem>
-                                    </Select>
-                                    <Typography id="monthErrorText" className='hide-display mui-error-text'>Invalid month</Typography>
-                                </FormControl>
-                                <FormControl variant="outlined" sx={{ minWidth: 100, maxWidth: 100 }}>
-                                    <InputLabel id="dayLabel" sx={{ color : '#fff' }}>Day</InputLabel>
-                                    <Select
-                                        id="day"
-                                        name='day'
-                                        label="Day"
-                                        // type='text'
-                                        value={day}
-                                        {...register("day", { required: "Day is required."})}
-                                        onChange={ (e) => setDay(e.target.value) }
-                                        error={Boolean(errors.day)}
-                                        sx={{ color : '#fff' }}
-                                    >
-                                        <MenuItem value=""><em>None</em></MenuItem>
-                                        <MenuItem value={1}>1</MenuItem>
-                                        <MenuItem value={2}>2</MenuItem>
-                                        <MenuItem value={3}>3</MenuItem>
-                                        <MenuItem value={4}>4</MenuItem>
-                                        <MenuItem value={5}>5</MenuItem>
-                                        <MenuItem value={6}>6</MenuItem>
-                                        <MenuItem value={7}>7</MenuItem>
-                                        <MenuItem value={8}>8</MenuItem>
-                                        <MenuItem value={9}>9</MenuItem>
-                                        <MenuItem value={10}>10</MenuItem>
-                                        <MenuItem value={11}>11</MenuItem>
-                                        <MenuItem value={12}>12</MenuItem>
-                                        <MenuItem value={13}>13</MenuItem>
-                                        <MenuItem value={14}>14</MenuItem>
-                                        <MenuItem value={15}>15</MenuItem>
-                                        <MenuItem value={16}>16</MenuItem>
-                                        <MenuItem value={17}>17</MenuItem>
-                                        <MenuItem value={18}>18</MenuItem>
-                                        <MenuItem value={19}>19</MenuItem>
-                                        <MenuItem value={20}>20</MenuItem>
-                                        <MenuItem value={21}>21</MenuItem>
-                                        <MenuItem value={22}>22</MenuItem>
-                                        <MenuItem value={23}>23</MenuItem>
-                                        <MenuItem value={24}>24</MenuItem>
-                                        <MenuItem value={25}>25</MenuItem>
-                                        <MenuItem value={26}>26</MenuItem>
-                                        <MenuItem value={27}>27</MenuItem>
-                                        <MenuItem value={28}>28</MenuItem>
-                                        <MenuItem value={29}>29</MenuItem>
-                                        <MenuItem value={30}>30</MenuItem>
-                                        <MenuItem value={31}>31</MenuItem>
-                                    </Select>
-                                    <Typography id="dayErrorText" className='hide-display mui-error-text'>Invalid day</Typography>
-                                </FormControl>
-                                <FormControl>
-                                    <InputLabel id="nameLabel" htmlFor="name" sx={{ color : '#fff' }}>Name</InputLabel>
-                                    <OutlinedInput
-                                        id='name'
-                                        name='name'
-                                        label='Name'
-                                        type='text'
-                                        value={name}
-                                        onChange={ (e) => setName(e.target.value) }
-                                        error={Boolean(errors.name)}
-                                        sx={{ color: '#fff' }}
-                                    />
-                                    <Typography id="nameErrorText" className='hide-display mui-error-text'>Invalid name</Typography>
-                                </FormControl>
-                            </Stack>
+                            <FormGroup>
+                                <Box display="flex" justifyContent="space-around">
+                                    <Stack gap={1}>
+                                        <FormControlLabel
+                                            label="Christmas"
+                                            control={
+                                                <StyledCheckbox
+                                                    id='Christmas'
+                                                    value={christmasActive}
+                                                    onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
+                                                />
+                                            }
+                                        />
+                                        <FormControlLabel
+                                            label="Easter"
+                                            control={
+                                                <StyledCheckbox
+                                                    id='Easter'
+                                                    value={easterActive}
+                                                    onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
+                                                />
+                                            }
+                                        />
+                                        <FormControlLabel
+                                            label="Father's Day"
+                                            control={
+                                                <StyledCheckbox
+                                                    id="Father's Day"
+                                                    value={fathersDayActive}
+                                                    onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
+                                                />
+                                            }
+                                        />
+                                        <FormControlLabel
+                                            label="Halloween"
+                                            control={
+                                                <StyledCheckbox
+                                                    id='Halloween'
+                                                    value={halloweenActive}
+                                                    onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
+                                                />
+                                            }
+                                        />
+                                        <FormControlLabel
+                                            label="Independence Day"
+                                            control={
+                                                <StyledCheckbox
+                                                    id='Independence Day'
+                                                    value={independenceDayActive}
+                                                    onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
+                                                />
+                                            }
+                                        />
+                                        <FormControlLabel
+                                            label="Labor Day"
+                                            control={
+                                                <StyledCheckbox
+                                                    id='Labor Day'
+                                                    value={laborDayActive}
+                                                    onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
+                                                />
+                                            }
+                                        />
+                                    </Stack>
+                                    <Stack gap={1}>
+                                        <FormControlLabel
+                                            label="Memorial Day"
+                                            control={
+                                                <StyledCheckbox
+                                                    id='Memorial Day'
+                                                    value={memorialDayActive}
+                                                    onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
+                                                />
+                                            }
+                                        />
+                                        <FormControlLabel
+                                            label="Mother's Day"
+                                            control={
+                                                <StyledCheckbox
+                                                    id="Mother's Day"
+                                                    value={mothersDayActive}
+                                                    onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
+                                                />
+                                            }
+                                        />
+                                        <FormControlLabel
+                                            label="New Year's Day"
+                                            control={
+                                                <StyledCheckbox
+                                                    id="New Year's Day"
+                                                    value={newYearsDayActive}
+                                                    onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
+                                                />
+                                            }
+                                        />
+                                        <FormControlLabel
+                                            label="New Year's Eve"
+                                            control={
+                                                <StyledCheckbox
+                                                    id="New Year's Eve"
+                                                    value={newYearsEveActive}
+                                                    onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
+                                                />
+                                            }
+                                        />
+                                        <FormControlLabel
+                                            label="Thanksgiving"
+                                            control={
+                                                <StyledCheckbox
+                                                    id='Thanksgiving'
+                                                    value={thanksgivingActive}
+                                                    onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
+                                                />
+                                            }
+                                        />
+                                        <FormControlLabel
+                                            label="Valentine's Day"
+                                            control={
+                                                <StyledCheckbox
+                                                    id="Valentine's Day"
+                                                    value={valentinesDayActive}
+                                                    onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
+                                                />
+                                            }
+                                        />
+                                    </Stack>
+                                </Box>
+                            </FormGroup>
                         </DialogContent>
                         <DialogActions>
                             <SaveButton
                                 id='submit'
                                 type='submit'
-                                form='add-holiday'
+                                form='set-holidays'
                                 variant='contained'
+                                disabled={!haveValuesBeenUpdated}
                                 onClick={validateFormFields}
                             >
                                 Save

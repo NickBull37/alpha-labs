@@ -9,7 +9,6 @@ import CakeIcon from '@mui/icons-material/Cake';
 import EventIcon from '@mui/icons-material/Event';
 import FlareIcon from '@mui/icons-material/Flare';
 import { CalLandingHeader, CalButtonSet } from '../../../components';
-import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 
 const Toolbar = styled(Paper)(() => ({
     color: '#FFF',

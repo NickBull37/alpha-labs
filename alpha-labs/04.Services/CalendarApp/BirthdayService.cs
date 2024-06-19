@@ -7,9 +7,6 @@ namespace alpha_labs._04.Services.CalendarApp
     {
         /// <summary>Creates a list of birthday models for the next 100 years.</summary>
         List<BirthdayModel> CreateBirthdayModels(AddBirthdayRequest request);
-
-        /// <summary>Creates a new birthday template model entity.</summary>
-        BirthdayTemplate CreateBirthdayTemplateEntity(AddBirthdayRequest request);
     }
 
     public class BirthdayService : IBirthdayService
@@ -90,20 +87,6 @@ namespace alpha_labs._04.Services.CalendarApp
                 count++;
             }
             return birthdays;
-        }
-
-        /// <summary>Creates a new birthday template model entity.</summary>
-        public BirthdayTemplate CreateBirthdayTemplateEntity(AddBirthdayRequest request)
-        {
-            return new BirthdayTemplate
-            {
-                Day = request.Day,
-                Month = request.Month,
-                Name = request.Name,
-                CreatedDate = DateTime.Now,
-                UpdatedDate = null,
-                IsActive = true,
-            };
         }
     }
 }

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { styled } from '@mui/material/styles';
 import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
-import { Stack, Button, Typography, FormControl, InputLabel, Select, MenuItem, OutlinedInput, InputAdornment } from '@mui/material';
+import { Box, Stack, Button, Typography, FormControl, InputLabel, Select, MenuItem, OutlinedInput, InputAdornment } from '@mui/material';
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { outlinedInputClasses } from '@mui/material/OutlinedInput';
 import IconButton from '@mui/material/IconButton';
@@ -275,7 +275,15 @@ const AddBirthdayBtn = ({ setSuccessState, setErrorState }) => {
                         open={open}
                     >
                         <DialogTitle>
-                            Add Birthday
+                            <Box display="flex" alignItems="center">
+                                <CakeIcon
+                                    fontSize='large'
+                                    sx={{ mr: 2, color: '#00e6e6' }}
+                                />
+                                <Typography className="sec-header2">
+                                    Add Birthday
+                                </Typography>
+                            </Box>
                         </DialogTitle>
                         <IconButton
                             aria-label="close"

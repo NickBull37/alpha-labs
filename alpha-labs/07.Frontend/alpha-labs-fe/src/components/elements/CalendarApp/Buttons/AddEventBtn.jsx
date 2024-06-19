@@ -275,7 +275,15 @@ const AddEventBtn = ({ setSuccessState, setErrorState }) => {
                         open={open}
                     >
                         <DialogTitle>
-                            Add Event
+                            <Box display="flex" alignItems="center">
+                                <EventIcon
+                                    fontSize='large'
+                                    sx={{ mr: 2, color: '#ff6600' }}
+                                />
+                                <Typography className="sec-header2">
+                                    Add Event
+                                </Typography>
+                            </Box>
                         </DialogTitle>
                         <IconButton
                             aria-label="close"

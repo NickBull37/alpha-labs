@@ -50,10 +50,13 @@ builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
 // configure DI for CALENDAR APP services
 builder.Services.AddScoped<IBirthdayWorkflow, BirthdayWorkflow>();
+builder.Services.AddScoped<IHolidayWorkflow, HolidayWorkflow>();
 
 builder.Services.AddScoped<IBirthdayService, BirthdayService>();
+builder.Services.AddScoped<IHolidayService, HolidayService>();
 
 builder.Services.AddScoped<IBirthdayRepository, BirthdayRepository>();
+builder.Services.AddScoped<IHolidayRepository, HolidayRepository>();
 
 builder.Services.AddDbContext<AlphaLabsDbContext>(options => options
     .UseSqlServer(builder.Configuration.GetConnectionString("AlphaLabsDbContext")));
