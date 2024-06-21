@@ -46,11 +46,6 @@ const EmptyNode = styled(DayNode)(() => ({
 function createBirthdays(name, month, day) {
     return { name, month, day };
 }
-  
-const rows = [
-    createBirthdays('Jack\'s Birthday', 11, 8),
-    createBirthdays('Mom\'s Birthday', 1, 21),
-];
 
 const CalendarList = () => {
 
@@ -101,14 +96,14 @@ const CalendarList = () => {
             currentMonthRef.current.scrollIntoView({ behavior: 'smooth' });
         }
         GetBirthdays();
+        GetHolidays();
     }, []);
 
     useEffect(() => {
         if (successState !== '')
         {
             GetBirthdays();
-            console.log("Setting snackbar open.");
-            console.log("Success State: " + successState);
+            GetHolidays();
             setSuccessOpen(true);
         }
     }, [successState]);
@@ -155,6 +150,22 @@ const CalendarList = () => {
         }
     }
 
+    async function GetHolidays() {
+
+        try {
+            // Get holidays for the current calendar year
+            const response = await axios.get("https://localhost:44379/Holiday/get-active-holidays");
+
+            if (response.status === 200) {
+                setHolidays(response.data);
+            }
+        } catch (error) {
+            if (error.response) {
+                setErrorState(error.response.data.title);
+            }
+        }
+    }
+
     return (
         <>
             <CalLandingHeader />
@@ -165,7 +176,7 @@ const CalendarList = () => {
             <Box
                 sx={{
                     my: 4,
-                    px: 20,
+                    px: 26,
                 }}
             >
                 <Toolbar elevation={8}>
@@ -229,7 +240,7 @@ const CalendarList = () => {
                                                             {birthdays.find(element => element.day === day && element.monthName === monthName) !== undefined && (
                                                                 <EventIcon fontSize='large'  sx={{ ml: 1.5, color: '#ff6600' }} />
                                                             )}
-                                                            {birthdays.find(element => element.day === day && element.monthName === monthName) !== undefined && (
+                                                            {holidays.find(element => element.day === day && element.monthName === monthName) !== undefined && (
                                                                 <FlareIcon fontSize='large' sx={{ ml: 1.5, color: '#e6e600' }} />
                                                             )}
                                                         </Box>

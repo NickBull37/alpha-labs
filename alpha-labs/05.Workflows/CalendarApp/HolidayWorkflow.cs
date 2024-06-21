@@ -11,6 +11,9 @@ namespace alpha_labs._05.Workflows.CalendarApp
         /// <summary>Workflow for the [holiday/get-active-holidays] endpoint.</summary>
         Task<ActionResponse<List<HolidayModel>>> ExecGetActiveHolidays();
 
+        /// <summary>Workflow for the [holiday/get-holiday-statuses] endpoint.</summary>
+        Task<ActionResponse<ActiveHolidaysResponse>> ExecGetHolidayStatuses();
+
         /// <summary>Workflow for the [holiday/set-holidays] endpoint.</summary>
         Task<ActionResponse> ExecSetHolidays(SetHolidaysRequest request);
     }
@@ -32,6 +35,69 @@ namespace alpha_labs._05.Workflows.CalendarApp
             return await _holidayRepository.GetHolidays();
         }
 
+        /// <summary>Workflow for the [holiday/get-holiday-statuses] endpoint.</summary>
+        public async Task<ActionResponse<ActiveHolidaysResponse>> ExecGetHolidayStatuses()
+        {
+            var activeHolidayResponse = new ActiveHolidaysResponse();
+
+            var dbResponse = await _holidayRepository.GetHolidays();
+            var holidays = dbResponse.Content!;
+
+            foreach (var holiday in holidays)
+            {
+                if (holiday.Name == "Christmas")
+                {
+                    activeHolidayResponse.IsChristmasActive = true;
+                }
+                if (holiday.Name == "Easter")
+                {
+                    activeHolidayResponse.IsEasterActive = true;
+                }
+                if (holiday.Name == "Father's Day")
+                {
+                    activeHolidayResponse.IsFathersDayActive = true;
+                }
+                if (holiday.Name == "Halloween")
+                {
+                    activeHolidayResponse.IsHalloweenActive = true;
+                }
+                if (holiday.Name == "IndependenceDay")
+                {
+                    activeHolidayResponse.IsIndependenceDayActive = true;
+                }
+                if (holiday.Name == "Labor Day")
+                {
+                    activeHolidayResponse.IsLaborDayActive = true;
+                }
+                if (holiday.Name == "Memorial Day")
+                {
+                    activeHolidayResponse.IsMemorialDayActive = true;
+                }
+                if (holiday.Name == "Mother's Day")
+                {
+                    activeHolidayResponse.IsMothersDayActive = true;
+                }
+                if (holiday.Name == "New Year's Day")
+                {
+                    activeHolidayResponse.IsNewYearsDayActive = true;
+                }
+                if (holiday.Name == "New Year's Eve")
+                {
+                    activeHolidayResponse.IsNewYearsEveActive = true;
+                }
+                if (holiday.Name == "Thanksgiving")
+                {
+                    activeHolidayResponse.IsThanksgivingActive = true;
+                }
+                if (holiday.Name == "Valentine's Day")
+                {
+                    activeHolidayResponse.IsValentinesDayActive = true;
+                }
+            }
+
+            return new PassingAR<ActiveHolidaysResponse>(activeHolidayResponse);
+        }
+
         /// <summary>Workflow for the [holiday/set-holidays] endpoint.</summary>
         public async Task<ActionResponse> ExecSetHolidays(SetHolidaysRequest request)
         {
@@ -50,8 +116,13 @@ namespace alpha_labs._05.Workflows.CalendarApp
             // Enabled Holidays
             foreach (var holiday in request.EnabledHolidays)
             {
-                var alreadyExists = await _holidayRepository.CheckIfHolidayRecordsExist(holiday);
+                var isActive = await _holidayRepository.CheckIfHolidayIsActive(holiday);
+                if (isActive.Content)
+                {
+                    continue;
+                }
 
+                var alreadyExists = await _holidayRepository.CheckIfHolidayRecordsExist(holiday);
                 if (alreadyExists.Content)
                 {
                     // mark as active

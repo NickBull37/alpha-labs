@@ -4,6 +4,8 @@ import { Box, CssBaseline } from '@mui/material';
 import { Header } from "./components";
 import { LabDashboard, BudgetLanding, BudgetDashboard, Purchases, Bills } from "./components";
 import { CalendarLanding, CalendarList } from "./components";
+import { PhotoLanding } from "./components";
+import { TodoLanding } from "./components";
 
 function App() {
     return (
@@ -17,6 +19,10 @@ function App() {
 
                 <Route path="/calendar-landing" element={<CalendarLanding />} />
                 <Route path="/calendar-list" element={<CalendarList />} />
+
+                <Route path="/photo-landing" element={<PhotoLanding />} />
+
+                <Route path="/todo-landing" element={<TodoLanding />} />
             </Routes>
         </BrowserRouter>
     );

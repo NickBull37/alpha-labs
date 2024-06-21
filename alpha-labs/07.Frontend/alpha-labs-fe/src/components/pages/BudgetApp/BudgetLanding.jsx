@@ -45,7 +45,7 @@ const BudgetLanding = () => {
                                 px: 4,
                                 bgcolor: '#1a1a1a',
                                 borderRadius: '10px',
-                                boxShadow: '0px 2px 15px 4px #1a1a1a'
+                                boxShadow: '0px 2px 15px 8px #1a1a1a'
                             }}
                         >
                             <Typography className="salvar-h1-red-grad">

@@ -27,6 +27,19 @@ namespace alpha_labs._06.Controllers.CalendarApp.Holidays
             }
             return Ok(response.Content);
         }
+
+        /// <summary>Gets an active or inactive status value for each holiday.</summary>
+        [HttpGet]
+        [Route("get-holiday-statuses")]
+        public async Task<IActionResult> GetHolidayStatuses()
+        {
+            var response = await _holidayWorkflow.ExecGetHolidayStatuses();
+            if (!response.IsSuccess)
+            {
+                return Problem(statusCode: 500);
+            }
+            return Ok(response.Content);
+        }
         #endregion
 
         #region POST Endpoints

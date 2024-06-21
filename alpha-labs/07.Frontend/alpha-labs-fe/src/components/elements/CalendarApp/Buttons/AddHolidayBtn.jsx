@@ -37,7 +37,15 @@ const customTheme = (outerTheme) =>
 
 const AddHolidayButton = styled(Button)(() => ({
     color: '#fff',
-    backgroundColor: 'rgba(25, 118, 210, 0.6)'
+    backgroundColor: '#2d3b52',
+    minHeight: '100px',
+    minWidth: '100px',
+    padding: '10px',
+    boxShadow: "0px 2px 10px 2px #1a1a1a",
+    '&:hover': {
+        backgroundColor: 'rgba(25, 118, 210, 0.6)',
+        boxShadow: "0px 2px 10px 4px #1a1a1a",
+    }
 }));
 
 const SaveButton = styled(Button)(() => ({
@@ -104,18 +112,65 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
     };
 
     const UpdateHolidayNamesList = (name, isChecked) => {
+
+        if (name === "Christmas") {
+            setChristmasActive(!christmasActive);
+        }
+        if (name === "Easter") {
+            setEasterActive(!easterActive);
+        }
+        if (name === "Father's Day") {
+            setFathersDayActive(!fathersDayActive);
+        }
+        if (name === "Halloween") {
+            setHalloweenActive(!halloweenActive);
+        }
+        if (name === "Independence Day") {
+            setIndependenceDayActive(!independenceDayActive);
+        }
+        if (name === "Labor Day") {
+            setLaborDayActive(!laborDayActive);
+        }
+        if (name === "Memorial Day") {
+            setMemorialDayActive(!memorialDayActive);
+        }
+        if (name === "Mother's Day") {
+            setMothersDayActive(!mothersDayActive);
+        }
+        if (name === "New Year's Day") {
+            setNewYearsDayActive(!newYearsDayActive);
+        }
+        if (name === "New Year's Eve") {
+            setNewYearsEveActive(!newYearsEveActive);
+        }
+        if (name === "Thanksgiving") {
+            setThanksgivingActive(!thanksgivingActive);
+        }
+        if (name === "Valentine's Day") {
+            setValentinesDayActive(!valentinesDayActive);
+        }
+
+        console.log("Name: " + name);
+        console.log("Enabled Holidays: " + enabledHolidays);
+        console.log("Disabled Holidays: " + disabledHolidays);
+
         let tempEnabled = enabledHolidays;
         let tempDisabled = disabledHolidays;
 
         if (isChecked) {
             tempEnabled.push(name);
+            console.log("Temp Enabled: " + tempEnabled);
+            let filteredDisabled = tempDisabled.filter(holiday => holiday !== name);
+            console.log("Filtered Disabled: " + filteredDisabled);
+            setEnabledHolidays(tempEnabled);
+            setDisabledHolidays(filteredDisabled);
         }
         else {
             tempDisabled.push(name);
+            let filteredEnabled = tempEnabled.filter(holiday => holiday !== name);
+            setEnabledHolidays(filteredEnabled);
+            setDisabledHolidays(tempDisabled);
         }
-
-        setEnabledHolidays(tempEnabled);
-        setDisabledHolidays(tempDisabled);
         setHaveValuesBeenUpdated(true);
     };
 
@@ -124,38 +179,9 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
         GetActiveHolidays();
     }, []);
 
-    // Validate form before submission
-    function validateFormFields () {
-
-        var validationSuccessful = true;
-        if (holidayNames.length === 0)
-        {
-            const element = document.getElementById("namesLabel");
-            if (element)
-            {
-                element.classList.add("error-label");
-            }
-            const errorText = document.getElementById("namesErrorText");
-            if (errorText)
-            {
-                errorText.classList.remove("hide-display");
-            }
-            validationSuccessful = false;
-        }
-        // Return success
-        if (validationSuccessful)
-        {
-            return validationSuccessful;
-        }
-    }
-
     // Form submission
     const onSubmit = (data) => {
-        var validationSuccessful = validateFormFields();
-        if (validationSuccessful)
-        {
-            SetHolidays(data);
-        }
+        SetHolidays(data);
     };
 
     // API Calls
@@ -163,7 +189,7 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
         try {
 
             // Get all active holidays
-            const response = await axios.get("https://localhost:44379/Holiday/get-active-holidays");
+            const response = await axios.get("https://localhost:44379/Holiday/get-holiday-statuses");
 
             if (response.status === 200) {
 
@@ -268,7 +294,6 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
 
                 setEnabledHolidays(tempEnabled);
                 setDisabledHolidays(tempDisabled);
-                
             }
         } catch (error) {
             if (error.response) {
@@ -289,7 +314,7 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
 
             // Clear form & close dialog window
             if (response.status === 200) {
-                setSuccessState('Holiday added successfully!');
+                setSuccessState('Holidays set successfully!');
                 setOpen(false);
             }
         } catch (error) {
@@ -305,10 +330,13 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
             <React.Fragment>
                 <AddHolidayButton
                     variant="contained"
-                    endIcon={<FlareIcon sx={{ color: '#e6e600' }} />}
                     onClick={handleClickOpen}
                 >
-                    Add
+                    <Stack alignItems="center" gap={1}>
+                        <Typography>Manage</Typography>
+                        <Typography>Holidays</Typography>
+                        <FlareIcon sx={{ color: '#e6e600' }} />
+                    </Stack>
                 </AddHolidayButton>
                 <form id="set-holidays" onSubmit={handleSubmit(onSubmit)}>
                     <BootstrapDialog
@@ -348,7 +376,7 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
                                             control={
                                                 <StyledCheckbox
                                                     id='Christmas'
-                                                    value={christmasActive}
+                                                    checked={christmasActive}
                                                     onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
                                                 />
                                             }
@@ -358,7 +386,7 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
                                             control={
                                                 <StyledCheckbox
                                                     id='Easter'
-                                                    value={easterActive}
+                                                    checked={easterActive}
                                                     onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
                                                 />
                                             }
@@ -368,7 +396,7 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
                                             control={
                                                 <StyledCheckbox
                                                     id="Father's Day"
-                                                    value={fathersDayActive}
+                                                    checked={fathersDayActive}
                                                     onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
                                                 />
                                             }
@@ -378,7 +406,7 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
                                             control={
                                                 <StyledCheckbox
                                                     id='Halloween'
-                                                    value={halloweenActive}
+                                                    checked={halloweenActive}
                                                     onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
                                                 />
                                             }
@@ -388,7 +416,7 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
                                             control={
                                                 <StyledCheckbox
                                                     id='Independence Day'
-                                                    value={independenceDayActive}
+                                                    checked={independenceDayActive}
                                                     onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
                                                 />
                                             }
@@ -398,7 +426,7 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
                                             control={
                                                 <StyledCheckbox
                                                     id='Labor Day'
-                                                    value={laborDayActive}
+                                                    checked={laborDayActive}
                                                     onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
                                                 />
                                             }
@@ -410,7 +438,7 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
                                             control={
                                                 <StyledCheckbox
                                                     id='Memorial Day'
-                                                    value={memorialDayActive}
+                                                    checked={memorialDayActive}
                                                     onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
                                                 />
                                             }
@@ -420,7 +448,7 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
                                             control={
                                                 <StyledCheckbox
                                                     id="Mother's Day"
-                                                    value={mothersDayActive}
+                                                    checked={mothersDayActive}
                                                     onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
                                                 />
                                             }
@@ -430,7 +458,7 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
                                             control={
                                                 <StyledCheckbox
                                                     id="New Year's Day"
-                                                    value={newYearsDayActive}
+                                                    checked={newYearsDayActive}
                                                     onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
                                                 />
                                             }
@@ -440,7 +468,7 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
                                             control={
                                                 <StyledCheckbox
                                                     id="New Year's Eve"
-                                                    value={newYearsEveActive}
+                                                    checked={newYearsEveActive}
                                                     onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
                                                 />
                                             }
@@ -450,7 +478,7 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
                                             control={
                                                 <StyledCheckbox
                                                     id='Thanksgiving'
-                                                    value={thanksgivingActive}
+                                                    checked={thanksgivingActive}
                                                     onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
                                                 />
                                             }
@@ -460,7 +488,7 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
                                             control={
                                                 <StyledCheckbox
                                                     id="Valentine's Day"
-                                                    value={valentinesDayActive}
+                                                    checked={valentinesDayActive}
                                                     onChange={(e) => UpdateHolidayNamesList(e.target.id, e.target.checked)}
                                                 />
                                             }
@@ -476,7 +504,6 @@ const AddHolidayBtn = ({ setSuccessState, setErrorState }) => {
                                 form='set-holidays'
                                 variant='contained'
                                 disabled={!haveValuesBeenUpdated}
-                                onClick={validateFormFields}
                             >
                                 Save
                             </SaveButton>

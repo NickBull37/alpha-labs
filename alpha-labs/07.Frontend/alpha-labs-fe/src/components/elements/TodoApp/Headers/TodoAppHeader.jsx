@@ -1,8 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { Box, Typography, Paper } from '@mui/material';
-import { alphaBull, alphaV, alphaVault, alphaLogo } from '../../../../utils/constants';
+import { Box, Paper } from '@mui/material';
+import { alphaLogo } from '../../../../utils/constants';
+
+const HeaderBox = styled(Box)(() => ({
+    height: '15vh',
+    width: '100vw',
+    display: "flex",
+    padding: '16px 24px',
+    backgroundColor: '#1a1a1a',
+}));
 
 const StyledPaper = styled(Paper)(() => ({
     backgroundColor: '#262626',
@@ -11,29 +19,22 @@ const StyledPaper = styled(Paper)(() => ({
     justifyContent: "center",
     alignItems: "center",
     padding: 2,
-    boxShadow: "0px 0px 6px 1px rgba(7, 113, 183, 1)",
+    boxShadow: "0px 0px 6px 1px rgba(0, 255, 0, 0.7)",
     '&:hover': {
-        boxShadow: "0px 0px 6px 2px rgba(9, 151, 246, 0.8)"
+        boxShadow: "0px 0px 6px 2px rgba(0, 255, 0, 1)"
     }
-
 }));
 
-const LandingHeader = () => {
+const TodoAppHeader = () => {
     return (
-        <Box display="flex" gap={1}
-            sx={{
-                py: 2,
-                px: 3,
-                backgroundColor: '#1a1a1a',
-            }}
-        >
+        <HeaderBox>
             <Link to="/">
                 <StyledPaper>
                     <img src={alphaLogo} height={65}/>
                 </StyledPaper>
             </Link>
-        </Box>
+        </HeaderBox>
     );
 }
 
-export default LandingHeader;
+export default TodoAppHeader;

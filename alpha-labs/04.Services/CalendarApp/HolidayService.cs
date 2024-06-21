@@ -129,12 +129,10 @@ namespace alpha_labs._04.Services.CalendarApp
 
             while (count < 100)
             {
-                currentYear += count;
-
                 // Algorithm to calculate Easter Sunday (Meeus/Jones/Butcher algorithm)
-                int a = currentYear % 19;
-                int b = currentYear / 100;
-                int c = currentYear % 100;
+                int a = (currentYear + count) % 19;
+                int b = (currentYear + count) / 100;
+                int c = (currentYear + count) % 100;
                 int d = b / 4;
                 int e = b % 4;
                 int f = (b + 8) / 25;
@@ -147,7 +145,7 @@ namespace alpha_labs._04.Services.CalendarApp
                 int month = (h + l - 7 * m + 114) / 31;
                 int day = ((h + l - 7 * m + 114) % 31) + 1;
 
-                var easterDate = new DateTime(currentYear, month, day);
+                var easterDate = new DateTime(currentYear + count, month, day);
 
                 var model = new HolidayModel
                 {

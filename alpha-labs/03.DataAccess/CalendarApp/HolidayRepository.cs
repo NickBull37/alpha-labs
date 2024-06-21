@@ -17,6 +17,9 @@ namespace alpha_labs._03.DataAccess.CalendarApp
         Task<ActionResponse<bool>> CheckIfHolidayRecordsExist(string name);
 
         /// <summary> </summary>
+        Task<ActionResponse<bool>> CheckIfHolidayIsActive(string name);
+
+        /// <summary> </summary>
         Task<ActionResponse> UpdateHolidayActiveStatus(string name, bool isActive);
     }
 
@@ -33,7 +36,6 @@ namespace alpha_labs._03.DataAccess.CalendarApp
         public async Task<ActionResponse<List<HolidayModel>>> GetHolidays()
         {
             var currentDate = DateTime.Today;
-
             var startOfYear = new DateTime(currentDate.Year, 1, 1);
             var endOfYear = new DateTime(currentDate.Year, 12, 31);
 
@@ -93,6 +95,36 @@ namespace alpha_labs._03.DataAccess.CalendarApp
             catch
             {
                 return new FailingAR<bool>("Failed to check if holiday records exist.");
+            }
+        }
+
+        /// <summary> </summary>
+        public async Task<ActionResponse<bool>> CheckIfHolidayIsActive(string name)
+        {
+            try
+            {
+                var holiday = await _dbContext.Holidays
+                    .AsNoTracking()
+                    .Where(x => x.Name == name)
+                    .FirstOrDefaultAsync()
+                    .ConfigureAwait(false);
+
+                if (holiday is not null)
+                {
+                    if (!holiday.IsActive)
+                    {
+                        return new PassingAR<bool>(false);
+                    }
+                    return new PassingAR<bool>(true);
+                }
+                else
+                {
+                    return new PassingAR<bool>(false);
+                }
+            }
+            catch
+            {
+                return new FailingAR<bool>("Failed to check if holiday record is active.");
             }
         }
 

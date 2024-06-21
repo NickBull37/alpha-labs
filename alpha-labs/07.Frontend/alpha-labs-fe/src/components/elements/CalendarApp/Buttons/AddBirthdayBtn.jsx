@@ -37,7 +37,15 @@ const customTheme = (outerTheme) =>
 
 const AddBirthdayButton = styled(Button)(() => ({
     color: '#fff',
-    backgroundColor: 'rgba(25, 118, 210, 0.6)'
+    backgroundColor: '#2d3b52',
+    minHeight: '100px',
+    minWidth: '100px',
+    padding: '10px',
+    boxShadow: "0px 2px 10px 2px #1a1a1a",
+    '&:hover': {
+        backgroundColor: 'rgba(25, 118, 210, 0.6)',
+        boxShadow: "0px 2px 10px 4px #1a1a1a",
+    }
 }));
 
 const SaveButton = styled(Button)(() => ({
@@ -263,10 +271,13 @@ const AddBirthdayBtn = ({ setSuccessState, setErrorState }) => {
             <React.Fragment>
                 <AddBirthdayButton
                     variant="contained"
-                    endIcon={<CakeIcon sx={{ color: '#00e6e6' }} />}
                     onClick={handleClickOpen}
                 >
-                    Add
+                    <Stack alignItems="center" gap={1}>
+                        <Typography>Manage</Typography>
+                        <Typography>Birthdays</Typography>
+                        <CakeIcon sx={{ color: '#00e6e6' }} />
+                    </Stack>
                 </AddBirthdayButton>
                 <form id="add-birthday" onSubmit={handleSubmit(onSubmit)}>
                     <BootstrapDialog

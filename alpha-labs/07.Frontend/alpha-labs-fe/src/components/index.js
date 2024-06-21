@@ -12,6 +12,12 @@ export { default as Purchases } from './pages/BudgetApp/Purchases';
 export { default as CalendarLanding } from './pages/CalendarApp/CalendarLanding';
 export { default as CalendarList } from './pages/CalendarApp/CalendarList';
 
+//########################### Photo Pages ###########################//
+export { default as PhotoLanding } from './pages/PhotoApp/PhotoLanding';
+
+//########################### Todo Pages ###########################//
+export { default as TodoLanding } from './pages/TodoApp/TodoLanding';
+
 
 
 
@@ -65,3 +71,13 @@ export { default as CalButtonSet } from './elements/CalendarApp/Buttons/CalButto
 export { default as AddBirthdayBtn } from './elements/CalendarApp/Buttons/AddBirthdayBtn';
 export { default as AddEventBtn } from './elements/CalendarApp/Buttons/AddEventBtn';
 export { default as AddHolidayBtn } from './elements/CalendarApp/Buttons/AddHolidayBtn';
+
+
+//######################## PhotoApp Elements ########################//
+// Headers
+export { default as PhotoAppHeader } from './elements/PhotoApp/Headers/PhotoAppHeader';
+
+
+//######################## TodoApp Elements ########################//
+// Headers
+export { default as TodoAppHeader } from './elements/TodoApp/Headers/TodoAppHeader';

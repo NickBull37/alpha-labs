@@ -37,7 +37,15 @@ const customTheme = (outerTheme) =>
 
 const AddEventButton = styled(Button)(() => ({
     color: '#fff',
-    backgroundColor: 'rgba(25, 118, 210, 0.6)'
+    backgroundColor: '#2d3b52',
+    minHeight: '100px',
+    minWidth: '100px',
+    padding: '10px',
+    boxShadow: "0px 2px 10px 2px #1a1a1a",
+    '&:hover': {
+        backgroundColor: 'rgba(25, 118, 210, 0.6)',
+        boxShadow: "0px 2px 10px 4px #1a1a1a",
+    }
 }));
 
 const SaveButton = styled(Button)(() => ({
@@ -263,10 +271,13 @@ const AddEventBtn = ({ setSuccessState, setErrorState }) => {
             <React.Fragment>
                 <AddEventButton
                     variant="contained"
-                    endIcon={<EventIcon sx={{ color: '#ff6600' }} />}
                     onClick={handleClickOpen}
                 >
-                    Add
+                    <Stack alignItems="center" gap={1}>
+                        <Typography>Manage</Typography>
+                        <Typography>Events</Typography>
+                        <EventIcon sx={{ color: '#ff6600' }} />
+                    </Stack>
                 </AddEventButton>
                 <form id="add-event" onSubmit={handleSubmit(onSubmit)}>
                     <BootstrapDialog

@@ -335,6 +335,12 @@ body {
 }
 
 @font-face {
+    font-family: 'Fastrace';
+    src: local('Fastrace'),
+         url('./fonts/Fastrace.ttf') format('truetype');
+}
+
+@font-face {
     font-family: 'Kepo';
     src: local('Kepo'),
          url('./fonts/Kepo.ttf') format('truetype');
@@ -483,6 +489,15 @@ body {
 
 /* EROS */
 
+/* FASTRACE */
+.fastrace-h1 {
+    font-family: Fastrace !important;
+    font-size: 11rem!important;
+    background: linear-gradient(to right, #00e600, #4dff4d)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
 /* KEPO */
 
 /* PROGRESS */
@@ -554,6 +569,22 @@ body {
 /* SIGNWOOD */
 
 /* SIGNATURE */
+.signature-h1-dark {
+    font-family: Signature !important;
+    font-size: 7rem!important;
+    font-weight: 500!important;
+    background: linear-gradient(to right, #8a0f21, #F71218)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.signature-h1-light {
+    font-family: Signature !important;
+    font-size: 8rem!important;
+    font-weight: 500!important;
+    background: linear-gradient(to right, #F71218, #8a0f21)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
 
 /* WOLFALCON */
 
@@ -565,39 +596,43 @@ body {
 ********************************************************************************************************************************************/
 .app-preview-cal {
     border-radius: 5px;
-    border: 1px solid #000;
-    box-shadow: 0px 2px 10px 2px #1a1a1a;
+    border: 2px solid #000;
+    /* box-shadow: 0px 2px 10px 2px #1a1a1a; */
+    box-shadow: 0px 0px 20px 10px #1a1a1a;
 }
 .app-preview-cal:hover {
     cursor: pointer;
-    box-shadow: 0px 1px 10px 0.5px rgba(0, 82, 204, 0.8);
+    box-shadow: 0px 0px 15px 10px rgba(0, 255, 255, 0.3);
 }
 .app-preview-bud {
     border-radius: 5px;
-    border: 1px solid #000;
-    box-shadow: 0px 2px 10px 2px #1a1a1a;
+    border: 2px solid #000;
+    /* box-shadow: 0px 2px 10px 2px #1a1a1a; */
+    box-shadow: 0px 0px 20px 10px #1a1a1a;
 }
 .app-preview-bud:hover {
     cursor: pointer;
-    box-shadow: 0px 1px 10px 0.5px rgba(172, 0, 230, 0.7);
+    box-shadow: 0px 0px 15px 10px rgba(172, 0, 230, 0.3);
 }
 .app-preview-pho {
     border-radius: 5px;
-    border: 1px solid #000;
-    box-shadow: 0px 2px 10px 2px #1a1a1a;
+    border: 2px solid #000;
+    /* box-shadow: 0px 2px 10px 2px #1a1a1a; */
+    box-shadow: 0px 0px 20px 10px #1a1a1a;
 }
 .app-preview-pho:hover {
     cursor: pointer;
-    box-shadow: 0px 1px 10px 0.5px rgba(238, 4, 41, 0.7);
+    box-shadow: 0px 0px 15px 10px rgba(238, 4, 41, 0.3);
 }
 .app-preview-tod {
     border-radius: 5px;
-    border: 1px solid #000;
-    box-shadow: 0px 2px 10px 2px #1a1a1a;
+    border: 2px solid #000;
+    /* box-shadow: 0px 2px 10px 2px #1a1a1a; */
+    box-shadow: 0px 0px 20px 10px #1a1a1a;
 }
 .app-preview-tod:hover {
     cursor: pointer;
-    box-shadow: 0px 2px 10px 1px rgba(160, 238, 25, 0.7);
+    box-shadow: 0px 0px 15px 10px rgba(0, 230, 0, 0.3);
 }
 
 
@@ -658,8 +693,13 @@ body {
 
 
 /********************************************************************************************************************************************
-************************************************************** 5. FOOTER ********************************************************************
+************************************************************** BUDGET APP ********************************************************************
 ********************************************************************************************************************************************/
+.grad-border {
+    border-width: 2px!important;
+    border-style: solid!important;
+    border-image: linear-gradient(to right, #EE0425, #2F0897) 1;
+}
 
 
 
@@ -674,4 +714,13 @@ body {
 /* ------------------- 6.2 Mobile View  ------------------*/
 @media only screen and (max-width: 600px) {
 
+}
+
+
+.bg-image {
+    background-image: url('/src/images/test-bull.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* background-size: 100% 100%; */
+    background-size: cover;
 }

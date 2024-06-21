@@ -8,8 +8,8 @@ const CalButtonSet = ({ setSuccessState, setErrorState }) => {
             gap={2}
             sx={{
                 position: 'fixed',
-                top: '40%',
-                right: 28,
+                top: '19%',
+                right: 50,
                 transform: 'translateZ(0px)',
                 flexGrow: 1
             }}
