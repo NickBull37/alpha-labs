@@ -1,26 +1,48 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Typography, } from '@mui/material';
-import { alphaVault } from '../../../../utils/constants';
+import { styled } from '@mui/material/styles';
+import { Box, Typography, Paper } from '@mui/material';
+import { alphaLogo } from '../../../../utils/constants';
+
+const StyledPaper = styled(Paper)(() => ({
+    backgroundColor: '#262626',
+    display: "flex",
+    width: '100%',
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 2,
+    boxShadow: "0px 0px 6px 1px rgba(172, 0, 230, 1)",
+    '&:hover': {
+        boxShadow: "0px 0px 6px 2px rgba(172, 0, 230, 0.8)"
+    }
+}));
 
 const DashboardHeader = () => {
 
     return (
-        <Box display="flex" gap={1}
+        <Box
+            display="flex"
+            justifyContent="flex-end"
+            alignItems="center"
+            gap={1}
             sx={{
-                py: 2,
-                px: 4,
-                mb: 6,
-                backgroundColor: '#18181b'
+                pt: 2,
+                pb: 2,
+                pl: 3,
+                pr: 4,
+                backgroundColor: '#1a1a1a',
+                boxShadow: '0px 0px 15px 2px #0d0d0d'
             }}
         >
             <Link to="/">
-                <Box sx={{ mr: 4 }}>
-                    <img src={alphaVault} height={50}/>
-                </Box>
+                <StyledPaper>
+                    <img src={alphaLogo} height={65}/>
+                </StyledPaper>
             </Link>
+            <Box flexGrow={1}></Box>
             <Typography variant='h4'
                 sx={{
+                    ml: 6,
                     py: 0.5,
                     px: 2,
                     border: '2px solid #7e22ce',

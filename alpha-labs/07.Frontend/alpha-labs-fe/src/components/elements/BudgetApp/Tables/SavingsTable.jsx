@@ -3,30 +3,28 @@ import axios from "axios";
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
-import { Box, Paper, Typography, Checkbox, Toolbar, Tooltip, Button, IconButton, Alert, Snackbar, FormControlLabel, Switch } from '@mui/material';
+import { Box, Paper, Typography, Toolbar, Tooltip, IconButton, Checkbox, Alert, Snackbar } from '@mui/material';
 import { TableHead, TableRow, TableSortLabel, TableContainer, Table, TableBody, TablePagination } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import { PaycheckChip, DepositChip, FundChip, LogPaycheckBtn } from '../../../../components';
 import DeleteIcon from '@mui/icons-material/Delete';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-import CheckIcon from '@mui/icons-material/Check';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: '#1976d2',
-        color: theme.palette.common.white,
+        backgroundColor: '#00cc7a',
+        color: theme.palette.common.black,
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 14,
         color: theme.palette.common.white,
     },
 }));
-  
+
 const StyledTableRow = styled(TableRow)(() => ({
-    height: '42px',
     '&:hover': {
-        backgroundColor: 'rgba(25, 118, 210, 0.2)!important',
+        backgroundColor: 'rgba(0, 204, 122, 0.2)!important',
     },
     '&:nth-of-type(odd)': {
         backgroundColor: '#262626',
@@ -36,7 +34,7 @@ const StyledTableRow = styled(TableRow)(() => ({
         border: 0,
     },
 }));
-
+  
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
@@ -67,10 +65,16 @@ function stableSort(array, comparator) {
   
 const headCells = [
     {
-        id: 'dueDate',
+        id: 'date',
         numeric: false,
         disablePadding: true,
-        label: 'Due Date',
+        label: 'Date',
+    },
+    {
+        id: 'type',
+        numeric: false,
+        disablePadding: false,
+        label: 'Type',
     },
     {
         id: 'category',
@@ -91,20 +95,14 @@ const headCells = [
         label: 'Amount',
     },
     {
-        id: 'isAutoPay',
+        id: 'balance',
         numeric: true,
         disablePadding: false,
-        label: 'Auto Pay',
-    },
-    {
-        id: 'isPaid',
-        numeric: true,
-        disablePadding: false,
-        label: 'Paid',
+        label: 'Balance',
     },
 ];
   
-function BillsTableHead(props) {
+function SavingsTableHead(props) {
 
     const { order, orderBy, numSelected, rowCount, onRequestSort } = props;
     const createSortHandler = (property) => (event) => {
@@ -115,7 +113,7 @@ function BillsTableHead(props) {
         <TableHead>
             <StyledTableRow>
                 <StyledTableCell>
-                    <ReceiptLongIcon sx={{ mb: -1 }} />
+                    <AccountBalanceIcon sx={{ mb: -1 }} />
                 </StyledTableCell>
                 {headCells.map((headCell) => (
                     <StyledTableCell
@@ -132,7 +130,6 @@ function BillsTableHead(props) {
                             <Typography className="body1 bolded"
                                 sx={{
                                     my: 0.5,
-                                    color: '#fff'
                                 }}
                             >
                                 {headCell.label}
@@ -150,35 +147,16 @@ function BillsTableHead(props) {
     );
 }
   
-BillsTableHead.propTypes = {
+SavingsTableHead.propTypes = {
     numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
-    onSelectAllClick: PropTypes.func.isRequired,
+    //onSelectAllClick: PropTypes.func.isRequired,
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
 };
-  
-function BillsTableToolbar({ numSelected, hasUnbatchedBills, setDeleteBtnClicked }) {
 
-    // Constants
-    const monthNames = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-    ];
-    const currentDate = new Date();
-    const currentMonthIndex = currentDate.getMonth();
-    const currentMonthName = monthNames[currentMonthIndex];
+function SavingsTableToolbar({ numSelected }) {
 
     // State variables
     const [successState, setSuccessState] = useState('');
@@ -187,10 +165,6 @@ function BillsTableToolbar({ numSelected, hasUnbatchedBills, setDeleteBtnClicked
     const [failureOpen, setFailureOpen] = useState(false);
 
     // Event Handlers
-    const handleBatchClick = () => {
-        RunBillsBatch();
-    };
-
     const handleSuccessClose = (reason) => {
         if (reason === 'clickaway') {
           return;
@@ -204,37 +178,6 @@ function BillsTableToolbar({ numSelected, hasUnbatchedBills, setDeleteBtnClicked
         }
         setFailureOpen(false);
     };
-
-    // Use Effects
-    useEffect(() => {
-        if (successState !== '')
-        {
-            setSuccessOpen(true);
-        }
-    }, [successState]);
-    useEffect(() => {
-        if (errorState !== '')
-        {
-            setFailureOpen(true);
-        }
-    }, [errorState]);
-
-    // API Calls
-    async function RunBillsBatch() {
-        try {
-            // Create BillTemplate record
-            const response = await axios.get("https://localhost:44379/Bill/batch");
-
-            if (response.status === 200) {
-                // console.log('CreateBillTemplate API call successful');
-                setSuccessState('Batch job executed successfully!');
-            }
-        } catch (error) {
-            if (error.response) {
-                setErrorState(error.response.data.title);
-            }
-        }
-    }
 
     return (
         <Toolbar
@@ -261,39 +204,20 @@ function BillsTableToolbar({ numSelected, hasUnbatchedBills, setDeleteBtnClicked
                 <Box display="flex" alignItems="center" gap={4}>
                     <Typography className="sec-header2"
                         sx={{ flex: '1 1 100%' }}
-                        variant="h4"
                         id="tableTitle"
                         component="div"
                     >
-                        {currentMonthName} Bills
+                        Savings Report
                     </Typography>
-                    <Button
-                        elevation={8}
-                        size='small'
-                        variant='outlined'
-                        disabled={!hasUnbatchedBills}
-                        onClick={handleBatchClick}
-                        sx={{
-                            bgcolor: '#27272a',
-                            '&:hover': {
-                                backgroundColor: 'rgba(25, 118, 210, 0.2)',
-                            },
-                            '&:disabled': {
-                                color: '#595959',
-                                backgroundColor: '#333333',
-                            },
-                        }}
-                    >
-                        Batch
-                    </Button>
+                    <Box display="flex" sx={{ minWidth: '200px' }}>
+                        <LogPaycheckBtn setSuccessState={setSuccessState} setErrorState={setErrorState} />
+                    </Box>
                 </Box>
             )}
             {numSelected > 0 ? (
                 <Tooltip title="Delete">
-                    <IconButton onClick={() => setDeleteBtnClicked(true)}>
-                        <DeleteIcon
-                            sx={{ color: '#fff' }}
-                        />
+                    <IconButton>
+                        <DeleteIcon sx={{ color: '#fff' }} />
                     </IconButton>
                 </Tooltip>
             ) : (
@@ -322,22 +246,19 @@ function BillsTableToolbar({ numSelected, hasUnbatchedBills, setDeleteBtnClicked
         </Toolbar>
     );
 }
-
-BillsTableToolbar.propTypes = {
+SavingsTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
-    hasUnbatchedBills: PropTypes.bool.isRequired,
 };
-
-export default function BillsTable({ hasUnbatchedBills, bills, setSuccessState, setErrorState }) {
+  
+export default function SavingsTable({ funds, tableRecords }) {
 
     // State Variables
     const [order, setOrder] = useState('asc');
-    const [orderBy, setOrderBy] = useState('dueDate');
+    const [orderBy, setOrderBy] = useState('date');
+    const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
     const [dense, setDense] = useState(true);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [selected, setSelected] = useState([]);
-    const [deleteBtnClicked, setDeleteBtnClicked] = useState(false);
 
     // Event handlers
     const handleRequestSort = (event, property) => {
@@ -346,16 +267,7 @@ export default function BillsTable({ hasUnbatchedBills, bills, setSuccessState, 
         setOrderBy(property);
     };
 
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelected = bills.map((n) => n.id);
-            setSelected(newSelected);
-            return;
-        }
-        setSelected([]);
-    };
-
-    const handleClick = (event, id) => {
+    const handleCheckboxClick = (event, id) => {
 
         const selectedIndex = selected.indexOf(id);
         let newSelected = [];
@@ -391,73 +303,24 @@ export default function BillsTable({ hasUnbatchedBills, bills, setSuccessState, 
         setPage(0);
     };
 
-    const handleChangeDense = (event) => {
-        setDense(event.target.checked);
-    };
-
-    const handlePayBtnClick = (rowId) => (event) => {
-        SetBillPaid(rowId);
-    };
-
     const isSelected = (id) => selected.indexOf(id) !== -1;
 
     // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - bills.length) : 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableRecords.length) : 0;
 
     const visibleRows = useMemo(
         () =>
-            stableSort(bills, getComparator(order, orderBy)).slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage,
-            ),
-        [order, orderBy, page, rowsPerPage, bills],
+        stableSort(tableRecords, getComparator(order, orderBy)).slice(
+            page * rowsPerPage,
+            page * rowsPerPage + rowsPerPage,
+        ),
+        [order, orderBy, page, rowsPerPage, tableRecords],
     );
 
     // Use Effects
-    useEffect(() => {
-        console.log(deleteBtnClicked);
-        setDeleteBtnClicked(false);
-        if (deleteBtnClicked === true) {
-            console.log('Delete Button Clicked.');
-            console.log(selected);
-            DeleteTableRecords();
-            setSelected([]);
-        }
-    }, [deleteBtnClicked]);
-
-    // API Calls
-    async function SetBillPaid(rowId) {
-        try {
-            // Set bill as paid
-            const response = await axios.post(`https://localhost:44379/Bill/set-paid?id=${rowId}`);
-
-            if (response.status === 200) {
-                setSuccessState("Bill updated successfully!");
-            }
-        } catch (error) {
-            setErrorState(error.response.data.title);
-        }
-    }
-
-    async function DeleteTableRecords() {
-
-        try {
-            // Create bill record
-            const response = await axios.post("https://localhost:44379/Bill/delete-bills", {
-                billIDs: selected
-            });
-
-            // Close dialog window
-            if (response.status === 200) {
-                // console.log('Delete Bills API call successful');
-                setSuccessState('Bills deleted successfully!');
-            }
-        } catch (error) {
-            if (error.response) {
-                setErrorState(error.response.data.title);
-            }
-        }
-    }
+    // useEffect(() => {
+        
+    // }, []);
 
     return (
         <Box sx={{ width: '100%', mb: 8 }}>
@@ -468,24 +331,19 @@ export default function BillsTable({ hasUnbatchedBills, bills, setSuccessState, 
                     color: '#fff',
                 }}
             >
-                <BillsTableToolbar
-                    numSelected={selected.length}
-                    hasUnbatchedBills={hasUnbatchedBills}
-                    setDeleteBtnClicked={setDeleteBtnClicked}
-                />
+                <SavingsTableToolbar numSelected={selected.length} />
                 <TableContainer>
                     <Table
                         sx={{ minWidth: 750 }}
                         aria-labelledby="tableTitle"
                         size={dense ? 'small' : 'medium'}
                     >
-                        <BillsTableHead
+                        <SavingsTableHead
                             numSelected={selected.length}
                             order={order}
                             orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
-                            rowCount={bills.length}
+                            rowCount={tableRecords.length}
                         />
                         <TableBody>
                             {visibleRows.map((row, index) => {
@@ -494,7 +352,7 @@ export default function BillsTable({ hasUnbatchedBills, bills, setSuccessState, 
                                 return (
                                     <StyledTableRow
                                         hover
-                                        onClick={(event) => handleClick(event, row.id)}
+                                        onClick={(event) => handleCheckboxClick(event, row.id)}
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
@@ -504,14 +362,16 @@ export default function BillsTable({ hasUnbatchedBills, bills, setSuccessState, 
                                     >
                                         <StyledTableCell padding="checkbox">
                                             <Checkbox
-                                                color="primary"
                                                 checked={isItemSelected}
                                                 inputProps={{
                                                     'aria-labelledby': labelId,
                                                 }}
                                                 sx={{
                                                     mr: 3,
-                                                    color: '#fff'
+                                                    color: '#fff',
+                                                    '&.Mui-checked': {
+                                                        color: '#00cc7a',
+                                                    },
                                                 }}
                                             />
                                         </StyledTableCell>
@@ -520,75 +380,51 @@ export default function BillsTable({ hasUnbatchedBills, bills, setSuccessState, 
                                             id={labelId}
                                             scope="row"
                                             padding="none"
+                                            sx={{
+                                                color:'#fff',
+                                            }}
                                         >
-                                            {row.dueDateFormatted}
+                                            {row.date}
                                         </StyledTableCell>
-                                        <StyledTableCell align="left">{row.category}</StyledTableCell>
-                                        <StyledTableCell align="left">{row.description}</StyledTableCell>
-                                        <StyledTableCell align="right">
-                                            {row.hasEstimatedAmount ? (
-                                                <>
-                                                    <Tooltip title="Estimated value based on the average of previous bills of the same type. Update amount for current month.">
-                                                        <span className="subtitle3 color-blue">
-                                                            EST&nbsp;&nbsp;
-                                                        </span>
-                                                    </Tooltip>
-                                                    <span>
-                                                        $ {row.amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
-                                                    </span>
-                                                </>
-                                            ) : (
-                                                <span>
-                                                    $ {row.amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
-                                                </span>
+                                        <StyledTableCell sx={{ color: '#fff' }} align="left">
+                                            {row.type === 'Fund' && (
+                                                <FundChip />
+                                            )}
+                                            {row.type === 'FundUpdate' && (
+                                                <FundChip />
+                                            )}
+                                            {row.type === 'Transaction' && (
+                                                <DepositChip />
+                                            )}
+                                            {row.type === 'Paycheck' && (
+                                                <PaycheckChip />
                                             )}
                                         </StyledTableCell>
-                                        <StyledTableCell align="right">
-                                            {row.isAutoPay && (
-                                                <CheckIcon
-                                                    color="primary"
-                                                    sx={{
-                                                        mb: '-2px'
-                                                    }}
-                                                />
+                                        <StyledTableCell sx={{ color: '#fff' }} align="left">{row.category}</StyledTableCell>
+                                        <StyledTableCell sx={{ color: '#fff' }} align="left">{row.description}</StyledTableCell>
+                                        <StyledTableCell sx={{ color: '#fff' }} align="right">$ {row.amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</StyledTableCell>
+                                        <StyledTableCell sx={{ color: '#fff' }} align="right">
+                                            {row.balance === null && (
+                                                <Typography className="subtitle1 ls-100 color-gray400">
+                                                    n/a
+                                                </Typography>
+                                            )}
+                                            {row.balance !== null && (
+                                                <Typography fontSize='14px'>${row.balance.toFixed(2)}</Typography>
                                             )}
                                         </StyledTableCell>
-                                        <TableCell align="right">
-                                            {row.isPaid ? (
-                                                <CheckCircleIcon
-                                                    sx={{
-                                                        color: '#1976d2',
-                                                        mb: '-4px'
-                                                    }}
-                                                />
-                                            ) : (
-                                                <Button variant='outlined' size='small'
-                                                    onClick={handlePayBtnClick(row.id)}
-                                                    sx={{
-                                                        mr: '-4px',
-                                                        minWidth: '50px',
-                                                        '&:hover': {
-                                                            color: '#fff',
-                                                            backgroundColor: '#104d89'
-                                                        }
-                                                    }}
-                                                >
-                                                    Pay
-                                                </Button>
-                                            )}
-                                        </TableCell>
                                     </StyledTableRow>
                                 );
                             })}
                             <Box></Box>
                             {emptyRows > 0 && (
-                                <StyledTableRow
+                                <TableRow
                                     style={{
                                         height: (dense ? 33 : 53) * emptyRows,
                                     }}
                                 >
-                                    <StyledTableCell colSpan={6} />
-                                </StyledTableRow>
+                                    <TableCell colSpan={6} />
+                                </TableRow>
                             )}
                         </TableBody>
                     </Table>
@@ -596,7 +432,7 @@ export default function BillsTable({ hasUnbatchedBills, bills, setSuccessState, 
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={bills.length}
+                    count={tableRecords.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
@@ -606,10 +442,6 @@ export default function BillsTable({ hasUnbatchedBills, bills, setSuccessState, 
                     }}
                 />
             </Paper>
-            <FormControlLabel
-                control={<Switch checked={dense} onChange={handleChangeDense} />}
-                label="Dense padding"
-            />
         </Box>
     );
 }

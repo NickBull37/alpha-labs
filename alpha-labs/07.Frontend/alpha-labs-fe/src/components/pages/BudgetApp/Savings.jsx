@@ -2,9 +2,9 @@ import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
 import { Box, Stack, Alert, Snackbar } from '@mui/material';
-import { BillHeader, BillDetails, BillButtonSet, BillsTable } from '../../../components';
+import { SavingsHeader, SavingsDetails, SavingsButtonSet, SavingsTable } from '../../../components';
 
-const Bills = () => {
+const Savings = () => {
 
     // Constants
     const [successState, setSuccessState] = useState('');
@@ -13,11 +13,14 @@ const Bills = () => {
     const [failureOpen, setFailureOpen] = useState(false);
 
     // State variables
-    const [hasUnbatchedBills, setHasUnbatchedBills] = useState(false);
-    const [billingTotal, setBillingTotal] = useState(0);
-    const [billsCount, setBillsCount] = useState(0);
-    const [billsPaidCount, setBillsPaidCount] = useState(0);
-    const [bills, setBills] = useState([]);
+    const [totalMonthlyIncome, setTotalMonthlyIncome] = useState(0);
+    const [currentMonthlySavings, setCurrentMonthlySavings] = useState(0);
+    const [combinedFundTotal, setCombinedFundTotal] = useState(0);
+    const [paycheckCount, setPaycheckCount] = useState(0);
+    const [paycheckTemplateCount, setPaycheckTemplateCount] = useState(0);
+    const [funds, setFunds] = useState([]);
+    const [paychecks, setPaychecks] = useState([]);
+    const [tableRecords, setTableRecords] = useState([]);
 
     // Event Handlers
     const handleSuccessClose = (reason) => {
@@ -34,17 +37,15 @@ const Bills = () => {
     };
 
     // Use Effects
-    // useEffect(() => {
-    //     GetBillReport();
-    // }, [successState]);
+    useEffect(() => {
+        GetFundReport();
+    }, [successState]);
 
     useEffect(() => {
         if (successState !== '')
         {
             setSuccessOpen(true);
         }
-        GetBillReport();
-        setSuccessState(''); // error here
     }, [successState]);
 
     useEffect(() => {
@@ -55,17 +56,20 @@ const Bills = () => {
     }, [errorState]);
 
     // API Calls
-    async function GetBillReport() {
+    async function GetFundReport() {
         try {
-            // Get bill report data
-            const response = await axios.get("https://localhost:44379/Bill/report");
+            // Get fund report data
+            const response = await axios.get("https://localhost:44379/Fund/report");
 
             if (response.status === 200) {
-                setHasUnbatchedBills(response.data.hasUnbatchedBills);
-                setBillingTotal(response.data.billingTotal);
-                setBillsCount(response.data.billsCount);
-                setBillsPaidCount(response.data.billsPaidCount);
-                setBills(response.data.billingList)
+                setTotalMonthlyIncome(response.data.totalMonthlyIncome);
+                setCurrentMonthlySavings(response.data.currentMonthlySavings);
+                setCombinedFundTotal(response.data.combinedFundTotal);
+                setPaycheckCount(response.data.paycheckCount);
+                setPaycheckTemplateCount(response.data.paycheckTemplateCount);
+                setFunds(response.data.fundList);
+                // setPaychecks(response.data.paycheckList);
+                setTableRecords(response.data.tableRecords)
             }
         } catch (error) {
             alert(error);
@@ -74,22 +78,21 @@ const Bills = () => {
 
     return (
         <>
-            <BillHeader />
-            <Box display="flex" justifyContent="center" sx={{ mt: 6 }}>
+            <SavingsHeader />
+            <Box display="flex" justifyContent="center"  sx={{ mt: 6 }}>
                 <Stack className="container">
-                    <BillDetails />
-                    <BillButtonSet
+                    <SavingsDetails />
+                    <SavingsButtonSet
+                        paycheckCount={paycheckCount}
+                        paycheckTemplateCount={paycheckTemplateCount}
+                        totalMonthlyIncome={totalMonthlyIncome}
+                        currentMonthlySavings={currentMonthlySavings}
                         setSuccessState={setSuccessState}
                         setErrorState={setErrorState}
-                        billingTotal={billingTotal}
-                        billsCount={billsCount}
-                        billsPaidCount={billsPaidCount}
                     />
-                    <BillsTable
-                        hasUnbatchedBills={hasUnbatchedBills}
-                        bills={bills}
-                        setSuccessState={setSuccessState}
-                        setErrorState={setErrorState}
+                    <SavingsTable
+                        funds={funds}
+                        tableRecords={tableRecords}
                     />
                 </Stack>
             </Box>
@@ -117,4 +120,4 @@ const Bills = () => {
     );
 }
 
-export default Bills;
+export default Savings;

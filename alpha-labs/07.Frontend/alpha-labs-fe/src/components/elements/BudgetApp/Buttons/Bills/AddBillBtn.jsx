@@ -341,7 +341,7 @@ const AddBillBtn = ({ setSuccessState, setErrorState }) => {
 
         try {
             // Create bill record
-            const response = await axios.post("https://localhost:44379/Bills/create-bill-template", {
+            const response = await axios.post("https://localhost:44379/Bill/create-bill-template", {
                 paymentFrequency: paymentFrequency,
                 paymentDueDay: paymentDueDay,
                 amount: Number(amount),

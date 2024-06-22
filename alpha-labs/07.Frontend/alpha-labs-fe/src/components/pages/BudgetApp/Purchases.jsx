@@ -78,7 +78,7 @@ const Purchases = () => {
     return (
         <>
             <PurchaseHeader />
-            <Box display="flex" justifyContent="center">
+            <Box display="flex" justifyContent="center" sx={{ mt: 6 }}>
                 {/* <PurchasesLeftSidebar /> */}
                 <Stack className="container" gap={2}>
                     <PrevPurchaseDetails />

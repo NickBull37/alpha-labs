@@ -8,7 +8,7 @@ import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import CakeIcon from '@mui/icons-material/Cake';
 import EventIcon from '@mui/icons-material/Event';
 import FlareIcon from '@mui/icons-material/Flare';
-import { CalLandingHeader, CalButtonSet } from '../../../components';
+import { CalendarHeader, CalButtonSet } from '../../../components';
 
 const Toolbar = styled(Paper)(() => ({
     color: '#FFF',
@@ -42,10 +42,6 @@ const CurrentDayNode = styled(DayNode)(() => ({
 const EmptyNode = styled(DayNode)(() => ({
     backgroundColor: '#1E293B',
 }));
-
-function createBirthdays(name, month, day) {
-    return { name, month, day };
-}
 
 const CalendarList = () => {
 
@@ -168,7 +164,7 @@ const CalendarList = () => {
 
     return (
         <>
-            <CalLandingHeader />
+            <CalendarHeader />
             <CalButtonSet
                 setSuccessState={setSuccessState}
                 setErrorState={setErrorState}
@@ -216,7 +212,7 @@ const CalendarList = () => {
                                 ))}
                                 {daysInMonth.map((day, dayIndex) => (
                                     <Grid item xs={1.714} key={dayIndex}>
-                                        <Link>
+                                        <Link to="/details">
                                             {day ? (
                                                 (day === todayDate && currentDate.getFullYear() === todayYear && index === todayMonth) ? (
                                                     <CurrentDayNode elevation={4}>

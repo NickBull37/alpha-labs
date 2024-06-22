@@ -18,10 +18,10 @@ const GradientButton = styled(Button)(() => ({
 
 const BudgetLanding = () => {
     return (
-        <Stack>
+        <Stack gap={2}>
             <LandingHeader />
             <Stack
-                pt={6}
+                pt={5}
                 pb={10}
                 gap={8}
                 sx={{

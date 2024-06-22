@@ -105,7 +105,7 @@ const DashboardDetails = () => {
                 p: 2,
                 border: '2px solid #7e22ce',
                 borderRadius: '5px',
-                backgroundColor: 'rgba(126, 34, 206, 0.1)'
+                backgroundColor: 'rgba(126, 34, 206, 0.1)',
             }}
         >
             <StyledPaper elevation={8}

@@ -6,11 +6,12 @@ export { default as BudgetLanding } from './pages/BudgetApp/BudgetLanding';
 export { default as BudgetDashboard } from './pages/BudgetApp/BudgetDashboard';
 export { default as Bills } from './pages/BudgetApp/Bills';
 export { default as Purchases } from './pages/BudgetApp/Purchases';
-// export { default as Savings } from './pages/BudgetApp/Savings';
+export { default as Savings } from './pages/BudgetApp/Savings';
 
 //########################## Calendar Pages ##########################//
 export { default as CalendarLanding } from './pages/CalendarApp/CalendarLanding';
 export { default as CalendarList } from './pages/CalendarApp/CalendarList';
+export { default as DayDetails } from './pages/CalendarApp/DayDetails';
 
 //########################### Photo Pages ###########################//
 export { default as PhotoLanding } from './pages/PhotoApp/PhotoLanding';
@@ -37,16 +38,16 @@ export { default as SavingsHeader } from './elements/BudgetApp/Headers/SavingsHe
 // Buttons
 export { default as AddPurchaseBtn } from './elements/BudgetApp/Buttons/Purchases/AddPurchaseBtn';
 export { default as AddBillBtn } from './elements/BudgetApp/Buttons/Bills/AddBillBtn';
-// export { default as AddPaycheckBtn } from './elements/Buttons/Funds/AddPaycheckBtn';
-// export { default as LogPaycheckBtn } from './elements/Buttons/Funds/LogPaycheckBtn';
-// export { default as AddFundBtn } from './elements/Buttons/Funds/AddFundBtn';
-// export { default as AddTransactionBtn } from './elements/Buttons/Funds/AddTransactionBtn';
+export { default as AddPaycheckBtn } from './elements/BudgetApp/Buttons/Savings/AddPaycheckBtn';
+export { default as LogPaycheckBtn } from './elements/BudgetApp/Buttons/Savings/LogPaycheckBtn';
+export { default as AddFundBtn } from './elements/BudgetApp/Buttons/Savings/AddFundBtn';
+export { default as AddTransactionBtn } from './elements/BudgetApp/Buttons/Savings/AddTransactionBtn';
 export { default as DepositFundsBtn } from './elements/BudgetApp/Buttons/Savings/DepositFundsBtn';
 
 // Button Sets
 export { default as PurchaseButtonSet } from './elements/BudgetApp/Buttons/Purchases/PurchaseButtonSet';
 export { default as BillButtonSet } from './elements/BudgetApp/Buttons/Bills/BillButtonSet';
-// export { default as FundButtonSet } from './elements/Buttons/Funds/FundButtonSet';
+export { default as SavingsButtonSet } from './elements/BudgetApp/Buttons/Savings/SavingsButtonSet';
 
 // Section Details
 export { default as DashboardDetails } from './elements/BudgetApp/SectionDetails/DashboardDetails';
@@ -59,12 +60,18 @@ export { default as SavingsDetails } from './elements/BudgetApp/SectionDetails/S
 // export { default as DashboardTable } from './elements/Tables/DashboardTable';
 export { default as PurchasesTable } from './elements/BudgetApp/Tables/PurchasesTable';
 export { default as BillsTable } from './elements/BudgetApp/Tables/BillsTable';
-// export { default as FundsTable } from './elements/Tables/FundsTable';
+export { default as SavingsTable } from './elements/BudgetApp/Tables/SavingsTable';
+
+// Table Chips
+export { default as DepositChip } from './elements/BudgetApp/TableChips/DepositChip';
+export { default as FundChip } from './elements/BudgetApp/TableChips/FundChip';
+export { default as PaycheckChip } from './elements/BudgetApp/TableChips/PaycheckChip';
 
 
 //######################## CalendarApp Elements ########################//
 // Headers
-export { default as CalLandingHeader } from './elements/CalendarApp/Headers/LandingHeader';
+export { default as CalendarHeader } from './elements/CalendarApp/Headers/CalendarHeader';
+export { default as DayDetailsHeader } from './elements/CalendarApp/Headers/DayDetailsHeader';
 
 // Buttons
 export { default as CalButtonSet } from './elements/CalendarApp/Buttons/CalButtonSet';

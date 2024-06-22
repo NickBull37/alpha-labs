@@ -280,6 +280,10 @@ body {
     font-style: italic!important;
     font-weight: 500!important;
 }
+.subtitle4 {
+    font-size: 14px!important;
+    font-weight: 500!important;
+}
 
 /* ICONS */
 .text-icon-plus {
@@ -479,6 +483,23 @@ body {
     background: linear-gradient(to right, #0951aa, #00e6e6)!important;
     -webkit-background-clip: text!important;
     -webkit-text-fill-color: transparent!important;
+}
+.blackpear-h3-blue-grad {
+    font-family: Blackpearl !important;
+    font-size: 2.75rem!important;
+    background: linear-gradient(to right, #0951aa, #00e6e6)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.blackpear-p-blue-grad {
+    font-family: Blackpearl !important;
+    font-size: 1.5rem!important;
+    font-style: normal!important;
+    background: linear-gradient(to right, #0951aa, #00e6e6)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    margin-left: 4px;
+    margin-right: 8px;
 }
 
 /* BROSH */

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Typography, Box, Stack, Button } from '@mui/material';
 import { calendarBull } from '../../../utils/constants';
-import { CalLandingHeader } from '../..';
+import { CalendarHeader } from '../../../components';
 
 const GradientButton = styled(Button)(() => ({
     minHeight: '45px',
@@ -20,7 +20,7 @@ const GradientButton = styled(Button)(() => ({
 const CalendarLanding = () => {
     return (
         <Stack>
-            <CalLandingHeader />
+            <CalendarHeader />
             <Stack
                 pt={6}
                 pb={10}
