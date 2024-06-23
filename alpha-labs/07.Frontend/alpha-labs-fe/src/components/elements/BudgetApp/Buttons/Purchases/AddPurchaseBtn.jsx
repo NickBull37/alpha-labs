@@ -396,6 +396,7 @@ const AddPurchaseBtn = ({ setSuccessState, setErrorState }) => {
                                         sx={{ color : '#fff' }}
                                     >
                                         <MenuItem value=""><em>None</em></MenuItem>
+                                        <MenuItem value={'Amazon'}>Amazon</MenuItem>
                                         <MenuItem value={'Car'}>Car</MenuItem>
                                         <MenuItem value={'Clothes'}>Clothes</MenuItem>
                                         <MenuItem value={'Consumables'}>Consumables</MenuItem>
@@ -404,6 +405,7 @@ const AddPurchaseBtn = ({ setSuccessState, setErrorState }) => {
                                         <MenuItem value={'Housing'}>Housing</MenuItem>
                                         <MenuItem value={'Miscellaneous'}>Miscellaneous</MenuItem>
                                         <MenuItem value={'Service'}>Service</MenuItem>
+                                        <MenuItem value={'Wawa'}>Wawa</MenuItem>
                                         {/* <MenuItem value={'Other'}>Other</MenuItem> */}
                                     </Select>
                                     <Typography id="categoryErrorText" className='hide-display mui-error-text'>Invalid category</Typography>

@@ -37,11 +37,11 @@ const CalendarLanding = () => {
                     >
                         <img src={calendarBull} alt='logo' height={270} />
                         <Stack>
-                            <Typography className="blackpear-h1-blue-grad">
-                                BULL's
+                            <Typography className="blackpearl-h1-blue-grad">
+                                Bull's
                             </Typography>
-                            <Typography className="blackpear-h1-blue-grad">
-                                CALENDAR
+                            <Typography className="blackpearl-h1-blue-grad">
+                                Calendar
                             </Typography>
                         </Stack>
                     </Box>

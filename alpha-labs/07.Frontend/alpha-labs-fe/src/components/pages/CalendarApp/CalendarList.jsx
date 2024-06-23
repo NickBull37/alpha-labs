@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { Typography, Paper, Box, Grid, Button } from '@mui/material';
+import { Typography, Paper, Box, Grid, Button, Tooltip } from '@mui/material';
 import { Snackbar, Alert } from '@mui/material';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import CakeIcon from '@mui/icons-material/Cake';
@@ -18,7 +18,10 @@ const Toolbar = styled(Paper)(() => ({
 }));
 
 const Calendar = styled(Paper)(() => ({
-    padding: '24px',
+    paddingTop: '12px',
+    paddingLeft: '24px',
+    paddingRight: '24px',
+    paddingBottom: '24px',
     color: '#FFF',
     backgroundColor: '#1E293B',
     border: '2px solid #27272a',
@@ -200,11 +203,23 @@ const CalendarList = () => {
                             ref={index === currentDate.getMonth() ? currentMonthRef : null}
                         >
                             <Typography variant="h6" align="center">
-                                {monthName}
+                                {monthName} {todayYear}
                             </Typography>
                             <Grid container spacing={1.5} style={{ marginTop: '8px' }}>
                                 {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(day => (
-                                    <Grid item xs={1.714} key={day}>
+                                    <Grid
+                                        xs={1.714}
+                                        key={day}
+                                        sx={{
+                                            mt: 1,
+                                            pt: 0.5,
+                                            pb: 0.5,
+                                            pl: '12px',
+                                            mb: 1,
+                                            borderTop: '1px solid #b3b3b3',
+                                            borderBottom: '1px solid #b3b3b3',
+                                        }}
+                                    >
                                         <Typography variant="subtitle1" align="center">
                                             {day}
                                         </Typography>
@@ -212,13 +227,30 @@ const CalendarList = () => {
                                 ))}
                                 {daysInMonth.map((day, dayIndex) => (
                                     <Grid item xs={1.714} key={dayIndex}>
-                                        <Link to="/details">
+                                        <Link to={`/details?month=${monthName}`}>
                                             {day ? (
                                                 (day === todayDate && currentDate.getFullYear() === todayYear && index === todayMonth) ? (
                                                     <CurrentDayNode elevation={4}>
                                                         <Typography variant="body2">
                                                             {day}
                                                         </Typography>
+                                                        <Box
+                                                            display="flex"
+                                                            justifyContent="flex-end"
+                                                            alignItems="flex-end"
+                                                        >
+                                                            {birthdays.find(element => element.day === day && element.monthName === monthName) !== undefined && (
+                                                                <Tooltip title={birthdays.find(element => element.day === day && element.monthName === monthName).name}>
+                                                                    <CakeIcon fontSize='large' sx={{ color: '#00e6e6' }} />
+                                                                </Tooltip>
+                                                            )}
+                                                            {events.find(element => element.day === day && element.monthName === monthName) !== undefined && (
+                                                                <EventIcon fontSize='large'  sx={{ ml: 1.5, color: '#ff6600' }} />
+                                                            )}
+                                                            {holidays.find(element => element.day === day && element.monthName === monthName) !== undefined && (
+                                                                <FlareIcon fontSize='large' sx={{ ml: 1.5, color: '#e6e600' }} />
+                                                            )}
+                                                        </Box>
                                                     </CurrentDayNode>
                                                 ) : (
                                                     <DayNode elevation={4}>
@@ -231,21 +263,24 @@ const CalendarList = () => {
                                                             alignItems="flex-end"
                                                         >
                                                             {birthdays.find(element => element.day === day && element.monthName === monthName) !== undefined && (
-                                                                <CakeIcon fontSize='large' sx={{ color: '#00e6e6' }} />
+                                                                <Tooltip title={birthdays.find(element => element.day === day && element.monthName === monthName).name}>
+                                                                    <CakeIcon fontSize='large' sx={{ color: '#00e6e6' }} />
+                                                                </Tooltip>
                                                             )}
-                                                            {birthdays.find(element => element.day === day && element.monthName === monthName) !== undefined && (
+                                                            {events.find(element => element.day === day && element.monthName === monthName) !== undefined && (
                                                                 <EventIcon fontSize='large'  sx={{ ml: 1.5, color: '#ff6600' }} />
                                                             )}
                                                             {holidays.find(element => element.day === day && element.monthName === monthName) !== undefined && (
-                                                                <FlareIcon fontSize='large' sx={{ ml: 1.5, color: '#e6e600' }} />
+                                                                <Tooltip title={holidays.find(element => element.day === day && element.monthName === monthName).name}>
+                                                                    <FlareIcon fontSize='large' sx={{ ml: 1.5, color: '#e6e600' }} />
+                                                                </Tooltip>
                                                             )}
                                                         </Box>
-                                                        
                                                     </DayNode>
                                                 )
-                                                ) : (
-                                                    <EmptyNode elevation={0}></EmptyNode>
-                                                )}
+                                            ) : (
+                                                <EmptyNode elevation={0}></EmptyNode>
+                                            )}
                                         </Link>
                                     </Grid>
                                 ))}

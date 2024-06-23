@@ -3,6 +3,7 @@ export const alphaV = require('../images/alphalabs-v.png');
 export const alphaVault = require('../images/alphalabs-vault.png');
 export const alphaLogo = require('../images/alphalabs-logo.png');
 export const testBull = require('../images/test-bull.png');
+export const boxCat = require('../images/box-cat.jpg');
 
 // App Screenshots
 export const bullsBudget = require('../images/bulls-budget.png');

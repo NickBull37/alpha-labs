@@ -187,7 +187,7 @@ function PurchaseTableToolbar({ numSelected, setDeleteBtnClicked }) {
     return (
         <Toolbar
             sx={{
-                mt: { md: 6 },
+                mt: { md: 1 },
                 pl: { sm: 2 },
                 pr: { xs: 1, sm: 1 },
                 ...(numSelected > 0 && {

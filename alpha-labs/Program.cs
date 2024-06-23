@@ -51,8 +51,10 @@ builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 // configure DI for CALENDAR APP services
 builder.Services.AddScoped<IBirthdayWorkflow, BirthdayWorkflow>();
 builder.Services.AddScoped<IHolidayWorkflow, HolidayWorkflow>();
+builder.Services.AddScoped<IDetailsWorkflow, DetailsWorkflow>();
 
 builder.Services.AddScoped<IBirthdayService, BirthdayService>();
+builder.Services.AddScoped<IDetailsService, DetailsService>();
 builder.Services.AddScoped<IHolidayService, HolidayService>();
 
 builder.Services.AddScoped<IBirthdayRepository, BirthdayRepository>();

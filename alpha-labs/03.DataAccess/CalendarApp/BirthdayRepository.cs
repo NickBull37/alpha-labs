@@ -10,6 +10,9 @@ namespace alpha_labs._03.DataAccess.CalendarApp
         /// <summary>Gets all birthday records for the current calendar year.</summary>
         Task<ActionResponse<List<BirthdayModel>>> GetBirthdays();
 
+        /// <summary>Gets all birthday records for the current month.</summary>
+        Task<ActionResponse<List<BirthdayModel>>> GetBirthdaysByMonth(string month);
+
         /// <summary>Saves birthday models to the database.</summary>
         Task<ActionResponse> SaveBirthdayModelsToDB(List<BirthdayModel> models);
     }
@@ -36,6 +39,28 @@ namespace alpha_labs._03.DataAccess.CalendarApp
                 var birthdays = await _dbContext.Birthdays
                     .AsNoTracking()
                     .Where(x => x.Date >= startOfYear && x.Date <= endOfYear)
+                    .ToListAsync()
+                    .ConfigureAwait(false);
+                return new PassingAR<List<BirthdayModel>>(birthdays);
+            }
+            catch
+            {
+                return new FailingAR<List<BirthdayModel>>("Failed to retrieve birthdays from the database.");
+            }
+        }
+
+        /// <summary>Gets all birthday records for the current month.</summary>
+        public async Task<ActionResponse<List<BirthdayModel>>> GetBirthdaysByMonth(string month)
+        {
+            var currentDate = DateTime.Today;
+            var startOfYear = new DateTime(currentDate.Year, 1, 1);
+            var endOfYear = new DateTime(currentDate.Year, 12, 31);
+
+            try
+            {
+                var birthdays = await _dbContext.Birthdays
+                    .AsNoTracking()
+                    .Where(x => x.MonthName == month && x.Date >= startOfYear && x.Date <= endOfYear)
                     .ToListAsync()
                     .ConfigureAwait(false);
                 return new PassingAR<List<BirthdayModel>>(birthdays);

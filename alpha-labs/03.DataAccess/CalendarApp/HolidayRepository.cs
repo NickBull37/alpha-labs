@@ -10,6 +10,9 @@ namespace alpha_labs._03.DataAccess.CalendarApp
         /// <summary>Gets all holiday records for the current calendar year.</summary>
         Task<ActionResponse<List<HolidayModel>>> GetHolidays();
 
+        /// <summary>Gets all holiday records for the current month.</summary>
+        Task<ActionResponse<List<HolidayModel>>> GetHolidaysByMonth(string month);
+
         /// <summary>Saves holiday models to the database.</summary>
         Task<ActionResponse> SaveHolidayModelsToDB(List<HolidayModel> models);
 
@@ -44,6 +47,28 @@ namespace alpha_labs._03.DataAccess.CalendarApp
                 var holidays = await _dbContext.Holidays
                     .AsNoTracking()
                     .Where(x => x.Date >= startOfYear && x.Date <= endOfYear)
+                    .ToListAsync()
+                    .ConfigureAwait(false);
+                return new PassingAR<List<HolidayModel>>(holidays);
+            }
+            catch
+            {
+                return new FailingAR<List<HolidayModel>>("Failed to retrieve holidays from the database.");
+            }
+        }
+
+        /// <summary>Gets all holiday records for the current month.</summary>
+        public async Task<ActionResponse<List<HolidayModel>>> GetHolidaysByMonth(string month)
+        {
+            var currentDate = DateTime.Today;
+            var startOfYear = new DateTime(currentDate.Year, 1, 1);
+            var endOfYear = new DateTime(currentDate.Year, 12, 31);
+
+            try
+            {
+                var holidays = await _dbContext.Holidays
+                    .AsNoTracking()
+                    .Where(x => x.MonthName == month && x.Date >= startOfYear && x.Date <= endOfYear)
                     .ToListAsync()
                     .ConfigureAwait(false);
                 return new PassingAR<List<HolidayModel>>(holidays);

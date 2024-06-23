@@ -8,7 +8,6 @@ const PurchaseButtonSet = ({ purchaseTotal, luxuryPurchaseTotal, luxuryPurchaseL
         <Box display="flex" alignItems="flex-end"
             sx={{
                 mt: 8,
-                mb: -3.5
             }}
         >
             <Box
