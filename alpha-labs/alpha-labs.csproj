@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="06.Controllers\CalendarApp\Events\ResponseModels\" />
     <Folder Include="07.Frontend\" />
   </ItemGroup>
 

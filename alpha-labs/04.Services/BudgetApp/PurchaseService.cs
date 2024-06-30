@@ -28,46 +28,75 @@ namespace alpha_labs._04.Services.BudgetApp
         }
 
         /// <summary>Calculates values for the purchase nodes.</summary>
+        /// DELETE LATER ONCE NEW ENDPOINT WORKS
+        //public PurchaseNodesResponse CalculateNodeValues(List<Purchase> purchases)
+        //{
+        //    var totalMonthlySpending = purchases.Select(x => x.Amount).Sum();
+
+        //    if (totalMonthlySpending == 0)
+        //    {
+        //        return new PurchaseNodesResponse
+        //        {
+        //            TotalEntertainmentSpending = 0,
+        //            TotalEntertainmentPercentage = 0,
+        //            TotalFoodSpending = 0,
+        //            TotalFoodPercentage = 0,
+        //            TotalHousingSpending = 0,
+        //            TotalHousingPercentage = 0,
+        //            TotalMiscSpending = 0,
+        //            TotalMiscPercentage = 0,
+        //        };
+        //    }
+
+        //    var totalEntertainmentSpending = purchases.Where(x => x.Category == "Entertainment").Select(x => x.Amount).Sum();
+        //    var totalFoodSpending = purchases.Where(x => x.Category == "Food").Select(x => x.Amount).Sum();
+        //    var totalHousingSpending = purchases.Where(x => x.Category == "Housing").Select(x => x.Amount).Sum();
+        //    var totalMiscSpending = purchases.Where(x => x.Category == "Miscellaneous").Select(x => x.Amount).Sum();
+
+        //    var entertainmentPercentage = totalEntertainmentSpending != 0 ? totalEntertainmentSpending / totalMonthlySpending : 0;
+        //    var foodPercentage = totalFoodSpending != 0 ? totalFoodSpending / totalMonthlySpending : 0;
+        //    var housingPercentage = totalHousingSpending != 0 ? totalHousingSpending / totalMonthlySpending : 0;
+        //    var miscPercentage = totalMiscSpending != 0 ? totalMiscSpending / totalMonthlySpending : 0;
+
+        //    Converter converter = new();
+        //    return new PurchaseNodesResponse
+        //    {
+        //        TotalEntertainmentSpending = totalEntertainmentSpending,
+        //        TotalEntertainmentPercentage = converter.ConvertDecimalToPercent(entertainmentPercentage),
+        //        TotalFoodSpending = totalFoodSpending,
+        //        TotalFoodPercentage = converter.ConvertDecimalToPercent(foodPercentage),
+        //        TotalHousingSpending = totalHousingSpending,
+        //        TotalHousingPercentage = converter.ConvertDecimalToPercent(housingPercentage),
+        //        TotalMiscSpending = totalMiscSpending,
+        //        TotalMiscPercentage = converter.ConvertDecimalToPercent(miscPercentage),
+        //    };
+        //}
+
+        /// <summary>Calculates values for the purchase nodes.</summary>
         public PurchaseNodesResponse CalculateNodeValues(List<Purchase> purchases)
         {
             var totalMonthlySpending = purchases.Select(x => x.Amount).Sum();
 
             if (totalMonthlySpending == 0)
             {
-                return new PurchaseNodesResponse
-                {
-                    TotalEntertainmentSpending = 0,
-                    TotalEntertainmentPercentage = 0,
-                    TotalFoodSpending = 0,
-                    TotalFoodPercentage = 0,
-                    TotalHousingSpending = 0,
-                    TotalHousingPercentage = 0,
-                    TotalMiscSpending = 0,
-                    TotalMiscPercentage = 0,
-                };
+                return new PurchaseNodesResponse();
             }
 
-            var totalEntertainmentSpending = purchases.Where(x => x.Category == "Entertainment").Select(x => x.Amount).Sum();
-            var totalFoodSpending = purchases.Where(x => x.Category == "Food").Select(x => x.Amount).Sum();
-            var totalHousingSpending = purchases.Where(x => x.Category == "Housing").Select(x => x.Amount).Sum();
-            var totalMiscSpending = purchases.Where(x => x.Category == "Miscellaneous").Select(x => x.Amount).Sum();
+            (decimal amazonSpending, int amazonPercentage) = CalcSpendingAndPercentage(purchases, "Amazon");
+            (decimal entertainmentSpending, int entertainmentPercentage) = CalcSpendingAndPercentage(purchases, "Entertainment");
+            (decimal foodSpending, int foodPercentage) = CalcSpendingAndPercentage(purchases, "Food");
+            (decimal housingSpending, int housingPercentage) = CalcSpendingAndPercentage(purchases, "Housing");
+            (decimal miscSpending, int miscPercentage) = CalcSpendingAndPercentage(purchases, "Miscellaneous");
+            (decimal wawaSpending, int wawaPercentage) = CalcSpendingAndPercentage(purchases, "Wawa");
 
-            var entertainmentPercentage = totalEntertainmentSpending != 0 ? totalEntertainmentSpending / totalMonthlySpending : 0;
-            var foodPercentage = totalFoodSpending != 0 ? totalFoodSpending / totalMonthlySpending : 0;
-            var housingPercentage = totalHousingSpending != 0 ? totalHousingSpending / totalMonthlySpending : 0;
-            var miscPercentage = totalMiscSpending != 0 ? totalMiscSpending / totalMonthlySpending : 0;
-
-            Converter converter = new();
             return new PurchaseNodesResponse
             {
-                TotalEntertainmentSpending = totalEntertainmentSpending,
-                TotalEntertainmentPercentage = converter.ConvertDecimalToPercent(entertainmentPercentage),
-                TotalFoodSpending = totalFoodSpending,
-                TotalFoodPercentage = converter.ConvertDecimalToPercent(foodPercentage),
-                TotalHousingSpending = totalHousingSpending,
-                TotalHousingPercentage = converter.ConvertDecimalToPercent(housingPercentage),
-                TotalMiscSpending = totalMiscSpending,
-                TotalMiscPercentage = converter.ConvertDecimalToPercent(miscPercentage),
+                AmazonValues = CreateCategoryValues(amazonSpending, amazonPercentage),
+                EntertainmentValues = CreateCategoryValues(entertainmentSpending, entertainmentPercentage),
+                FoodValues = CreateCategoryValues(foodSpending, foodPercentage),
+                HousingValues = CreateCategoryValues(housingSpending, housingPercentage),
+                MiscValues = CreateCategoryValues(miscSpending, miscPercentage),
+                WawaValues = CreateCategoryValues(wawaSpending, wawaPercentage)
             };
         }
 
@@ -99,6 +128,28 @@ namespace alpha_labs._04.Services.BudgetApp
                 NecessityPurchaseTotal = purchases.Where(p => !p.IsLuxury).Select(p => p.Amount).Sum(),
                 NodeResponse = nodes,
                 PurchaseList = purchases
+            };
+        }
+
+        private static (decimal, int) CalcSpendingAndPercentage(List<Purchase> purchases, string category)
+        {
+            Converter converter = new();
+            var totalMonthlySpending = purchases.Select(x => x.Amount).Sum();
+
+            var spendingTotal = purchases.Where(x => x.Category == category).Select(x => x.Amount).Sum();
+            var percentage = spendingTotal != 0
+                ? converter.ConvertDecimalToPercent(spendingTotal / totalMonthlySpending)
+                : 0;
+
+            return (spendingTotal, percentage);
+        }
+
+        private static CategoryValues CreateCategoryValues(decimal totalSpent, int percentage)
+        {
+            return new CategoryValues()
+            {
+                TotalSpent = totalSpent,
+                Percentage = percentage
             };
         }
     }

@@ -15,27 +15,40 @@ namespace alpha_labs._05.Workflows.BudgetApp
         /// <summary>Workflow for the [fund/report] endpoint.</summary>
         Task<ActionResponse<FundReportResponse>> ExecGetFundReport();
 
+        /// <summary>Workflow for the [fund/get-monthly-savings] endpoint.</summary>
+        Task<ActionResponse<decimal>> ExecGetMonthlySavings();
+
         /// <summary>Workflow for the [fund/create-fund] endpoint.</summary>
         Task<ActionResponse> ExecCreateFund(CreateFundRequest request);
 
-        /// <summary>Workflow for the [fund/create-fund-transaction] endpoint.</summary>
-        Task<ActionResponse> ExecCreateFundTransaction(CreateFundTransactionRequest request);
+        /// <summary>Workflow for the [fund/deposit-funds] endpoint.</summary>
+        Task<ActionResponse> ExecDepositFunds(DepositFundsRequest request);
     }
 
     public class FundWorkflow : IFundWorkflow
     {
+        private readonly IBillRepository _billRepository;
         private readonly IFundService _fundService;
         private readonly IFundRepository _fundRepository;
         private readonly IPaycheckRepository _paycheckRepository;
+        private readonly IPurchaseRepository _purchaseRepository;
         private readonly ITransactionRepository _transactionRepository;
         private readonly AlphaLabsDbContext _dbContext;
 
-        public FundWorkflow(IFundService fundService, IFundRepository fundRepository, IPaycheckRepository paycheckRepository, ITransactionRepository transactionRepository,
+        public FundWorkflow(
+            IBillRepository billRepository,
+            IFundService fundService,
+            IFundRepository fundRepository,
+            IPaycheckRepository paycheckRepository,
+            IPurchaseRepository purchaseRepository,
+            ITransactionRepository transactionRepository,
             AlphaLabsDbContext dbContext)
         {
+            _billRepository = billRepository;
             _fundService = fundService;
             _fundRepository = fundRepository;
             _paycheckRepository = paycheckRepository;
+            _purchaseRepository = purchaseRepository;
             _transactionRepository = transactionRepository;
             _dbContext = dbContext;
         }
@@ -80,6 +93,45 @@ namespace alpha_labs._05.Workflows.BudgetApp
             return new PassingAR<FundReportResponse>(reportResponse.Content!);
         }
 
+        /// <summary>Workflow for the [fund/get-monthly-savings] endpoint.</summary>
+        public async Task<ActionResponse<decimal>> ExecGetMonthlySavings()
+        {
+            var purchaseResponse = await _purchaseRepository.GetPurchases();
+            if (!purchaseResponse.IsSuccess)
+            {
+                return new FailingAR<decimal>(purchaseResponse.ErrorMessage!);
+            }
+            var billsResponse = await _billRepository.GetBills();
+            if (!billsResponse.IsSuccess)
+            {
+                return new FailingAR<decimal>(billsResponse.ErrorMessage!);
+            }
+            var paycheckResponse = await _paycheckRepository.GetPaychecks();
+            if (!paycheckResponse.IsSuccess)
+            {
+                return new FailingAR<decimal>(paycheckResponse.ErrorMessage!);
+            }
+            var paycheckTemplateResponse = await _paycheckRepository.GetPaycheckTemplates();
+            if (!paycheckTemplateResponse.IsSuccess)
+            {
+                return new FailingAR<decimal>(paycheckTemplateResponse.ErrorMessage!);
+            }
+            var transactionResponse = await _transactionRepository.GetTransactions();
+            if (!transactionResponse.IsSuccess)
+            {
+                return new FailingAR<decimal>(transactionResponse.ErrorMessage!);
+            }
+
+            var monthlySavings = _fundService.CalculateMonthlySavings(
+                billsResponse.Content!,
+                purchaseResponse.Content!,
+                paycheckResponse.Content!,
+                paycheckTemplateResponse.Content!,
+                transactionResponse.Content!);
+
+            return new PassingAR<decimal>(monthlySavings);
+        }
+
         /// <summary>Workflow for the [fund/create-fund] endpoint.</summary>
         public async Task<ActionResponse> ExecCreateFund(CreateFundRequest request)
         {
@@ -87,24 +139,28 @@ namespace alpha_labs._05.Workflows.BudgetApp
             return await _fundRepository.SaveFundToDB(fund);
         }
 
-        /// <summary>Workflow for the [fund/create-fund-transaction] endpoint.</summary>
-        public async Task<ActionResponse> ExecCreateFundTransaction(CreateFundTransactionRequest request)
+        /// <summary>Workflow for the [fund/deposit-funds] endpoint.</summary>
+        public async Task<ActionResponse> ExecDepositFunds(DepositFundsRequest request)
         {
-            var fundResponse = await _fundRepository.GetFundByID(request.FundID);
-            if (!fundResponse.IsSuccess)
+            foreach (var deposit in request.FundDeposits)
             {
-                return new FailingAR(fundResponse.ErrorMessage!);
+                var fundResponse = await _fundRepository.GetFundByID(deposit.FundId);
+                if (!fundResponse.IsSuccess)
+                {
+                    return new FailingAR(fundResponse.ErrorMessage!);
+                }
+
+                var fund = fundResponse.Content!;
+                var fundDeposit = _fundService.CreateFundDepositEntity(fund, deposit.Amount);
+
+                fund.Balance = fundDeposit.NewBalance;
+                fund.DepositCount++;
+                fund.UpdatedDate = DateTime.Now;
+
+                await _dbContext.SaveChangesAsync();
+                await _fundRepository.SaveFundDepositToDB(fundDeposit);
             }
-            var fund = fundResponse.Content!;
-
-            var fundTransaction = _fundService.CreateFundTransactionEntity(request, fund);
-
-            fund.Balance = fundTransaction.NewBalance;
-            fund.DepositCount++;
-            fund.UpdatedDate = DateTime.Now;
-
-            await _dbContext.SaveChangesAsync();
-            return await _fundRepository.SaveFundTransactionToDB(fundTransaction);
+            return new PassingAR();
         }
     }
 }

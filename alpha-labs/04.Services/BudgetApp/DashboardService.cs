@@ -1,5 +1,6 @@
 ﻿using alpha_labs._01.Configuration.Configs;
 using alpha_labs._02.Models.BudgetApp.Bills;
+using alpha_labs._02.Models.BudgetApp.Funds;
 using alpha_labs._02.Models.BudgetApp.Paychecks;
 using alpha_labs._02.Models.BudgetApp.Purchases;
 using alpha_labs._02.Models.BudgetApp.Transactions;
@@ -16,7 +17,8 @@ namespace alpha_labs._04.Services.BudgetApp
             List<Purchase> purchases,
             List<Paycheck> paychecks,
             List<PaycheckTemplate> templates,
-            List<Transaction> transactions);
+            List<Transaction> transactions,
+            List<FundTransaction> fundDeposits);
     }
 
     public class DashboardService : IDashboardService
@@ -34,7 +36,8 @@ namespace alpha_labs._04.Services.BudgetApp
             List<Purchase> purchases,
             List<Paycheck> paychecks,
             List<PaycheckTemplate> templates,
-            List<Transaction> transactions)
+            List<Transaction> transactions,
+            List<FundTransaction> fundDeposits)
         {
             var purchaseTotal = purchases.Select(x => x.Amount).Sum();
             var recSpendingTotal = purchases
@@ -51,8 +54,10 @@ namespace alpha_labs._04.Services.BudgetApp
 
             var transactionsTotal = transactions.Select(x => x.Amount).Sum();
 
+            var monthlyDepositTotal = fundDeposits.Select(x => x.Amount).Sum();
+
             var monthlyIncomeTotal = paycheckTotal + transactionsTotal;
-            var addToSavingsAmount = monthlyIncomeTotal - (purchaseTotal + billsTotal);
+            var addToSavingsAmount = monthlyIncomeTotal - (purchaseTotal + billsTotal + monthlyDepositTotal);
 
             return new DashboardNodesResponse
             {
@@ -64,6 +69,7 @@ namespace alpha_labs._04.Services.BudgetApp
                 MonthlyBillingTotal = billsTotal,
                 PaycheckCount = paychecks.Count,
                 PaycheckTemplateCount = templates.Count,
+                MonthlyDepositTotal = monthlyDepositTotal,
                 MonthlyIncomeTotal = paycheckTotal,
                 CurrentMonthlySavings = addToSavingsAmount,
             };

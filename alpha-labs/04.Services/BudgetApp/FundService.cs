@@ -1,6 +1,8 @@
 ﻿using alpha_labs._01.Configuration.ActionResponse;
+using alpha_labs._02.Models.BudgetApp.Bills;
 using alpha_labs._02.Models.BudgetApp.Funds;
 using alpha_labs._02.Models.BudgetApp.Paychecks;
+using alpha_labs._02.Models.BudgetApp.Purchases;
 using alpha_labs._02.Models.BudgetApp.Transactions;
 using alpha_labs._03.DataAccess.BudgetApp;
 using alpha_labs._06.Controllers.BudgetApp.Funds;
@@ -12,14 +14,22 @@ namespace alpha_labs._04.Services.BudgetApp
         /// <summary>Creates a new fund model entity.</summary>
         Fund CreateFundEntity(CreateFundRequest request);
 
-        /// <summary>Creates a new fund transaction model entity.</summary>
-        FundTransaction CreateFundTransactionEntity(CreateFundTransactionRequest request, Fund fund);
+        /// <summary>Creates a new fund deposit model entity.</summary>
+        FundTransaction CreateFundDepositEntity(Fund fund, decimal amount);
 
         /// <summary>Creates a new fund report model entity.</summary>
         Task<ActionResponse<FundReportResponse>> CreateFundReportEntity(
             List<Fund> funds,
             List<Paycheck> paychecks,
             List<FundTransaction> fundTransactions,
+            List<Transaction> transactions);
+
+        /// <summary>Calculates the monthly savings amount.</summary>
+        decimal CalculateMonthlySavings(
+            List<Bill> bills,
+            List<Purchase> purchases,
+            List<Paycheck> paychecks,
+            List<PaycheckTemplate> templates,
             List<Transaction> transactions);
     }
 
@@ -50,15 +60,15 @@ namespace alpha_labs._04.Services.BudgetApp
             };
         }
 
-        /// <summary>Creates a new fund transaction model entity.</summary>
-        public FundTransaction CreateFundTransactionEntity(CreateFundTransactionRequest request, Fund fund)
+        /// <summary>Creates a new fund deposit model entity.</summary>
+        public FundTransaction CreateFundDepositEntity(Fund fund, decimal amount)
         {
             return new FundTransaction
             {
                 Date = DateTime.Now,
                 DateFormatted = DateTime.Now.ToString("M/d/yy"),
-                Amount = request.Amount,
-                NewBalance = fund.Balance + request.Amount,
+                Amount = amount,
+                NewBalance = fund.Balance + amount,
                 Type = "FundDeposit",
                 FundName = fund.Name,
                 Description = $"Depositing funds into {fund.Name}",
@@ -125,12 +135,32 @@ namespace alpha_labs._04.Services.BudgetApp
             return new PassingAR<FundReportResponse>(reportResponse);
         }
 
+        /// <summary>Calculates the monthly savings amount.</summary>
+        public decimal CalculateMonthlySavings(
+            List<Bill> bills,
+            List<Purchase> purchases,
+            List<Paycheck> paychecks,
+            List<PaycheckTemplate> templates,
+            List<Transaction> transactions)
+        {
+            var purchaseTotal = purchases.Select(x => x.Amount).Sum();
+            var billsTotal = bills.Sum(bill => bill.Amount);
+            var paycheckTotal = templates.Select(x => x.Amount).Sum();
+            var transactionsTotal = transactions.Select(x => x.Amount).Sum();
+
+            var monthlyIncomeTotal = paycheckTotal + transactionsTotal;
+            var addToSavingsAmount = monthlyIncomeTotal - (purchaseTotal + billsTotal);
+
+            return addToSavingsAmount;
+        }
+
         #region Private Methods
         private static SavingsTableRecord ConvertFundTransactionToFundTableRecord(FundTransaction transaction)
         {
             return new SavingsTableRecord
             {
-                Date = transaction.DateFormatted,
+                Date = transaction.Date,
+                FormattedDate = transaction.DateFormatted,
                 Type = "FundUpdate",
                 Category = transaction.FundName,
                 Description = transaction.Description,
@@ -145,7 +175,8 @@ namespace alpha_labs._04.Services.BudgetApp
         {
             return new SavingsTableRecord
             {
-                Date = paycheck.DepositDateFormatted,
+                Date = paycheck.DepositDate,
+                FormattedDate = paycheck.DepositDateFormatted,
                 Type = "Paycheck",
                 Category = paycheck.Employer,
                 Description = paycheck.Description,
@@ -160,7 +191,8 @@ namespace alpha_labs._04.Services.BudgetApp
         {
             return new SavingsTableRecord
             {
-                Date = transaction.TransactionDateFormatted,
+                Date = transaction.TransactionDate,
+                FormattedDate = transaction.TransactionDateFormatted,
                 Type = "Transaction",
                 Category = transaction.Type,
                 Description = transaction.Description,

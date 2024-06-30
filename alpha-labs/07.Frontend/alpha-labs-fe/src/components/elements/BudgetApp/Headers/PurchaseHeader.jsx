@@ -11,9 +11,9 @@ const StyledPaper = styled(Paper)(() => ({
     justifyContent: "center",
     alignItems: "center",
     padding: 2,
-    boxShadow: "0px 0px 6px 1px rgba(172, 0, 230, 1)",
+    boxShadow: "0px 0px 6px 1px rgba(255, 26, 117, 0.8)",
     '&:hover': {
-        boxShadow: "0px 0px 6px 2px rgba(172, 0, 230, 0.8)"
+        boxShadow: "0px 0px 10px 2px rgba(255, 26, 117, 0.8)"
     }
 }));
 

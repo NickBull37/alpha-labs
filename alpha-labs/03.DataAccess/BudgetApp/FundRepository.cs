@@ -11,8 +11,8 @@ namespace alpha_labs._03.DataAccess.BudgetApp
         /// <summary>Saves a new fund record to the database.</summary>
         Task<ActionResponse> SaveFundToDB(Fund fund);
 
-        /// <summary>Saves a new fund transaction record to the database.</summary>
-        Task<ActionResponse> SaveFundTransactionToDB(FundTransaction transaction);
+        /// <summary>Saves a new fund deposit record to the database.</summary>
+        Task<ActionResponse> SaveFundDepositToDB(FundTransaction transaction);
         #endregion
 
         #region READ
@@ -58,8 +58,8 @@ namespace alpha_labs._03.DataAccess.BudgetApp
             }
         }
 
-        /// <summary>Saves a new fund transaction record to the database.</summary>
-        public async Task<ActionResponse> SaveFundTransactionToDB(FundTransaction transaction)
+        /// <summary>Saves a new fund deposit record to the database.</summary>
+        public async Task<ActionResponse> SaveFundDepositToDB(FundTransaction transaction)
         {
             try
             {

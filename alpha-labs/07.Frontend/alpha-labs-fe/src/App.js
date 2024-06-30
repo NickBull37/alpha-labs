@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Box, CssBaseline } from '@mui/material';
 import { Header } from "./components";
-import { LabDashboard, BudgetLanding, BudgetDashboard, Purchases, Bills, Savings } from "./components";
+import { LabDashboard, BudgetLanding, BudgetDashboard, Purchases, Bills, Savings, DepositFunds } from "./components";
 import { CalendarLanding, CalendarList, DayDetails } from "./components";
 import { PhotoLanding } from "./components";
 import { TodoLanding } from "./components";
@@ -17,6 +17,7 @@ function App() {
                 <Route path="/budget-bills" element={<Bills />} />
                 <Route path="/budget-purchases" element={<Purchases />} />
                 <Route path="/budget-savings" element={<Savings />} />
+                <Route path="/budget-deposit" element={<DepositFunds />} />
 
                 <Route path="/calendar-landing" element={<CalendarLanding />} />
                 <Route path="/calendar-list" element={<CalendarList />} />

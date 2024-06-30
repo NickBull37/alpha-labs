@@ -37,7 +37,8 @@ const customTheme = (outerTheme) =>
 
 const AddHolidayButton = styled(Button)(() => ({
     color: '#fff',
-    backgroundColor: '#2d3b52',
+    //backgroundColor: '#2d3b52',
+    backgroundColor: '#222f44',
     minHeight: '100px',
     minWidth: '100px',
     padding: '10px',

@@ -2,20 +2,23 @@
 {
     public class PurchaseNodesResponse
     {
-        public decimal TotalEntertainmentSpending { get; set; }
+        public CategoryValues AmazonValues { get; set; } = new();
 
-        public int TotalEntertainmentPercentage { get; set; }
+        public CategoryValues EntertainmentValues { get; set; } = new();
 
-        public decimal TotalFoodSpending { get; set; }
+        public CategoryValues FoodValues { get; set; } = new();
 
-        public int TotalFoodPercentage { get; set; }
+        public CategoryValues HousingValues { get; set; } = new();
 
-        public decimal TotalHousingSpending { get; set; }
+        public CategoryValues MiscValues { get; set; } = new();
 
-        public int TotalHousingPercentage { get; set; }
+        public CategoryValues WawaValues { get; set; } = new();
+    }
 
-        public decimal TotalMiscSpending { get; set; }
+    public class CategoryValues
+    {
+        public decimal TotalSpent { get; set; }
 
-        public int TotalMiscPercentage { get; set; }
+        public int Percentage { get; set; }
     }
 }

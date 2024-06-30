@@ -54,7 +54,7 @@ const SavingsDetails = () => {
     // API Calls
     async function GetFundNodes() {
         try {
-            // Get purchase nodes data
+            // Get fund nodes data
             const response = await axios.get("https://localhost:44379/Fund/nodes");
 
             if (response.status === 200) {

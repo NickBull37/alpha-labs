@@ -26,6 +26,7 @@ namespace alpha_labs._05.Workflows.BudgetApp
         private readonly IPurchaseRepository _purchaseRepository;
         private readonly IPurchaseWorkflow _purchaseWorkflow;
 
+        private readonly IFundRepository _fundRepository;
         private readonly IFundWorkflow _fundWorkflow;
 
         private readonly ITransactionRepository _transactionRepository;
@@ -36,6 +37,7 @@ namespace alpha_labs._05.Workflows.BudgetApp
             IPaycheckRepository paycheckRepository,
             IPurchaseRepository purchaseRepository,
             IPurchaseWorkflow purchaseWorkflow,
+            IFundRepository fundRepository,
             IFundWorkflow fundWorkflow,
             ITransactionRepository transactionRepository)
         {
@@ -45,6 +47,7 @@ namespace alpha_labs._05.Workflows.BudgetApp
             _paycheckRepository = paycheckRepository;
             _purchaseRepository = purchaseRepository;
             _purchaseWorkflow = purchaseWorkflow;
+            _fundRepository = fundRepository;
             _fundWorkflow = fundWorkflow;
             _transactionRepository = transactionRepository;
         }
@@ -77,13 +80,19 @@ namespace alpha_labs._05.Workflows.BudgetApp
             {
                 return new FailingAR<DashboardNodesResponse>(transactionResponse.ErrorMessage!);
             }
+            var fundDepositResponse = await _fundRepository.GetFundTransactions();
+            if (!fundDepositResponse.IsSuccess)
+            {
+                return new FailingAR<DashboardNodesResponse>(fundDepositResponse.ErrorMessage!);
+            }
 
             var dashboardReport = _dashboardService.CalculateNodeValues(
                 billsResponse.Content!,
                 purchaseResponse.Content!,
                 paycheckResponse.Content!,
                 paycheckTemplateResponse.Content!,
-                transactionResponse.Content!);
+                transactionResponse.Content!,
+                fundDepositResponse.Content!);
 
             return new PassingAR<DashboardNodesResponse>(dashboardReport);
         }

@@ -12,6 +12,8 @@ const StyledPaper = styled(Paper)(() => ({
 const PrevPurchaseDetails = () => {
 
     // State variables
+    const [amazonSpending, setAmazonSpending] = useState(0);
+    const [amazonPercentage, setAmazonPercentage] = useState(0);
     const [entertainmentSpending, setEntertainmentSpending] = useState(0);
     const [entertainmentPercentage, setEntertainmentPercentage] = useState(0);
     const [foodSpending, setFoodSpending] = useState(0);
@@ -20,6 +22,8 @@ const PrevPurchaseDetails = () => {
     const [housingPercentage, setHousingPercentage] = useState(0);
     const [miscSpending, setMiscSpending] = useState(0);
     const [miscPercentage, setMiscPercentage] = useState(0);
+    const [wawaSpending, setWawaSpending] = useState(0);
+    const [wawaPercentage, setWawaPercentage] = useState(0);
 
     // Use Effects
     useEffect(() => {
@@ -33,14 +37,18 @@ const PrevPurchaseDetails = () => {
             const response = await axios.get("https://localhost:44379/Purchase/prev-nodes");
 
             if (response.status === 200) {
-                setEntertainmentSpending(response.data.totalEntertainmentSpending);
-                setEntertainmentPercentage(response.data.totalEntertainmentPercentage);
-                setFoodSpending(response.data.totalFoodSpending);
-                setFoodPercentage(response.data.totalFoodPercentage);
-                setHousingSpending(response.data.totalHousingSpending);
-                setHousingPercentage(response.data.totalHousingPercentage);
-                setMiscSpending(response.data.totalMiscSpending);
-                setMiscPercentage(response.data.totalMiscPercentage);
+                setAmazonSpending(response.data.amazonValues.totalSpent);
+                setAmazonPercentage(response.data.amazonValues.percentage);
+                setEntertainmentSpending(response.data.entertainmentValues.totalSpent);
+                setEntertainmentPercentage(response.data.entertainmentValues.percentage);
+                setFoodSpending(response.data.foodValues.totalSpent);
+                setFoodPercentage(response.data.foodValues.percentage);
+                setHousingSpending(response.data.housingValues.totalSpent);
+                setHousingPercentage(response.data.housingValues.percentage);
+                setMiscSpending(response.data.miscValues.totalSpent);
+                setMiscPercentage(response.data.miscValues.percentage);
+                setWawaSpending(response.data.wawaValues.totalSpent);
+                setWawaPercentage(response.data.wawaValues.percentage);
             }
         } catch (error) {
             alert(error);

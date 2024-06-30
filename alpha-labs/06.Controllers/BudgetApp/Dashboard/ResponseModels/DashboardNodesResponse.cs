@@ -18,6 +18,8 @@
 
         public int PaycheckTemplateCount { get; set; }
 
+        public decimal MonthlyDepositTotal { get; set; }
+
         public decimal MonthlyIncomeTotal { get; set; }
 
         public decimal CurrentMonthlySavings { get; set; }

@@ -7,6 +7,7 @@ export { default as BudgetDashboard } from './pages/BudgetApp/BudgetDashboard';
 export { default as Bills } from './pages/BudgetApp/Bills';
 export { default as Purchases } from './pages/BudgetApp/Purchases';
 export { default as Savings } from './pages/BudgetApp/Savings';
+export { default as DepositFunds } from './pages/BudgetApp/DepositFunds';
 
 //########################## Calendar Pages ##########################//
 export { default as CalendarLanding } from './pages/CalendarApp/CalendarLanding';
@@ -70,6 +71,7 @@ export { default as PaycheckChip } from './elements/BudgetApp/TableChips/Paychec
 
 //######################## CalendarApp Elements ########################//
 // Headers
+export { default as CalLandingHeader } from './elements/CalendarApp/Headers/LandingHeader';
 export { default as CalendarHeader } from './elements/CalendarApp/Headers/CalendarHeader';
 export { default as DayDetailsHeader } from './elements/CalendarApp/Headers/DayDetailsHeader';
 

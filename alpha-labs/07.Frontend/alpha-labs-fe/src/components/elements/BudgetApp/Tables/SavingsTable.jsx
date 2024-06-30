@@ -384,7 +384,7 @@ export default function SavingsTable({ funds, tableRecords }) {
                                                 color:'#fff',
                                             }}
                                         >
-                                            {row.date}
+                                            {row.formattedDate}
                                         </StyledTableCell>
                                         <StyledTableCell sx={{ color: '#fff' }} align="left">
                                             {row.type === 'Fund' && (

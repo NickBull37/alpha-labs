@@ -43,18 +43,18 @@ namespace alpha_labs._06.Controllers.BudgetApp.Funds
             return Ok(response.Content);
         }
 
-        ///// <summary>Gets all paycheck templates.</summary>
-        //[HttpGet]
-        //[Route("templates")]
-        //public async Task<IActionResult> GetPaycheckTemplates()
-        //{
-        //    var response = await _fundWorkflow.ExecGetPaycheckTemplates();
-        //    if (!response.IsSuccess)
-        //    {
-        //        return Problem(statusCode: 500);
-        //    }
-        //    return Ok(response.Content);
-        //}
+        /// <summary>Gets monthly savings amount.</summary>
+        [HttpGet]
+        [Route("get-monthly-savings")]
+        public async Task<IActionResult> GetMonthlySavings()
+        {
+            var response = await _fundWorkflow.ExecGetMonthlySavings();
+            if (!response.IsSuccess)
+            {
+                return Problem(statusCode: 500);
+            }
+            return Ok(response.Content);
+        }
         #endregion
 
         #region POST Endpoints
@@ -74,46 +74,15 @@ namespace alpha_labs._06.Controllers.BudgetApp.Funds
             return Ok();
         }
 
-        //[HttpPost]
-        //[Route("create-paycheck-template")]
-        //public async Task<IActionResult> CreatePaycheckTemplate(CreatePaycheckTemplateRequest request)
-        //{
-        //    if (string.IsNullOrEmpty(request.Employer)
-        //        || string.IsNullOrEmpty(request.Description)
-        //        || request.Amount <= 0
-        //        || request.PayDay <= 0)
-        //    {
-        //        return BadRequest(new { message = "Missing or invalid required fields." });
-        //    }
-        //    var response = await _fundWorkflow.ExecCreatePaycheckTemplate(request);
-        //    if (!response.IsSuccess)
-        //    {
-        //        return Problem(statusCode: 500);
-        //    }
-        //    return Ok();
-        //}
-
-        //[HttpPost]
-        //[Route("log-paycheck")]
-        //public async Task<IActionResult> LogPaycheck([FromQuery] int id)
-        //{
-        //    var response = await _fundWorkflow.ExecLogPaycheck(id);
-        //    if (!response.IsSuccess)
-        //    {
-        //        return Problem(statusCode: 500);
-        //    }
-        //    return Ok();
-        //}
-
         [HttpPost]
-        [Route("create-fund-transaction")]
-        public async Task<IActionResult> CreateFundTransactionRecord(CreateFundTransactionRequest request)
+        [Route("deposit-funds")]
+        public async Task<IActionResult> DepositFunds([FromBody] DepositFundsRequest request)
         {
-            if (request.Amount <= 0)
+            if (!request.FundDeposits.Any() || request.FundDeposits.Any(x => x.FundId == default))
             {
                 return BadRequest(new { message = "Missing or invalid required fields." });
             }
-            var response = await _fundWorkflow.ExecCreateFundTransaction(request);
+            var response = await _fundWorkflow.ExecDepositFunds(request);
             if (!response.IsSuccess)
             {
                 return Problem(statusCode: 500, title: response.ErrorMessage);
