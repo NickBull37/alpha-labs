@@ -1,11 +1,15 @@
-//########################## AlphaLabs Pages ##########################//
+//###################################################################################//
+//################################### VAULT PAGES ###################################//
+//###################################################################################//
 export { default as LabDashboard } from './pages/LabDashboard';
 
 //########################## Budget Pages ##########################//
 export { default as BudgetLanding } from './pages/BudgetApp/BudgetLanding';
 export { default as BudgetDashboard } from './pages/BudgetApp/BudgetDashboard';
 export { default as Bills } from './pages/BudgetApp/Bills';
+export { default as BillingHistory } from './pages/BudgetApp/BillingHistory';
 export { default as Purchases } from './pages/BudgetApp/Purchases';
+export { default as PurchaseHistory } from './pages/BudgetApp/PurchaseHistory';
 export { default as Savings } from './pages/BudgetApp/Savings';
 export { default as DepositFunds } from './pages/BudgetApp/DepositFunds';
 
@@ -19,22 +23,22 @@ export { default as PhotoLanding } from './pages/PhotoApp/PhotoLanding';
 
 //########################### Todo Pages ###########################//
 export { default as TodoLanding } from './pages/TodoApp/TodoLanding';
+export { default as TodoList } from './pages/TodoApp/TodoList';
 
 
 
 
-
-//######################## AlphaLabs Elements ########################//
-export { default as Header } from './elements/Header';
-
+//###################################################################################//
+//################################# SHARED ELEMENTS #################################//
+//###################################################################################//
+export { default as Navbar } from './elements/Shared/PageElements/Navbar';
+export { default as NavbarLandingPage } from './elements/Shared/PageElements/NavbarLandingPage';
+export { default as PageContainer } from './elements/Shared/PageElements/PageContainer';
+export { default as LandingPageContainer } from './elements/Shared/PageElements/LandingPageContainer';
 
 //######################## BudgetApp Elements ########################//
 // Headers
 export { default as LandingHeader } from './elements/BudgetApp/Headers/LandingHeader';
-export { default as DashboardHeader } from './elements/BudgetApp/Headers/DashboardHeader';
-export { default as PurchaseHeader } from './elements/BudgetApp/Headers/PurchaseHeader';
-export { default as BillHeader } from './elements/BudgetApp/Headers/BillHeader';
-export { default as SavingsHeader } from './elements/BudgetApp/Headers/SavingsHeader';
 
 // Buttons
 export { default as AddPurchaseBtn } from './elements/BudgetApp/Buttons/Purchases/AddPurchaseBtn';
@@ -89,4 +93,3 @@ export { default as PhotoAppHeader } from './elements/PhotoApp/Headers/PhotoAppH
 
 //######################## TodoApp Elements ########################//
 // Headers
-export { default as TodoAppHeader } from './elements/TodoApp/Headers/TodoAppHeader';

@@ -41,6 +41,19 @@ namespace alpha_labs._06.Controllers.BudgetApp.Purchases
             return Ok(response.Content);
         }
 
+        /// <summary>Gets all purchase history.</summary>
+        [HttpGet]
+        [Route("get-purchase-history")]
+        public async Task<IActionResult> GetPurchaseHistory()
+        {
+            var response = await _purchaseWorkflow.ExecGetPurchaseHistory();
+            if (!response.IsSuccess)
+            {
+                return Problem(statusCode: 500);
+            }
+            return Ok(response.Content);
+        }
+
         /// <summary>Gets monthly purchase nodes and table data.</summary>
         [HttpGet]
         [Route("report")]

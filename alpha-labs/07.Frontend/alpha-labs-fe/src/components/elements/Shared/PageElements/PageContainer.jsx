@@ -1,15 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { Box, Paper } from '@mui/material';
+import { Box, Paper, Stack } from '@mui/material';
 import { alphaLogo } from '../../../../utils/constants';
 
-const HeaderBox = styled(Box)(() => ({
-    height: '15vh',
+const PageContainerStack = styled(Stack)(() => ({
+    height: '100vh',
+    maxHeight: '104px',
     width: '100vw',
     display: "flex",
     padding: '16px 24px',
     backgroundColor: '#1a1a1a',
+    boxShadow: '0px 0px 15px 2px #0d0d0d',
+    zIndex: '100',
 }));
 
 const StyledPaper = styled(Paper)(() => ({
@@ -25,16 +28,10 @@ const StyledPaper = styled(Paper)(() => ({
     }
 }));
 
-const TodoAppHeader = () => {
+const PageContainer = () => {
     return (
-        <HeaderBox>
-            <Link to="/">
-                <StyledPaper>
-                    <img src={alphaLogo} height={65}/>
-                </StyledPaper>
-            </Link>
-        </HeaderBox>
+        <div>PageContainer</div>
     );
 }
 
-export default TodoAppHeader;
+export default PageContainer;

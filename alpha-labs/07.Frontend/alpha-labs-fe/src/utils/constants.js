@@ -1,8 +1,10 @@
 // Logo
+export const vault = require('../images/vault.png');
 export const alphaV = require('../images/alphalabs-v.png');
 export const alphaVault = require('../images/alphalabs-vault.png');
 export const alphaLogo = require('../images/alphalabs-logo.png');
 export const testBull = require('../images/test-bull.png');
+export const testBull2 = require('../images/test-bull2.png');
 export const boxCat = require('../images/box-cat.jpg');
 
 // App Screenshots

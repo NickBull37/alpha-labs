@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import { Typography, Paper, Box, Stack, Button } from '@mui/material';
 import { alphaLogo, budgetBull, dashboardShowcase, purchaseShowcase, billShowcase, savingsShowcase } from '../../../utils/constants';
-import { LandingHeader } from '../..';
+import { Navbar } from '../../../components';
 
 const GradientButton = styled(Button)(() => ({
     minHeight: '45px',
@@ -17,9 +17,16 @@ const GradientButton = styled(Button)(() => ({
 }));
 
 const BudgetLanding = () => {
+
+    // Constants
+    const navLinks = [];
+
     return (
         <Stack gap={2}>
-            <LandingHeader />
+            <Navbar
+                appName={"BullsBudget"}
+                navLinks={navLinks}
+            />
             <Stack
                 pt={5}
                 pb={10}

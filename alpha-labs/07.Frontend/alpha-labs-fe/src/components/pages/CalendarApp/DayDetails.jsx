@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
 import axios from "axios";
-import { Link, useSearchParams } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { Stack, Typography, Paper, Box, Grid, Button } from '@mui/material';
-import { Snackbar, Alert } from '@mui/material';
-import { ArrowBack, ArrowForward } from '@mui/icons-material';
+import { Stack, Typography, Paper, Box } from '@mui/material';
+import { DayDetailsHeader, Navbar } from '../../../components';
+import { boxCat } from '../../../utils/constants';
 import CakeIcon from '@mui/icons-material/Cake';
 import EventIcon from '@mui/icons-material/Event';
 import FlareIcon from '@mui/icons-material/Flare';
-import { DayDetailsHeader } from '../../../components';
-import { boxCat } from '../../../utils/constants';
 
 const PageContainer = styled(Box)(() => ({
     height: "100vh",

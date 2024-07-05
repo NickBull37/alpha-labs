@@ -1,11 +1,40 @@
 import React from 'react';
 import { Box, Stack, Typography, } from '@mui/material';
-import { DashboardHeader, DashboardDetails, PurchaseDetails, BillDetails, SavingsDetails } from '../../../components';
+import { Navbar, DashboardDetails, PurchaseDetails, BillDetails, SavingsDetails } from '../../../components';
 
 const BudgetDashboard = () => {
+
+    const navLinks = [
+        {
+            index: 1,
+            label: 'DASHBOARD',
+            link: '/budget-dashboard'
+        },
+        {
+            index: 2,
+            label: 'PURCHASES',
+            link: '/budget-purchases'
+        },
+        {
+            index: 3,
+            label: 'BILLS',
+            link: '/budget-bills'
+        },
+        {
+            index: 4,
+            label: 'SAVINGS',
+            link: '/budget-savings'
+        },
+    ];
+
     return (
         <>
-            <DashboardHeader/>
+            <Navbar
+                appName={"BullsBudget"}
+                currentPage={"DASHBOARD"}
+                navLinks={navLinks}
+                linkClassName={"progress-p-purple-grad"}
+            />
             <Box
                 display="flex"
                 justifyContent="center"

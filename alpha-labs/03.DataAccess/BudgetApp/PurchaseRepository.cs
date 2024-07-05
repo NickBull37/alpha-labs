@@ -18,6 +18,9 @@ namespace alpha_labs._03.DataAccess.BudgetApp
 
         /// <summary>Gets all purchase records for the previous month from the database.</summary>
         Task<ActionResponse<List<Purchase>>> GetPrevPurchases();
+
+        /// <summary>Gets all past purchases from the database.</summary>
+        Task<ActionResponse<List<Purchase>>> GetPastPurchases();
         #endregion
 
         #region UPDATE
@@ -97,6 +100,27 @@ namespace alpha_labs._03.DataAccess.BudgetApp
             catch
             {
                 return new FailingAR<List<Purchase>>("Failed to retrieve purchases from the database.");
+            }
+        }
+
+        /// <summary>Gets all past purchases from the database.</summary>
+        public async Task<ActionResponse<List<Purchase>>> GetPastPurchases()
+        {
+            var currentDate = DateTime.Today;
+            var startOfMonth = new DateTime(currentDate.Year, currentDate.Month, 1);
+
+            try
+            {
+                var purchases = await _dbContext.Purchases
+                    .AsNoTracking()
+                    .Where(p => p.PurchaseDate < startOfMonth)
+                    .ToListAsync()
+                    .ConfigureAwait(false);
+                return new PassingAR<List<Purchase>>(purchases);
+            }
+            catch
+            {
+                return new FailingAR<List<Purchase>>("Failed to retrieve bills from the database.");
             }
         }
         #endregion

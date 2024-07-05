@@ -16,11 +16,17 @@ namespace alpha_labs._03.DataAccess.BudgetApp
         #endregion
 
         #region READ
-        /// <summary>Gets all bill templates from the database.</summary>
-        Task<ActionResponse<List<BillTemplate>>> GetBillTemplates();
+        /// <summary>Gets all active bill templates from the database.</summary>
+        Task<ActionResponse<List<BillTemplate>>> GetActiveBillTemplates();
 
         /// <summary>Gets all bills for the current month from the database.</summary>
         Task<ActionResponse<List<Bill>>> GetBills();
+
+        /// <summary>Gets all past bills from the database.</summary>
+        Task<ActionResponse<List<Bill>>> GetPastBills();
+
+        /// <summary>Gets all bills within a specified range from the database.</summary>
+        Task<ActionResponse<List<Bill>>> GetBillsByRange(DateTime start, DateTime end);
 
         /// <summary>Gets the bill with matching ID from the database.</summary>
         Task<ActionResponse<Bill>> GetBillByID(int id);
@@ -80,13 +86,14 @@ namespace alpha_labs._03.DataAccess.BudgetApp
         #endregion
 
         #region READ
-        /// <summary>Gets all bill templates from the database.</summary>
-        public async Task<ActionResponse<List<BillTemplate>>> GetBillTemplates()
+        /// <summary>Gets all active bill templates from the database.</summary>
+        public async Task<ActionResponse<List<BillTemplate>>> GetActiveBillTemplates()
         {
             try
             {
                 var templates = await _dbContext.BillTemplates
                     .AsNoTracking()
+                    .Where(x => x.IsActive)
                     .ToListAsync()
                     .ConfigureAwait(false);
                 return new PassingAR<List<BillTemplate>>(templates);
@@ -109,6 +116,45 @@ namespace alpha_labs._03.DataAccess.BudgetApp
                 var bills = await _dbContext.Bills
                     .AsNoTracking()
                     .Where(p => p.DueDate >= startOfMonth && p.DueDate < startOfNextMonth)
+                    .ToListAsync()
+                    .ConfigureAwait(false);
+                return new PassingAR<List<Bill>>(bills);
+            }
+            catch
+            {
+                return new FailingAR<List<Bill>>("Failed to retrieve bills from the database.");
+            }
+        }
+
+        /// <summary>Gets all past bills from the database.</summary>
+        public async Task<ActionResponse<List<Bill>>> GetPastBills()
+        {
+            var currentDate = DateTime.Today;
+            var startOfMonth = new DateTime(currentDate.Year, currentDate.Month, 1);
+
+            try
+            {
+                var bills = await _dbContext.Bills
+                    .AsNoTracking()
+                    .Where(p => p.DueDate < startOfMonth)
+                    .ToListAsync()
+                    .ConfigureAwait(false);
+                return new PassingAR<List<Bill>>(bills);
+            }
+            catch
+            {
+                return new FailingAR<List<Bill>>("Failed to retrieve bills from the database.");
+            }
+        }
+
+        /// <summary>Gets all bills within a specified range from the database.</summary>
+        public async Task<ActionResponse<List<Bill>>> GetBillsByRange(DateTime start, DateTime end)
+        {
+            try
+            {
+                var bills = await _dbContext.Bills
+                    .AsNoTracking()
+                    .Where(x => x.DueDate >= start && x.DueDate <= end)
                     .ToListAsync()
                     .ConfigureAwait(false);
                 return new PassingAR<List<Bill>>(bills);

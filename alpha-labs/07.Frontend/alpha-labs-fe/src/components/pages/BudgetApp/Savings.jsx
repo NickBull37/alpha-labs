@@ -2,17 +2,40 @@ import React from 'react';
 import axios from "axios";
 import { useState, useEffect } from 'react';
 import { Box, Stack, Alert, Snackbar } from '@mui/material';
-import { SavingsHeader, SavingsDetails, SavingsButtonSet, SavingsTable } from '../../../components';
+import { Navbar, SavingsDetails, SavingsButtonSet, SavingsTable } from '../../../components';
 
 const Savings = () => {
 
     // Constants
+    const navLinks = [
+        {
+            index: 1,
+            label: 'DASHBOARD',
+            link: '/budget-dashboard'
+        },
+        {
+            index: 2,
+            label: 'PURCHASES',
+            link: '/budget-purchases'
+        },
+        {
+            index: 3,
+            label: 'BILLS',
+            link: '/budget-bills'
+        },
+        {
+            index: 4,
+            label: 'SAVINGS',
+            link: '/budget-savings'
+        },
+    ];
+
+    // State variables
     const [successState, setSuccessState] = useState('');
     const [errorState, setErrorState] = useState('');
     const [successOpen, setSuccessOpen] = useState(false);
     const [failureOpen, setFailureOpen] = useState(false);
 
-    // State variables
     const [totalMonthlyIncome, setTotalMonthlyIncome] = useState(0);
     const [currentMonthlySavings, setCurrentMonthlySavings] = useState(0);
     const [combinedFundTotal, setCombinedFundTotal] = useState(0);
@@ -78,7 +101,12 @@ const Savings = () => {
 
     return (
         <>
-            <SavingsHeader />
+            <Navbar
+                appName={"BullsBudget"}
+                currentPage={"SAVINGS"}
+                navLinks={navLinks}
+                linkClassName={"progress-p-green-grad"}
+            />
             <Box display="flex" justifyContent="center"  sx={{ mt: 6 }}>
                 <Stack className="container">
                     <SavingsDetails />

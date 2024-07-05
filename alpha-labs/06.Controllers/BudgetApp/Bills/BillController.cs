@@ -54,6 +54,19 @@ namespace alpha_labs._06.Controllers.BudgetApp.Bills
             }
             return Ok(response.Content);
         }
+
+        /// <summary>Gets all billing history.</summary>
+        [HttpGet]
+        [Route("get-billing-history")]
+        public async Task<IActionResult> GetBillingHistory()
+        {
+            var response = await _workflow.ExecGetBillingHistory();
+            if (!response.IsSuccess)
+            {
+                return Problem(statusCode: 500);
+            }
+            return Ok(response.Content);
+        }
         #endregion
 
         #region POST Endpoints

@@ -1,4 +1,5 @@
 ﻿using alpha_labs._01.Configuration.ActionResponse;
+using alpha_labs._02.Models.BudgetApp.Purchases;
 using alpha_labs._03.DataAccess.BudgetApp;
 using alpha_labs._04.Services.BudgetApp;
 using alpha_labs._06.Controllers.BudgetApp.Purchases;
@@ -12,6 +13,9 @@ namespace alpha_labs._05.Workflows.BudgetApp
 
         /// <summary>Workflow for the [purchase/prev-nodes] endpoint.</summary>
         Task<ActionResponse<PurchaseNodesResponse>> ExecGetPrevPurchaseNodes();
+
+        /// <summary>Workflow for the [purchase/get-purchase-history] endpoint.</summary>
+        Task<ActionResponse<PurchaseHistoryResponse>> ExecGetPurchaseHistory();
 
         /// <summary>Workflow for the [purchase/report] endpoint.</summary>
         Task<ActionResponse<PurchaseReportResponse>> ExecGetPurchaseReport();
@@ -62,6 +66,46 @@ namespace alpha_labs._05.Workflows.BudgetApp
             var purchaseNodesResponse = _purchaseService.CalculateNodeValues(response.Content!);
 
             return new PassingAR<PurchaseNodesResponse>(purchaseNodesResponse);
+        }
+
+        /// <summary>Workflow for the [purchase/get-purchase-history] endpoint.</summary>
+        public async Task<ActionResponse<PurchaseHistoryResponse>> ExecGetPurchaseHistory()
+        {
+            var purchaseHistoryResponse = await _purchaseRepository.GetPastPurchases();
+            if (!purchaseHistoryResponse.IsSuccess)
+            {
+                return new FailingAR<PurchaseHistoryResponse>(purchaseHistoryResponse.ErrorMessage!);
+            }
+            var purchases = purchaseHistoryResponse.Content;
+
+            List<int> years = purchases!.Select(x => x.PurchaseDate.Year).Distinct().ToList();
+
+            var index = 1;
+            List<PurchaseNode> purchaseNodes = [];
+            List<PurchaseHistoryRecord> historyRecords = [];
+            foreach (var year in years)
+            {
+                List<int> months = purchases!.Select(x => x.PurchaseDate.Month).Distinct().ToList();
+
+                foreach (var month in months)
+                {
+                    List<Purchase> monthlyPurchases = purchases!.Where(x => x.PurchaseDate.Year == year && x.PurchaseDate.Month == month).ToList();
+
+                    var historyRecord = _purchaseService.CreatePurchaseHistoryRecord(monthlyPurchases, month, year);
+
+                    historyRecord.ID = index;
+                    index++;
+
+                    historyRecords.Add(historyRecord);
+                }
+            }
+
+            var response = new PurchaseHistoryResponse
+            {
+                Records = historyRecords
+            };
+
+            return new PassingAR<PurchaseHistoryResponse>(response);
         }
 
         /// <summary>Workflow for the [purchase/report] endpoint.</summary>

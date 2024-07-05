@@ -3,15 +3,23 @@ import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Typography, Box, Stack, Button } from '@mui/material';
 import { calendarBull } from '../../../utils/constants';
-import { CalendarHeader, CalLandingHeader } from '../../../components';
+import { NavbarLandingPage } from '../../../components';
 
-const LandingStack = styled(Stack)(() => ({
+const LandingPageStack = styled(Stack)(() => ({
+    height: '100vh',
+    width: '100vw',
+    display: 'flex',
+    alignItems: 'center',
+}));
+
+const LandingContentStack = styled(Stack)(() => ({
     height: '85vh',
     width: '100vw',
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
+    // backgroundColor: '#101823'
     backgroundImage: '',
-    //backgroundColor: '#333333',
 }));
 
 const GradientButton = styled(Button)(() => ({
@@ -27,18 +35,16 @@ const GradientButton = styled(Button)(() => ({
 }));
 
 const CalendarLanding = () => {
+
+    const blue = 'rgba(25, 118, 210, 0.8)';
+
     return (
-        <Stack>
-            <CalendarHeader />
-            <Stack
-                pt={5}
-                pb={8.5}
-                gap={8}
-                sx={{
-                    bgcolor: '#101823'
-                }}
-            >
-                <Stack gap={3}>
+        <LandingPageStack>
+            <NavbarLandingPage
+                appName={"BullsCalendar"}
+            />
+            <LandingContentStack className="cal-bg-image" gap={8} pb={4}>
+                <Stack ml={1}>
                     <Box
                         display={'flex'}
                         justifyContent={'center'}
@@ -49,26 +55,26 @@ const CalendarLanding = () => {
                             <Typography className="blackpearl-h1-blue-grad">
                                 Bull's
                             </Typography>
-                            <Typography className="blackpearl-h1-blue-grad">
-                                Calendar
+                            <Typography className="blackpearl-h1caps-blue-grad"
+                                sx={{
+                                    pl: 1
+                                }}
+                            >
+                                CALENDAR
                             </Typography>
                         </Stack>
                     </Box>
                 </Stack>
 
                 {/* Box for title */}
-                <Box
-                    display={'flex'}
-                    justifyContent={'center'}
-                    alignItems={'center'}
-                >
+                <Box>
                     <Typography align={'center'} variant='h4'>
                         A simple calendar app for tracking birthdays, holidays, and special events
                     </Typography>
                 </Box>
 
                 {/* Box for buttons */}
-                <Box display={'flex'} justifyContent={'center'} gap={12}>
+                <Box>
                     <Link to="/calendar-list">
                         <GradientButton
                             variant="contained"
@@ -79,8 +85,8 @@ const CalendarLanding = () => {
                         </GradientButton>
                     </Link>
                 </Box>
-            </Stack>
-        </Stack>
+            </LandingContentStack>
+        </LandingPageStack>
     )
 }
 

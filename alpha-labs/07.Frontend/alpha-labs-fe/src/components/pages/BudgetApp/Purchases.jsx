@@ -1,18 +1,43 @@
 import React from 'react';
 import axios from "axios";
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Box, Stack, Alert, Snackbar, Divider, Typography } from '@mui/material';
-import { PurchaseHeader, PrevPurchaseDetails, PurchaseDetails, PurchaseButtonSet, PurchasesTable } from '../../../components';
+import { Navbar, PrevPurchaseDetails, PurchaseDetails, PurchaseButtonSet, PurchasesTable } from '../../../components';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const Purchases = () => {
 
     // Constants
+    const navLinks = [
+        {
+            index: 1,
+            label: 'DASHBOARD',
+            link: '/budget-dashboard'
+        },
+        {
+            index: 2,
+            label: 'PURCHASES',
+            link: '/budget-purchases'
+        },
+        {
+            index: 3,
+            label: 'BILLS',
+            link: '/budget-bills'
+        },
+        {
+            index: 4,
+            label: 'SAVINGS',
+            link: '/budget-savings'
+        },
+    ];
+
+    // State variables
     const [successState, setSuccessState] = useState('');
     const [errorState, setErrorState] = useState('');
     const [successOpen, setSuccessOpen] = useState(false);
     const [failureOpen, setFailureOpen] = useState(false);
 
-    // State variables
     const [purchaseTotal, setPurchaseTotal] = useState(0);
     const [luxuryPurchaseTotal, setLuxuryPurchaseTotal] = useState(0);
     const [luxuryPurchaseLimit, setLuxuryPurchaseLimit] = useState(0);
@@ -77,8 +102,29 @@ const Purchases = () => {
 
     return (
         <>
-            <PurchaseHeader />
-            <Box display="flex" justifyContent="center" sx={{ mt: 6 }}>
+            <Navbar
+                appName={"BullsBudget"}
+                currentPage={"PURCHASES"}
+                navLinks={navLinks}
+                linkClassName={"progress-p-pink-grad"}
+            />
+            <Box
+                className="dash-link"
+                display="flex"
+                justifyContent="flex-end"
+                sx={{
+                    pr: 6,
+                    pt: 4,
+                }}
+            >
+                <Link className='purchase-link' to="/budget-purchase-history">
+                    <Typography className='no-deco'>View Purchase History</Typography>
+                </Link>
+                <Link className='purchase-link' to="/budget-purchase-history">
+                    <ArrowForwardIosIcon />
+                </Link>
+            </Box>
+            <Box display="flex" justifyContent="center">
                 {/* <PurchasesLeftSidebar /> */}
                 <Stack className="container" gap={2}>
                     <PrevPurchaseDetails />

@@ -1,64 +1,69 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Box, Stack, Typography, Paper, Grid, Button } from '@mui/material';
-import { TodoAppHeader } from '../../../components';
-import { todoBull, testBull } from '../../../utils/constants';
+import { NavbarLandingPage } from '../../../components';
 
-const LandingStack = styled(Stack)(() => ({
-    height: '85vh',
+const LandingPageStack = styled(Stack)(() => ({
     width: '100vw',
     display: 'flex',
-    alignItems: 'center',
-    backgroundImage: '',
-    //backgroundColor: '#333333',
 }));
 
-const EnterButton = styled(Button)(() => ({
-    color: '#fff',
-    height: '50px',
-    width: '160px',
-    fontSize: '1.25rem',
-    background: 'linear-gradient(to right, #00cc00, #00ff00)',
-    boxShadow: '0px 2px 10px 1px #1a1a1a',
-    backgroundColor: '#7e22ce',
-    '&:hover': {
-        background: 'linear-gradient(to right, #00b300, #00e600)',
-        boxShadow: '0px 0px 15px 2px #1a1a1a',
-    },
+const LandingContentStack = styled(Stack)(() => ({
+    minHeight: '86vh',
+    height: '100%',
+    width: '100vw',
+    paddingLeft: '6rem',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
 }));
 
 const TodoLanding = () => {
+
+    const green = 'rgba(0, 255, 0, 0.7)';
+
     return (
-        <>
-            <TodoAppHeader />
-            <LandingStack className="bg-image">
-                <Box display="flex" alignItems="center" sx={{ mt: 2, mb: 12 }}>
+        <LandingPageStack>
+            <NavbarLandingPage
+                appName={"BullsTodos"}
+            />
+            <LandingContentStack
+                className="bg-image"
+                gap={2}
+            >
+                <Box
+                    sx={{
+
+                    }}
+                >
                     <Typography className="fastrace-h1">
                         TO -DO&nbsp;
                     </Typography>
                 </Box>
-
-                <Box
+                {/* <Box
                     display={'flex'}
                     justifyContent={'center'}
                 >
                     <Typography variant='h4'>
                         A simple to-do list app for keeping track of day to day tasks
                     </Typography>
-                </Box>
-
-                <Box display={'flex'} justifyContent={'center'} sx={{ mt: 6 }}>
-                    <EnterButton
+                </Box> */}
+                <Box
+                    sx={{
+                        ml: 23
+                    }}
+                >
+                    <Button
+                        className='todo-landing-btn'
                         variant="contained"
                         size='large'
-                        href="/photo-album"
+                        href="/todo-list"
                     >
                         Enter
-                    </EnterButton>
+                    </Button>
                 </Box>
-            </LandingStack>
-        </>
+            </LandingContentStack>
+        </LandingPageStack>
     );
 }
 

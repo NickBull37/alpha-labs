@@ -8,7 +8,7 @@ import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import CakeIcon from '@mui/icons-material/Cake';
 import EventIcon from '@mui/icons-material/Event';
 import FlareIcon from '@mui/icons-material/Flare';
-import { CalendarHeader, CalButtonSet } from '../../../components';
+import { Navbar, CalButtonSet } from '../../../components';
 
 const Toolbar = styled(Paper)(() => ({
     color: '#FFF',
@@ -49,6 +49,8 @@ const EmptyNode = styled(DayNode)(() => ({
 const CalendarList = () => {
 
     // Constants
+    const purple = 'rgba(126, 34, 206, 0.8)';
+    const navLinks = [];
     const today = new Date();
     const todayYear = today.getFullYear();
     const todayMonth = today.getMonth();
@@ -167,7 +169,10 @@ const CalendarList = () => {
 
     return (
         <>
-            <CalendarHeader />
+            <Navbar
+                appName={"BullsCalendar"}
+                navLinks={navLinks}
+            />
             <CalButtonSet
                 setSuccessState={setSuccessState}
                 setErrorState={setErrorState}

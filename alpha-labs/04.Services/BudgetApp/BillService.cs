@@ -3,6 +3,7 @@ using alpha_labs._01.Configuration.Utilities;
 using alpha_labs._02.Models.BudgetApp.Bills;
 using alpha_labs._03.DataAccess.BudgetApp;
 using alpha_labs._06.Controllers.BudgetApp.Bills;
+using System.Globalization;
 
 namespace alpha_labs._04.Services.BudgetApp
 {
@@ -16,6 +17,8 @@ namespace alpha_labs._04.Services.BudgetApp
 
         /// <summary>Calculates values for the billing nodes.</summary>
         BillingNodesResponse CalculateNodeValues(List<Bill> bills);
+
+        BillingHistoryRecord CreateBillingHistoryRecord(List<Bill> bills, int month, int year);
 
         /// <summary>Creates a new bill template model entity.</summary>
         BillTemplate CreateBillTemplateEntity(CreateBillTemplateRequest request);
@@ -156,6 +159,57 @@ namespace alpha_labs._04.Services.BudgetApp
                 MiscBillsPercentage = converter.ConvertDecimalToPercent(miscBillPercentage),
                 WebDevBillsAmount = totalWebDevBills,
                 WebDevBillsPercentage = converter.ConvertDecimalToPercent(webDevBillPercentage),
+            };
+        }
+
+        public BillingHistoryRecord CreateBillingHistoryRecord(List<Bill> bills, int month, int year)
+        {
+            List<BillingNode> billingNodes = [];
+
+            var totalBillsAmount = bills.Select(x => x.Amount).Sum();
+
+            if (totalBillsAmount == 0)
+            {
+                return new();
+            }
+
+            List<string> categories = bills.Select(x => x.Category).Distinct().ToList();
+
+            foreach (var category in categories)
+            {
+                List<Bill> catSpecificBills = bills.Where(x => x.Category == category).ToList();
+
+                var billingNode = CreateBillingNodeModel(catSpecificBills, category, totalBillsAmount);
+
+                billingNodes.Add(billingNode);
+            }
+
+            return CreateBillingHistoryRecordModel(billingNodes, month, year);
+        }
+
+        private static BillingNode CreateBillingNodeModel(List<Bill> bills, string category, decimal totalAmount)
+        {
+            var sum = bills.Select(x => x.Amount).Sum();
+            var percentage = sum != 0 ? sum / totalAmount : 0;
+
+            Converter converter = new();
+            return new BillingNode
+            {
+                Category = category,
+                Percentage = converter.ConvertDecimalToPercent(percentage),
+                Total = sum
+            };
+        }
+
+        private static BillingHistoryRecord CreateBillingHistoryRecordModel(List<BillingNode> nodes, int month, int year)
+        {
+            var orderedNodes = nodes.OrderByDescending(x => x.Total);
+            return new BillingHistoryRecord
+            {
+                Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month),
+                Year = year,
+                Total = nodes.Select(x => x.Total).Sum(),
+                BillingNodes = orderedNodes
             };
         }
 

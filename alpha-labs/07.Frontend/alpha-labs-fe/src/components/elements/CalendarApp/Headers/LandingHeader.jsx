@@ -21,25 +21,15 @@ const StyledPaper = styled(Paper)(() => ({
     justifyContent: "center",
     alignItems: "center",
     padding: 2,
-    boxShadow: "0px 0px 6px 1px rgba(172, 0, 230, 1)",
+    boxShadow: "0px 0px 6px 1px rgba(25, 118, 210, 0.8)",
     '&:hover': {
-        boxShadow: "0px 0px 6px 2px rgba(172, 0, 230, 0.8)"
+        boxShadow: "0px 0px 10px 2px rgba(25, 118, 210, 0.8)"
     }
 }));
 
 const LandingHeader = () => {
     return (
-        <HeaderBox
-            // sx={{
-            //     zIndex: '100',
-            //     pt: 2,
-            //     pb: 2,
-            //     pl: 3,
-            //     pr: 4,
-            //     backgroundColor: '#1a1a1a',
-            //     boxShadow: '0px 0px 15px 2px #0d0d0d'
-            // }}
-        >
+        <HeaderBox>
             <Link to="/">
                 <StyledPaper>
                     <img src={alphaLogo} height={65}/>
