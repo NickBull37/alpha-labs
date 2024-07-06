@@ -184,23 +184,26 @@ const DashboardDetails = () => {
                     </Typography>
                     <Box display="flex" justifyContent="space-between" alignItems="baseline">
                         <Link to="/budget-deposit">
-                            <Box>
-                                <Typography className="num-text-bold"
-                                    sx={{
-                                        mt: 2,
-                                        px: 1,
-                                        color: '#00cc7a',
-                                        border: '1px solid #333333',
-                                        borderRadius: '5px',
-                                        backgroundColor: '#595959',
-                                        '&:hover': {
-                                            cursor: 'pointer',
-                                            bgcolor: '#4d4d4d',
-                                            boxShadow: '0px 2px 5px 0px #1a1a1a'
-                                        },
-                                    }}
-                                >
-                                    ${currentMonthlySavings.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                            <Box
+                                display="flex"
+                                alignItems="center"
+                                sx={{
+                                    mt: 2,
+                                    px: 1,
+                                    border: '1px solid #333333',
+                                    borderRadius: '5px',
+                                    backgroundColor: '#595959',
+                                    color: '#00cc7a',
+                                    '&:hover': {
+                                        cursor: 'pointer',
+                                        bgcolor: '#4d4d4d',
+                                        boxShadow: '0px 2px 5px 0px #1a1a1a'
+                                    },
+                                }}
+                            >
+                                <span className='sm-dollar'>$</span>
+                                <Typography className="num-text-bold">
+                                    {currentMonthlySavings.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
                                 </Typography>
                             </Box>
                         </Link>

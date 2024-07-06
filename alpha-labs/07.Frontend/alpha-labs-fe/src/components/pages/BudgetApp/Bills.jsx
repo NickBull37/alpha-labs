@@ -122,7 +122,11 @@ const Bills = () => {
                     <ArrowForwardIosIcon />
                 </Link>
             </Box>
-            <Box display="flex" justifyContent="center">
+            <Box
+                display="flex"
+                justifyContent="center"
+                sx={{ mt: 2 }}
+            >
                 <Stack className="container">
                     <BillDetails />
                     <BillButtonSet

@@ -36,51 +36,6 @@ namespace alpha_labs._04.Services.BudgetApp
         }
 
         /// <summary>Calculates values for the purchase nodes.</summary>
-        /// DELETE LATER ONCE NEW ENDPOINT WORKS
-        //public PurchaseNodesResponse CalculateNodeValues(List<Purchase> purchases)
-        //{
-        //    var totalMonthlySpending = purchases.Select(x => x.Amount).Sum();
-
-        //    if (totalMonthlySpending == 0)
-        //    {
-        //        return new PurchaseNodesResponse
-        //        {
-        //            TotalEntertainmentSpending = 0,
-        //            TotalEntertainmentPercentage = 0,
-        //            TotalFoodSpending = 0,
-        //            TotalFoodPercentage = 0,
-        //            TotalHousingSpending = 0,
-        //            TotalHousingPercentage = 0,
-        //            TotalMiscSpending = 0,
-        //            TotalMiscPercentage = 0,
-        //        };
-        //    }
-
-        //    var totalEntertainmentSpending = purchases.Where(x => x.Category == "Entertainment").Select(x => x.Amount).Sum();
-        //    var totalFoodSpending = purchases.Where(x => x.Category == "Food").Select(x => x.Amount).Sum();
-        //    var totalHousingSpending = purchases.Where(x => x.Category == "Housing").Select(x => x.Amount).Sum();
-        //    var totalMiscSpending = purchases.Where(x => x.Category == "Miscellaneous").Select(x => x.Amount).Sum();
-
-        //    var entertainmentPercentage = totalEntertainmentSpending != 0 ? totalEntertainmentSpending / totalMonthlySpending : 0;
-        //    var foodPercentage = totalFoodSpending != 0 ? totalFoodSpending / totalMonthlySpending : 0;
-        //    var housingPercentage = totalHousingSpending != 0 ? totalHousingSpending / totalMonthlySpending : 0;
-        //    var miscPercentage = totalMiscSpending != 0 ? totalMiscSpending / totalMonthlySpending : 0;
-
-        //    Converter converter = new();
-        //    return new PurchaseNodesResponse
-        //    {
-        //        TotalEntertainmentSpending = totalEntertainmentSpending,
-        //        TotalEntertainmentPercentage = converter.ConvertDecimalToPercent(entertainmentPercentage),
-        //        TotalFoodSpending = totalFoodSpending,
-        //        TotalFoodPercentage = converter.ConvertDecimalToPercent(foodPercentage),
-        //        TotalHousingSpending = totalHousingSpending,
-        //        TotalHousingPercentage = converter.ConvertDecimalToPercent(housingPercentage),
-        //        TotalMiscSpending = totalMiscSpending,
-        //        TotalMiscPercentage = converter.ConvertDecimalToPercent(miscPercentage),
-        //    };
-        //}
-
-        /// <summary>Calculates values for the purchase nodes.</summary>
         public PurchaseNodesResponse CalculateNodeValues(List<Purchase> purchases)
         {
             var totalMonthlySpending = purchases.Select(x => x.Amount).Sum();
@@ -135,11 +90,14 @@ namespace alpha_labs._04.Services.BudgetApp
                 purchaseNodes.Add(purchaseNode);
             }
 
-            return CreatePurchaseHistoryRecordModel(purchaseNodes, month, year);
+            var luxTotal = purchases.Where(x => x.IsLuxury).Select(x => x.Amount).Sum();
+
+            return CreatePurchaseHistoryRecordModel(purchaseNodes, month, year, luxTotal);
         }
 
         private static PurchaseNode CreatePurchaseNodeModel(List<Purchase> purchases, string category, decimal totalAmount)
         {
+            var count = purchases.Count;
             var sum = purchases.Select(x => x.Amount).Sum();
             var percentage = sum != 0 ? sum / totalAmount : 0;
 
@@ -147,12 +105,13 @@ namespace alpha_labs._04.Services.BudgetApp
             return new PurchaseNode
             {
                 Category = category,
+                Count = count,
                 Percentage = converter.ConvertDecimalToPercent(percentage),
                 Total = sum
             };
         }
 
-        private static PurchaseHistoryRecord CreatePurchaseHistoryRecordModel(List<PurchaseNode> nodes, int month, int year)
+        private static PurchaseHistoryRecord CreatePurchaseHistoryRecordModel(List<PurchaseNode> nodes, int month, int year, decimal luxTotal)
         {
             var orderedNodes = nodes.OrderByDescending(x => x.Total);
             return new PurchaseHistoryRecord
@@ -160,6 +119,7 @@ namespace alpha_labs._04.Services.BudgetApp
                 Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month),
                 Year = year,
                 Total = nodes.Select(x => x.Total).Sum(),
+                LuxTotal = luxTotal,
                 PurchaseNodes = orderedNodes
             };
         }

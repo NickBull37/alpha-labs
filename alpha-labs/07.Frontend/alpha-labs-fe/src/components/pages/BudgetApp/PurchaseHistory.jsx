@@ -2,38 +2,19 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { styled } from '@mui/material/styles';
 import { Box, Stack, Typography, Paper, Button } from '@mui/material';
-import { Navbar } from '../../../components';
+import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Navbar, PurchaseHistoryTable } from '../../../components';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const PageContainer = styled(Stack)(() => ({
     // Your styles here
 }));
 
-const FlexBoxBetween = styled(Box)(() => ({
-    display: "flex",
-    alignItems: "center",
-    width: '100%'
-}));
-
-const PaperRecord = styled(Paper)(() => ({
+const StyledAccordion = styled(Accordion)(() => ({
+    maxWidth: '800px',
     backgroundColor: '#3f3f46',
     color: '#fff',
-    minWidth: '700px',
-    padding: '1rem'
-}));
-
-const ThirdTextLeft = styled(Typography)(() => ({
-    textAlign: 'left',
-    fontSize: '1.25rem',
-    lineHeight: '1.4',
-    fontWeight: '600',
-    position: 'relative',
-}));
-
-const ThirdTextRight = styled(Typography)(() => ({
-    textAlign: 'right',
-    fontSize: '1.125rem',
-    lineHeight: '1.4',
-    flex: 0
+    boxShadow: '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
 }));
 
 const GradientButton = styled(Button)(() => ({
@@ -105,60 +86,44 @@ const PurchaseHistory = () => {
             <Stack
                 display="flex"
                 alignItems="center"
-                gap={4}
                 sx={{
-                    mt: 8
+                    mt: 10
                 }}
             >
-                {historyRecords.map((record, index) => (
-                    <Stack key={index}>
-                        <Typography className='progress-h5-pink-grad'
-                            sx={{
-                                mb: 0.5
-                            }}
-                        >
-                            {record.month} {record.year}
-                        </Typography>
-                        <PaperRecord>
-                            <Stack gap={0.5}>
-                                {record.purchaseNodes.map((node, category) => (
-                                    <FlexBoxBetween key={category}>
-                                        <ThirdTextLeft>
-                                            {node.category} <span className='perc-text-pink'>({node.percentage}%)</span>
-                                        </ThirdTextLeft>
-                                        <Typography flex={1}></Typography>
-                                        <ThirdTextRight>
-                                            ${node.total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
-                                        </ThirdTextRight>
-                                    </FlexBoxBetween>
-                                ))}
-                                <Box
-                                    sx={{
-                                        my: 1,
-                                        borderBottom: '1px solid #ff1a75'
-                                    }}
-                                ></Box>
-                                <FlexBoxBetween>
-                                    <ThirdTextLeft>
-                                        Total
-                                    </ThirdTextLeft>
-                                    <Typography flex={1}></Typography>
-                                    <ThirdTextRight
-                                        sx={{
-                                            py: 0.5,
-                                            px: 1,
-                                            color: '#fff',
-                                            fontWeight: 600,
-                                            bgcolor: 'rgba(255, 77, 148, 0.2)',
-                                            borderRadius: '4px'
-                                        }}
-                                    >
-                                        ${record.total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
-                                    </ThirdTextRight>
-                                </FlexBoxBetween>
-                            </Stack>
-                        </PaperRecord>
-                    </Stack>
+                {historyRecords.map((record) => (
+                    <Box key={record.id}>
+                        {record.id === 1 ? (
+                            <StyledAccordion defaultExpanded>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon sx={{ color: '#fff' }} />}
+                                    aria-controls="panel1-content"
+                                    id="panel1-header"
+                                >
+                                    <Typography className='progress-h5-pink-grad'>
+                                        {record.month} {record.year}
+                                    </Typography>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <PurchaseHistoryTable historyRecord={record} />
+                                </AccordionDetails>
+                            </StyledAccordion>
+                        ) : (
+                            <StyledAccordion>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon sx={{ color: '#fff' }} />}
+                                    aria-controls="panel2-content"
+                                    id="panel2-header"
+                                >
+                                    <Typography className='progress-h5-pink-grad'>
+                                        {record.month} {record.year}
+                                    </Typography>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <PurchaseHistoryTable />
+                                </AccordionDetails>
+                            </StyledAccordion>
+                        )}
+                    </Box>
                 ))}
             </Stack>
         </PageContainer>

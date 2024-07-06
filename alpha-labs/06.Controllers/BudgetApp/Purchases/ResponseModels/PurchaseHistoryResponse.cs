@@ -17,6 +17,8 @@ namespace alpha_labs._06.Controllers.BudgetApp.Purchases
 
         public decimal Total { get; set; }
 
+        public decimal LuxTotal { get; set; }
+
         public IEnumerable<PurchaseNode> PurchaseNodes { get; set; } = [];
     }
 }

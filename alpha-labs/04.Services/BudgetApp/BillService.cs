@@ -189,6 +189,7 @@ namespace alpha_labs._04.Services.BudgetApp
 
         private static BillingNode CreateBillingNodeModel(List<Bill> bills, string category, decimal totalAmount)
         {
+            var count = bills.Count;
             var sum = bills.Select(x => x.Amount).Sum();
             var percentage = sum != 0 ? sum / totalAmount : 0;
 
@@ -196,6 +197,7 @@ namespace alpha_labs._04.Services.BudgetApp
             return new BillingNode
             {
                 Category = category,
+                Count = count,
                 Percentage = converter.ConvertDecimalToPercent(percentage),
                 Total = sum
             };

@@ -101,7 +101,7 @@ const Purchases = () => {
     }
 
     return (
-        <>
+        <Stack>
             <Navbar
                 appName={"BullsBudget"}
                 currentPage={"PURCHASES"}
@@ -124,11 +124,15 @@ const Purchases = () => {
                     <ArrowForwardIosIcon />
                 </Link>
             </Box>
-            <Box display="flex" justifyContent="center">
+            <Box
+                display="flex"
+                justifyContent="center"
+                sx={{ mt: 2 }}
+            >
                 {/* <PurchasesLeftSidebar /> */}
-                <Stack className="container" gap={2}>
-                    <PrevPurchaseDetails />
-                    <Stack gap={0.5}>
+                <Stack className="container">
+                    {/* <PrevPurchaseDetails /> */}
+                    {/* <Stack gap={0.5}>
                         <Typography textAlign="right" className="sec-header5">
                             Prev Month
                         </Typography>
@@ -136,7 +140,7 @@ const Purchases = () => {
                         <Typography className="sec-header5-grad">
                             Current Month
                         </Typography>
-                    </Stack>
+                    </Stack> */}
                     <PurchaseDetails />
                     <PurchaseButtonSet
                         purchaseTotal={purchaseTotal}
@@ -174,7 +178,7 @@ const Purchases = () => {
                     ERROR: {errorState}
                 </Alert>
             </Snackbar>
-        </>
+        </Stack>
     );
 }
 

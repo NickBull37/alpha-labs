@@ -56,7 +56,9 @@ const PurchaseDetails = () => {
     }
 
     return (
-        <Box display="flex" justifyContent="space-evenly" gap={6}
+        <Box
+            display="flex"
+            gap={2.25}
             sx={{
                 p: 2,
                 border: '2px solid #ff1a75',
@@ -201,6 +203,34 @@ const PurchaseDetails = () => {
                         }}
                     >
                         {miscPercentage}%
+                    </Typography>
+                </Stack>
+            </StyledPaper>
+            <StyledPaper elevation={8}
+                sx={{
+                    py: 1,
+                    px: 2,
+                }}
+            >
+                <Stack>
+                    <Typography className="sec-header3">
+                        Wawa
+                    </Typography>
+                    <Typography className="subtitle2">
+                        <span className="color-gray200">
+                            Total Spent
+                        </span>&nbsp;&nbsp;
+                        <span className="body1">
+                            ${wawaSpending.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                        </span>
+                    </Typography>
+                    <Typography className="pg-header3"
+                        sx={{
+                            pt: 1,
+                            color: '#ff1a75'
+                        }}
+                    >
+                        {wawaPercentage}%
                     </Typography>
                 </Stack>
             </StyledPaper>

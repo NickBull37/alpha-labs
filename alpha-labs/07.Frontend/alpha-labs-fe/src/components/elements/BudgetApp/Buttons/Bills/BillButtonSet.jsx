@@ -8,8 +8,7 @@ const BillButtonSet = ({ billingTotal, billsCount, billsPaidCount, setSuccessSta
     return (
         <Box display="flex" alignItems="flex-end"
             sx={{
-                mt: 8,
-                mb: -4,
+                mt: 6,
             }}
         >
             <Box
@@ -18,7 +17,14 @@ const BillButtonSet = ({ billingTotal, billsCount, billsPaidCount, setSuccessSta
                 flexGrow={1}
                 gap={2}
             >
-                <Paper elevation={4} sx={{ py: 1, px: 1.5, backgroundColor: '#3f3f46' }}>
+                <Paper
+                    elevation={4}
+                    sx={{
+                        py: 1,
+                        px: 1.5,
+                        backgroundColor: '#3f3f46'
+                    }}
+                >
                     <Stack>
                         <Tooltip title="The sum of all monthly bills including paid & un-paid bills.">
                             <Typography
@@ -39,7 +45,14 @@ const BillButtonSet = ({ billingTotal, billsCount, billsPaidCount, setSuccessSta
                         </Box>
                     </Stack>
                 </Paper>
-                <Paper elevation={4} sx={{ py: 1, px: 1.5, backgroundColor: '#3f3f46' }}>
+                <Paper
+                    elevation={4}
+                    sx={{
+                        py: 1,
+                        px: 1.5,
+                        backgroundColor: '#3f3f46'
+                    }}
+                >
                     <Stack>
                         <Typography
                             className="sec-header33"

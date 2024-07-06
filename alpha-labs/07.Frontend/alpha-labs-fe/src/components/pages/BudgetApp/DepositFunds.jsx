@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Box, Stack, Paper, Typography, TextField, InputAdornment, Button } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { LandingHeader } from './../../../components';
+import { LandingHeader, Navbar, NavbarLandingPage } from './../../../components';
 import { useForm } from 'react-hook-form';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
@@ -56,6 +56,7 @@ const GradientButton = styled(Button)(() => ({
 const DepositFunds = () => {
 
     // Constants
+    const navLinks = [];
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -155,7 +156,10 @@ const DepositFunds = () => {
 
     return (
         <>
-            <LandingHeader />
+            <NavbarLandingPage
+                appName={"BullsBudget"}
+                navLinks={navLinks}
+            />
             <Box
                 className="dash-link"
                 display="flex"

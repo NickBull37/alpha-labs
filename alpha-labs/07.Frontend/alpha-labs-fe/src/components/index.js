@@ -8,8 +8,10 @@ export { default as BudgetLanding } from './pages/BudgetApp/BudgetLanding';
 export { default as BudgetDashboard } from './pages/BudgetApp/BudgetDashboard';
 export { default as Bills } from './pages/BudgetApp/Bills';
 export { default as BillingHistory } from './pages/BudgetApp/BillingHistory';
+export { default as BillingHistoryTable } from './pages/BudgetApp/BillingHistoryTable';
 export { default as Purchases } from './pages/BudgetApp/Purchases';
 export { default as PurchaseHistory } from './pages/BudgetApp/PurchaseHistory';
+export { default as PurchaseHistoryTable } from './pages/BudgetApp/PurchaseHistoryTable';
 export { default as Savings } from './pages/BudgetApp/Savings';
 export { default as DepositFunds } from './pages/BudgetApp/DepositFunds';
 
