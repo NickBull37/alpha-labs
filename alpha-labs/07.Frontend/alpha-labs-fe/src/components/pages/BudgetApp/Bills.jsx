@@ -112,7 +112,7 @@ const Bills = () => {
                 justifyContent="flex-end"
                 sx={{
                     pr: 6,
-                    pt: 4,
+                    pt: 12,
                 }}
             >
                 <Link className='bill-link' to="/budget-billing-history">

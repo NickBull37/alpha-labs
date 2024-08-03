@@ -4,8 +4,10 @@ import { Box, CssBaseline } from '@mui/material';
 import { Header } from "./components";
 import { LabDashboard, BudgetLanding, BudgetDashboard, Purchases, PurchaseHistory, Bills, BillingHistory, Savings, DepositFunds } from "./components";
 import { CalendarLanding, CalendarList, DayDetails } from "./components";
+import { DevLanding, FontShowcase } from "./components";
 import { PhotoLanding } from "./components";
 import { TodoLanding, TodoList } from "./components";
+import { WeatherLanding } from "./components";
 
 function App() {
 
@@ -26,10 +28,16 @@ function App() {
                 <Route path="/calendar-list" element={<CalendarList />} />
                 <Route path="/details" element={<DayDetails />} />
 
+                <Route path="/dev-landing" element={<DevLanding />} />
+
+                <Route path="/dev-fonts" element={<FontShowcase />} />
+
                 <Route path="/photo-landing" element={<PhotoLanding />} />
 
                 <Route path="/todo-landing" element={<TodoLanding />} />
                 <Route path="/todo-list" element={<TodoList />} />
+
+                <Route path="/weather-landing" element={<WeatherLanding />} />
             </Routes>
         </BrowserRouter>
     );

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { Typography, Box, Stack, Button } from '@mui/material';
+import { Box, Stack, Typography, Paper, Grid, Button } from '@mui/material';
 import { Navbar } from '../../../components';
-import { calendarBull } from '../../../utils/constants';
+import { devBull } from '../../../utils/constants';
 
 const LandingPageStack = styled(Stack)(() => ({
     height: '100vh',
@@ -34,51 +34,37 @@ const GradientButton = styled(Button)(() => ({
     },
 }));
 
-const CalendarLanding = () => {
+const DevLanding = () => {
 
     const navLinks = [];
 
     return (
         <LandingPageStack>
             <Navbar
-                appName={"BullsCalendar"}
+                appName={"BullsDev"}
                 navLinks={navLinks}
             />
             <LandingContentStack
-                className="cal-bg-image"
-                gap={8}
-                pt={24}
-                pb={4}
+                sx={{
+                    pt: 16
+                }}
             >
-                <Stack ml={1}>
-                    <Box
-                        display={'flex'}
-                        justifyContent={'center'}
-                        alignItems="center"
-                    >
-                        <img src={calendarBull} alt='logo' height={270} />
-                        <Stack>
-                            <Typography className="blackpearl-h1-blue-grad">
-                                Bull's
-                            </Typography>
-                            <Typography className="blackpearl-h1caps-blue-grad"
-                                sx={{
-                                    pl: 1
-                                }}
-                            >
-                                CALENDAR
-                            </Typography>
-                        </Stack>
-                    </Box>
-                </Stack>
-
+                <Box
+                    display="flex"
+                    justifyContent={'center'}
+                    alignItems="center"
+                >
+                    <img scr={devBull} alt='logo' height={270} />
+                    <Typography className='hacked-demo-h1'>
+                        DEV-Bull
+                    </Typography>
+                </Box>
                 {/* Box for title */}
                 <Box>
                     <Typography align={'center'} variant='h4'>
                         A simple calendar app for tracking birthdays, holidays, and special events
                     </Typography>
                 </Box>
-
                 {/* Box for buttons */}
                 <Box>
                     <Link to="/calendar-list">
@@ -93,7 +79,7 @@ const CalendarLanding = () => {
                 </Box>
             </LandingContentStack>
         </LandingPageStack>
-    )
+    );
 }
 
-export default CalendarLanding;
+export default DevLanding;

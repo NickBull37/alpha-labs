@@ -107,7 +107,13 @@ const Savings = () => {
                 navLinks={navLinks}
                 linkClassName={"progress-p-green-grad"}
             />
-            <Box display="flex" justifyContent="center"  sx={{ mt: 6 }}>
+            <Box
+                display="flex"
+                justifyContent="center"
+                sx={{
+                    pt: 16
+                }}
+            >
                 <Stack className="container">
                     <SavingsDetails />
                     <SavingsButtonSet

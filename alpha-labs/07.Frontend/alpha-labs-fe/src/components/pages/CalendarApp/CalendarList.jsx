@@ -179,7 +179,8 @@ const CalendarList = () => {
             />
             <Box
                 sx={{
-                    my: 4,
+                    mb: 8,
+                    pt: 16,
                     px: 26,
                 }}
             >

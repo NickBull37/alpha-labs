@@ -7,7 +7,8 @@ import { alphaLogo, vault, budgetBull, calendarBull, todoBull } from '../../../.
 const HeaderBox = styled(Box)(() => ({
     height: '14vh',
     maxHeight: '70px',
-    width: '98.75vw',
+    width: '100%',
+    position: 'fixed',
     display: "flex",
     alignItems: 'center',
     padding: '0 28px',

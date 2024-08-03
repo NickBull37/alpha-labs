@@ -38,7 +38,7 @@ const BudgetDashboard = () => {
             <Box
                 display="flex"
                 justifyContent="center"
-                mt={6}
+                pt={14}
                 mb={12}
             >
                 <Stack className="container" gap={4}>

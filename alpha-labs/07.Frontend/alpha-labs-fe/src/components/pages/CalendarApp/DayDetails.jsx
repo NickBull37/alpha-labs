@@ -44,6 +44,7 @@ const DayDetails = () => {
     const currentYear = date.getFullYear();
     const [searchParams] = useSearchParams();
     const month = searchParams.get('month');
+    const navLinks = [];
 
     // State variables
     const [birthdayDetails, setBirthdayDetails] = useState([]);
@@ -93,11 +94,14 @@ const DayDetails = () => {
 
     return (
         <PageContainer>
-            <DayDetailsHeader />
+            <Navbar
+                appName={"BullsCalendar"}
+                navLinks={navLinks}
+            />
             <Stack
                 display="flex"
                 alignItems="center"
-                mt={4}
+                pt={18}
                 gap={1.5}
             >
                 <Typography className="blackpearl-h3-blue-grad">

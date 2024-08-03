@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Box, Stack, Paper, Typography, TextField, InputAdornment, Button } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { LandingHeader, Navbar, NavbarLandingPage } from './../../../components';
+import { Navbar } from './../../../components';
 import { useForm } from 'react-hook-form';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
@@ -156,7 +156,7 @@ const DepositFunds = () => {
 
     return (
         <>
-            <NavbarLandingPage
+            <Navbar
                 appName={"BullsBudget"}
                 navLinks={navLinks}
             />
@@ -165,7 +165,7 @@ const DepositFunds = () => {
                 display="flex"
                 sx={{
                     pl: 4,
-                    pt: 4,
+                    pt: 13,
                 }}
             >
                 <Link className='dash-link' to="/budget-dashboard">

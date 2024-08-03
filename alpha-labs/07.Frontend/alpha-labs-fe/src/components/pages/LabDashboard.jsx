@@ -30,11 +30,15 @@ const LabDashboard = () => {
     return (
         // <Header />
         <Stack
-            height='100vh'
-            width='100vw'
+            height='100%'
+            width='100%'
             display="flex"
             justifyContent="space-evenly"
             alignItems="center"
+            gap={8}
+            sx={{
+                my: 10
+            }}
         >
             <Box
                 display="flex"
@@ -51,7 +55,18 @@ const LabDashboard = () => {
                 display="flex"
                 gap={8}
             >
-                <Link to="/photo-landing">
+                <Link to="/dev-landing">
+                    <img className="app-preview-pho" src={bullsPhotos} height={250}/>
+                </Link>
+                <Link to="/weather-landing">
+                    <img className="app-preview-tod" src={bullsTodos} height={250}/>
+                </Link>
+            </Box>
+            <Box
+                display="flex"
+                gap={8}
+            >
+                <Link to="/weather-landing">
                     <img className="app-preview-pho" src={bullsPhotos} height={250}/>
                 </Link>
                 <Link to="/todo-landing">

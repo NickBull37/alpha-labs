@@ -22,13 +22,15 @@ const BudgetLanding = () => {
     const navLinks = [];
 
     return (
-        <Stack gap={2}>
+        <Stack
+            gap={2}
+        >
             <Navbar
                 appName={"BullsBudget"}
                 navLinks={navLinks}
             />
             <Stack
-                pt={5}
+                pt={20}
                 pb={10}
                 gap={8}
                 sx={{

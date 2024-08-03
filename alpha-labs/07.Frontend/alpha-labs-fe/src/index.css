@@ -356,6 +356,18 @@ body {
 }
 
 @font-face {
+    font-family: 'Geobin';
+    src: local('Geobin'),
+         url('./fonts/Geobin.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Hacked';
+    src: local('Hacked'),
+         url('./fonts/Hacked.ttf') format('truetype');
+}
+
+@font-face {
     font-family: 'Kepo';
     src: local('Kepo'),
          url('./fonts/Kepo.ttf') format('truetype');
@@ -365,6 +377,12 @@ body {
     font-family: 'Progress';
     src: local('Progress'),
          url('./fonts/Progress.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Revered';
+    src: local('Revered'),
+         url('./fonts/Revered.ttf') format('truetype');
 }
 
 @font-face {
@@ -851,6 +869,432 @@ body {
 .date-picker:hover {
     border: 1px solid #999999;
 }
+
+
+/********************************************************************************************************************************************
+****************************************************************** FONT SHOWCASE ********************************************************************
+********************************************************************************************************************************************/
+.blackpearl-demo-h1 {
+    font-family: Blackpearl!important;
+    font-size: 3.5rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #0951aa, #00e6e6)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.blackpearl-demo-sec3 {
+    font-family: Blackpearl !important;
+    font-size: 2.25rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #00a3cc, #00a3cc)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+}
+.blackpearl-demo-p {
+    font-family: Blackpearl !important;
+    font-size: 1.125rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #00e6e6, #00e6e6)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+.brosh-demo-h1 {
+    font-family: Brosh!important;
+    font-size: 6rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #00802b, #33ff77)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.brosh-demo-sec3 {
+    font-family: Brosh!important;
+    font-size: 3rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #00b33c, #00b33c)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+}
+.brosh-demo-p {
+    font-family: Brosh!important;
+    font-size: 1.5rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #33ff77, #33ff77)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+.cornerstone-demo-h1 {
+    font-family: Cornerstone!important;
+    font-size: 4rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #b38f00, #ffe066)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.cornerstone-demo-sec3 {
+    font-family: Cornerstone!important;
+    font-size: 2.125rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #e6b800, #e6b800)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+}
+.cornerstone-demo-p {
+    font-family: Cornerstone!important;
+    font-size: 1.125rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #ffe066, #ffe066)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+.engine-demo-h1 {
+    font-family: Engine!important;
+    font-size: 5rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #990000, #ff6666)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.engine-demo-sec3 {
+    font-family: Engine!important;
+    font-size: 2.5rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #cc0000, #cc0000)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+}
+.engine-demo-p {
+    font-family: Engine!important;
+    font-size: 1.5rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #ff4d4d, #ff4d4d)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+.eros-demo-h1 {
+    font-family: Eros!important;
+    font-size: 4.75rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #8c1aff, #cc99ff)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.eros-demo-sec3 {
+    font-family: Eros!important;
+    font-size: 2.5rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #9933ff, #9933ff)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+}
+.eros-demo-p {
+    font-family: Eros!important;
+    font-size: 1.25rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #bf80ff, #bf80ff)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+.fastrace-demo-h1 {
+    font-family: Fastrace!important;
+    font-size: 4.5rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #00b300, #66ff66)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.fastrace-demo-sec3 {
+    font-family: Fastrace!important;
+    font-size: 2.25rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #00e600, #00e600)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+}
+.fastrace-demo-p {
+    font-family: Fastrace!important;
+    font-size: 1.25rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #66ff66, #66ff66)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+.geobin-demo-h1 {
+    font-family: Geobin!important;
+    font-size: 4.5rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #660000, #ff4d4d)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.geobin-demo-sec3 {
+    font-family: Geobin!important;
+    font-size: 2rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #ff0000, #ff0000)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+}
+.geobin-demo-p {
+    font-family: Geobin!important;
+    font-size: 1.125rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #ff3333, #ff3333)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+.hacked-demo-h1 {
+    font-family: Hacked!important;
+    font-size: 5rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #136c3e, #7de8b1)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.hacked-demo-sec3 {
+    font-family: Hacked!important;
+    font-size: 2.5rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #1b9857, #1b9857)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+    border-bottom: 2px solid #666666;
+}
+.hacked-demo-p {
+    font-family: Hacked!important;
+    font-size: 1.25rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #52e097, #52e097)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+.kepo-demo-h1 {
+    font-family: Kepo !important;
+    font-size: 4.5rem!important;
+    letter-spacing: 0.075em!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #00a3cc, #66ffff)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.kepo-demo-sec3 {
+    font-family: Kepo !important;
+    font-size: 2.25rem!important;
+    letter-spacing: 0.075em!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #00b8e6, #00b8e6)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+}
+.kepo-demo-p {
+    font-family: Kepo !important;
+    font-size: 1.125rem!important;
+    letter-spacing: 0.075em!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #66ffff, #66ffff)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+.progress-demo-h1 {
+    font-family: Progress !important;
+    font-size: 4.5rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #cc0052, #ff66a3)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.progress-demo-sec3 {
+    font-family: Progress !important;
+    font-size: 2rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #e6005c, #e6005c)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+}
+.progress-demo-p {
+    font-family: Progress !important;
+    font-size: 1.125rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #ff4d94, #ff4d94)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+.revered-demo-h1 {
+    font-family: Revered !important;
+    font-size: 3.25rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #800080, #ff66ff)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.revered-demo-sec3 {
+    font-family: Revered !important;
+    font-size: 1.25rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #cc00cc, #cc00cc)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+}
+.revered-demo-p {
+    font-family: Revered !important;
+    font-size: 0.75rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #ff4dff, #ff4dff)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+.salvar-demo-h1 {
+    font-family: Salvar !important;
+    font-size: 4.5rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #EE0425, #fd687c)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.salvar-demo-sec3 {
+    font-family: Salvar !important;
+    font-size: 1.75rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #fc1d3b, #fc1d3b)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+}
+.salvar-demo-p {
+    font-family: Salvar !important;
+    font-size: 1rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #fc4f66, #fc4f66)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+.signwood-demo-h1 {
+    font-family: Signwood !important;
+    line-height: normal!important;
+    font-size: 4.75rem!important;
+    font-weight: 500!important;
+    background: linear-gradient(to right, #b34700, #ffb380)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.signwood-demo-sec3 {
+    font-family: Signwood !important;
+    line-height: normal!important;
+    font-size: 2.25rem!important;
+    font-weight: 500!important;
+    background: linear-gradient(to right, #ff6600, #ff6600)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+}
+.signwood-demo-p {
+    font-family: Signwood !important;
+    font-size: 1.125rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #ffa366, #ffa366)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+.signature-demo-h1 {
+    font-family: Signature !important;
+    line-height: normal!important;
+    font-size: 8rem!important;
+    font-weight: 500!important;
+    background: linear-gradient(to right, #009973, #4dffd2)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.signature-demo-sec3 {
+    font-family: Signature !important;
+    line-height: normal!important;
+    font-size: 5rem!important;
+    font-weight: 500!important;
+    background: linear-gradient(to right, #4dffd2, #4dffd2)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+}
+.signature-demo-p {
+    line-height: normal!important;
+    color: #a6a6a6;
+    margin-top: 25px!important;
+}
+
+.wolfalcon-demo-h1 {
+    font-family: Wolfalcon!important;
+    font-size: 3.75rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #666633, #bbbb77)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.wolfalcon-demo-sec3 {
+    font-family: Wolfalcon!important;
+    font-size: 1.75rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #888844, #888844)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+}
+.wolfalcon-demo-p {
+    font-family: Wolfalcon!important;
+    font-size: 0.875rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #b2b266, #b2b266)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
+.wordmean-demo-h1 {
+    font-family: Wordmean !important;
+    font-size: 4.5rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #3333cc, #8585e0)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+.wordmean-demo-sec3 {
+    font-family: Wordmean !important;
+    font-size: 2.5rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #4747d1, #4747d1)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+    border-bottom: 2px solid #666666;
+}
+.wordmean-demo-p {
+    font-family: Wordmean !important;
+    font-size: 1.125rem!important;
+    line-height: normal!important;
+    background: linear-gradient(to right, #7171da, #7171da)!important;
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: transparent!important;
+}
+
 
 
 

@@ -114,7 +114,7 @@ const Purchases = () => {
                 justifyContent="flex-end"
                 sx={{
                     pr: 6,
-                    pt: 4,
+                    pt: 12,
                 }}
             >
                 <Link className='purchase-link' to="/budget-purchase-history">

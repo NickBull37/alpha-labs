@@ -87,7 +87,7 @@ const BillingHistory = () => {
                 display="flex"
                 alignItems="center"
                 sx={{
-                    mt: 10
+                    mt: 18
                 }}
             >
                 {historyRecords.map((record) => (

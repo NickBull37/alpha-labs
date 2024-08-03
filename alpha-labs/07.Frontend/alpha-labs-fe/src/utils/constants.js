@@ -24,8 +24,14 @@ export const savingsShowcase = require('../images/savings-showcase.png');
 // CalendarApp Images
 export const calendarBull = require('../images/calendar-bull.png');
 
+// DevApp Images
+export const devBull = require('../images/dev-bull.png');
+
 // PhotoApp Images
 export const photoBull  = require('../images/photo-bull.png');
 
 // TodoApp Images
 export const todoBull = require('../images/todo-bull.png');
+
+// WeatherApp Images
+export const weatherBull = require('../images/weather-bull.png');

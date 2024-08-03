@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Stack, Typography, Paper, Grid, Button } from '@mui/material';
-import { NavbarLandingPage } from '../../../components';
+import { Navbar } from '../../../components';
 
 const LandingPageStack = styled(Stack)(() => ({
     width: '100vw',
@@ -20,22 +20,22 @@ const LandingContentStack = styled(Stack)(() => ({
 
 const TodoLanding = () => {
 
-    const green = 'rgba(0, 255, 0, 0.7)';
+    const navLinks = [];
 
     return (
         <LandingPageStack>
-            <NavbarLandingPage
+            <Navbar
                 appName={"BullsTodos"}
+                navLinks={navLinks}
             />
             <LandingContentStack
                 className="bg-image"
                 gap={2}
+                sx={{
+                    pt: 8
+                }}
             >
-                <Box
-                    sx={{
-
-                    }}
-                >
+                <Box>
                     <Typography className="fastrace-h1">
                         TO -DO&nbsp;
                     </Typography>

@@ -20,12 +20,21 @@ export { default as CalendarLanding } from './pages/CalendarApp/CalendarLanding'
 export { default as CalendarList } from './pages/CalendarApp/CalendarList';
 export { default as DayDetails } from './pages/CalendarApp/DayDetails';
 
+//########################### Development Pages ###########################//
+export { default as FontShowcase } from './pages/DevelopmentApp/FontShowcase';
+
 //########################### Photo Pages ###########################//
 export { default as PhotoLanding } from './pages/PhotoApp/PhotoLanding';
 
 //########################### Todo Pages ###########################//
 export { default as TodoLanding } from './pages/TodoApp/TodoLanding';
 export { default as TodoList } from './pages/TodoApp/TodoList';
+
+//########################### Weather Pages ###########################//
+export { default as WeatherLanding } from './pages/WeatherApp/WeatherLanding';
+
+//########################### Dev Pages ###########################//
+export { default as DevLanding } from './pages/DevelopmentApp/DevLanding';
 
 
 
@@ -34,7 +43,7 @@ export { default as TodoList } from './pages/TodoApp/TodoList';
 //################################# SHARED ELEMENTS #################################//
 //###################################################################################//
 export { default as Navbar } from './elements/Shared/PageElements/Navbar';
-export { default as NavbarLandingPage } from './elements/Shared/PageElements/NavbarLandingPage';
+// export { default as NavbarLandingPage } from './elements/Shared/PageElements/NavbarLandingPage';
 export { default as PageContainer } from './elements/Shared/PageElements/PageContainer';
 export { default as LandingPageContainer } from './elements/Shared/PageElements/LandingPageContainer';
 
