@@ -23,13 +23,41 @@ const FontPaper = styled(Paper)(() => ({
 
 const FontShowcase = () => {
 
-    const navLinks = [];
+    const navLinks = [
+        {
+            index: 1,
+            label: 'HOME',
+            link: '/dev-home'
+        },
+        {
+            index: 2,
+            label: 'FONTS',
+            link: '/dev-fonts'
+        },
+        {
+            index: 3,
+            label: 'SQL QUERIES',
+            link: '/dev-sql'
+        },
+        {
+            index: 4,
+            label: 'C# / .NET',
+            link: '/dev-csharp'
+        },
+        {
+            index: 5,
+            label: 'ReactJS',
+            link: '/dev-react'
+        },
+    ];
 
     return (
         <Stack>
             <Navbar
-                appName="Development"
+                appName="BullsDev"
+                currentPage={"FONTS"}
                 navLinks={navLinks}
+                linkClassName={"hacked-p-green-grad"}
             />
             <Box
                 display="flex"
@@ -38,7 +66,7 @@ const FontShowcase = () => {
                 alignItems="baseline"
                 gap={10}
                 sx={{
-                    py: 14,
+                    py: 16,
                     px: 4
                 }}
             >

@@ -12,6 +12,7 @@ export const bullsBudget = require('../images/bulls-budget.png');
 export const bullsCalendar = require('../images/bulls-calendar.png');
 export const bullsPhotos = require('../images/bulls-photos.png');
 export const bullsTodos = require('../images/bulls-todos.png');
+export const bullsDev = require('../images/bulls-dev.png');
 
 
 // BudgetApp Images
@@ -26,6 +27,8 @@ export const calendarBull = require('../images/calendar-bull.png');
 
 // DevApp Images
 export const devBull = require('../images/dev-bull.png');
+export const devBullLanding = require('../images/dev-bull-landing.png');
+export const fontsShowcase = require('../images/fonts-showcase.png');
 
 // PhotoApp Images
 export const photoBull  = require('../images/photo-bull.png');

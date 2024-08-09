@@ -3,7 +3,9 @@
 //###################################################################################//
 export { default as LabDashboard } from './pages/LabDashboard';
 
-//########################## Budget Pages ##########################//
+//###################################################################################//
+//################################### BUDGET PAGES ###################################//
+//###################################################################################//
 export { default as BudgetLanding } from './pages/BudgetApp/BudgetLanding';
 export { default as BudgetDashboard } from './pages/BudgetApp/BudgetDashboard';
 export { default as Bills } from './pages/BudgetApp/Bills';
@@ -15,26 +17,41 @@ export { default as PurchaseHistoryTable } from './pages/BudgetApp/PurchaseHisto
 export { default as Savings } from './pages/BudgetApp/Savings';
 export { default as DepositFunds } from './pages/BudgetApp/DepositFunds';
 
-//########################## Calendar Pages ##########################//
+//###################################################################################//
+//################################### CALENDAR PAGES ###################################//
+//###################################################################################//
 export { default as CalendarLanding } from './pages/CalendarApp/CalendarLanding';
 export { default as CalendarList } from './pages/CalendarApp/CalendarList';
 export { default as DayDetails } from './pages/CalendarApp/DayDetails';
 
-//########################### Development Pages ###########################//
+//###################################################################################//
+//################################### DEV PAGES ###################################//
+//###################################################################################//
+export { default as DevLanding } from './pages/DevelopmentApp/DevLanding';
+export { default as DevHome } from './pages/DevelopmentApp/DevHome';
 export { default as FontShowcase } from './pages/DevelopmentApp/FontShowcase';
+export { default as ArrayCheatsheet } from './pages/DevelopmentApp/Cheatsheets/ArrayCheatsheet';
+export { default as ListCheatsheet } from './pages/DevelopmentApp/Cheatsheets/ListCheatsheet';
+export { default as StringCheatsheet } from './pages/DevelopmentApp/Cheatsheets/StringCheatsheet';
+export { default as ControllerExample } from './pages/DevelopmentApp/CodeExamples/ControllerExample';
+export { default as RepositoryExample } from './pages/DevelopmentApp/CodeExamples/RepositoryExample';
 
-//########################### Photo Pages ###########################//
+//###################################################################################//
+//################################### PHOTO PAGES ###################################//
+//###################################################################################//
 export { default as PhotoLanding } from './pages/PhotoApp/PhotoLanding';
 
-//########################### Todo Pages ###########################//
+//###################################################################################//
+//################################### TODO PAGES ###################################//
+//###################################################################################//
 export { default as TodoLanding } from './pages/TodoApp/TodoLanding';
 export { default as TodoList } from './pages/TodoApp/TodoList';
 
-//########################### Weather Pages ###########################//
+//###################################################################################//
+//################################### WEATHER PAGES ###################################//
+//###################################################################################//
 export { default as WeatherLanding } from './pages/WeatherApp/WeatherLanding';
 
-//########################### Dev Pages ###########################//
-export { default as DevLanding } from './pages/DevelopmentApp/DevLanding';
 
 
 

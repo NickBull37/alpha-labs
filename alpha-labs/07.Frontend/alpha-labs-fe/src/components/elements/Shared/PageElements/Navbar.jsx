@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Box, Paper, Typography } from '@mui/material';
-import { alphaLogo, vault, budgetBull, calendarBull, todoBull } from '../../../../utils/constants';
+import { vault, budgetBull, calendarBull, todoBull, devBull } from '../../../../utils/constants';
 
 const HeaderBox = styled(Box)(() => ({
     height: '14vh',
@@ -61,6 +61,10 @@ const Navbar = ({ appName, navLinks, currentPage, linkClassName }) => {
                 ) : appName === 'BullsCalendar' ? (
                     <Link to="/calendar-landing">
                         <img className='test-img3' src={calendarBull} height={65}/>
+                    </Link>
+                ) : appName === 'BullsDev' ? (
+                    <Link to="/dev-landing">
+                        <img className='test-img4' src={devBull} height={58}/>
                     </Link>
                 ) : appName === 'BullsTodos' ? (
                     <Link to="/todo-landing">

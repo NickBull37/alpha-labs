@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Box, Stack, Typography, Paper, Grid, Button } from '@mui/material';
 import { Header } from '../../components'
-import { bullsBudget, bullsCalendar, bullsPhotos, bullsTodos } from '../../utils/constants';
+import { bullsBudget, bullsCalendar, bullsPhotos, bullsTodos, bullsDev } from '../../utils/constants';
 
 // const AppBox = styled(Box)(() => ({
 //     width: "42vw",
@@ -56,7 +56,7 @@ const LabDashboard = () => {
                 gap={8}
             >
                 <Link to="/dev-landing">
-                    <img className="app-preview-pho" src={bullsPhotos} height={250}/>
+                    <img className="app-preview-dev" src={bullsDev} height={250}/>
                 </Link>
                 <Link to="/weather-landing">
                     <img className="app-preview-tod" src={bullsTodos} height={250}/>

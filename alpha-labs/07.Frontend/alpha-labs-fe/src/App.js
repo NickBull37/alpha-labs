@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Box, CssBaseline } from '@mui/material';
-import { Header } from "./components";
 import { LabDashboard, BudgetLanding, BudgetDashboard, Purchases, PurchaseHistory, Bills, BillingHistory, Savings, DepositFunds } from "./components";
 import { CalendarLanding, CalendarList, DayDetails } from "./components";
-import { DevLanding, FontShowcase } from "./components";
+import { DevLanding, FontShowcase, DevHome, ArrayCheatsheet, ListCheatsheet, StringCheatsheet, ControllerExample, RepositoryExample } from "./components";
 import { PhotoLanding } from "./components";
 import { TodoLanding, TodoList } from "./components";
 import { WeatherLanding } from "./components";
@@ -29,8 +28,13 @@ function App() {
                 <Route path="/details" element={<DayDetails />} />
 
                 <Route path="/dev-landing" element={<DevLanding />} />
-
+                <Route path="/dev-home" element={<DevHome />} />
                 <Route path="/dev-fonts" element={<FontShowcase />} />
+                <Route path="/array-cheatsheet" element={<ArrayCheatsheet />} />
+                <Route path="/list-cheatsheet" element={<ListCheatsheet />} />
+                <Route path="/string-cheatsheet" element={<StringCheatsheet />} />
+                <Route path="/controller-example" element={<ControllerExample />} />
+                <Route path="/repo-example" element={<RepositoryExample />} />
 
                 <Route path="/photo-landing" element={<PhotoLanding />} />
 
